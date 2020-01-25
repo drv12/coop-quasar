@@ -4,8 +4,21 @@ const routes = [
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '/home', component: () => import('pages/Home.vue') },
+      { path: '/services', component: () => import('pages/Services.vue') }    
     ]
+  },
+  {
+    path: '/dashboard',
+    component: () => import('layouts/Layout2.vue'),
+    children: [
+      { path: '/xx/homex', component: () => import('pages/Home.vue') },
+      { path: '/xx/servicesx', component: () => import('pages/Services.vue') }    
+    ]
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/Login.vue') 
   }
 ]
 

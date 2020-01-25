@@ -1,10 +1,10 @@
 <template>
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders">
-      <q-header elevated class="bg-black">
+      <q-header elevated class="primary">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
           />
-          <q-toolbar-title>New GSIS Cooperative</q-toolbar-title>
+          <q-toolbar-title>DASHBOARD</q-toolbar-title>
             <div
              v-for="(menuItem, index) in menuList" :key="index"
             >
@@ -12,6 +12,7 @@
             :icon="menuItem.icon" 
             :label="menuItem.label" 
             :class="`col-md-3 ${$q.screen.xs ? 'hidden': ''}`"
+            :to="menuItem.route"
             />
             </div>
             
@@ -20,33 +21,15 @@
       
 
       <q-page-container>
-        
+        <router-view></router-view>
       </q-page-container>
     </q-layout>
 </template>
 
 <script>
 const menuList = [
-  {
-    icon: 'home',
-    label: 'Home',
-    separator: true
-  },
-  {
-    icon: 'account_balance',
-    label: 'Services',
-    separator: false
-  },
-  {
-    icon: 'info',
-    label: 'About',
-    separator: false
-  },
-  {
-    icon: 'lock',
-    label: 'Log In',
-    separator: true
-  }
+  { route:'/xx/homex' ,icon: 'home', label: 'Home', separator: true },
+  { route:'/login' ,icon: 'account_balance', label: 'LogIn', separator: false }
 ]
 
 export default {

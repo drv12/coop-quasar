@@ -12,6 +12,7 @@
             :icon="menuItem.icon" 
             :label="menuItem.label" 
             :class="`col-md-3 ${$q.screen.xs ? 'hidden': ''}`"
+            :to="menuItem.route"
             />
             </div>
             
@@ -28,7 +29,7 @@
       >
           <q-list v-for="(menuItem, index) in menuList" :key="index">
 
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -45,33 +46,17 @@
       
 
       <q-page-container>
-        
+        <router-view/>
       </q-page-container>
     </q-layout>
 </template>
 
 <script>
 const menuList = [
-  {
-    icon: 'home',
-    label: 'Home',
-    separator: true
-  },
-  {
-    icon: 'account_balance',
-    label: 'Services',
-    separator: false
-  },
-  {
-    icon: 'info',
-    label: 'About',
-    separator: false
-  },
-  {
-    icon: 'lock',
-    label: 'Log In',
-    separator: true
-  }
+  { route:'/home' ,icon: 'home', label: 'Home', separator: true },
+  { route:'/services' ,icon: 'account_balance', label: 'Services', separator: false },
+  { route:'/about' ,icon: 'info', label: 'About', separator: false },
+  { route:'/login' ,icon: 'lock', label: 'Log In', separator: true }
 ]
 
 export default {
