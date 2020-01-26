@@ -1,8 +1,9 @@
 <template>
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders">
-      <q-header elevated class="bg-black">
+      <q-header elevated>
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
+           :class="'lt-md'"
           />
           <q-toolbar-title>New GSIS Cooperative</q-toolbar-title>
             <div
@@ -11,11 +12,10 @@
             <q-btn flat dark 
             :icon="menuItem.icon" 
             :label="menuItem.label" 
-            :class="`col-md-3 ${$q.screen.xs ? 'hidden': ''}`"
             :to="menuItem.route"
+            :class="'gt-sm'"
             />
             </div>
-            
         </q-toolbar>
       </q-header>
 
@@ -43,8 +43,6 @@
           </q-list>
       </q-drawer>
 
-      
-
       <q-page-container>
         <router-view/>
       </q-page-container>
@@ -69,3 +67,7 @@ export default {
   }
 }
 </script>
+
+<style>
+.q-toolbar {height: 80px;}
+</style>
