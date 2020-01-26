@@ -2,7 +2,7 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/WebLayout.vue'),
     redirect: '/home',
     children: [
       { path: '/home', component: () => import('pages/Home.vue') },
@@ -11,7 +11,7 @@ const routes = [
   },
   {
     path: '/dashboard',
-    component: () => import('layouts/Layout2.vue'),
+    component: () => import('layouts/MemberLayout.vue'),
     children: [
       { path: '/xx/homex', component: () => import('pages/Home.vue') },
       { path: '/xx/servicesx', component: () => import('pages/Services.vue') }    
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('layouts/Login.vue') 
+    component: () => import('pages/Login.vue') 
   }
 ]
 

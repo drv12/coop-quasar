@@ -22,13 +22,14 @@
       <q-drawer
         v-model="drawer"
         :width="200"
-        :breakpoint="500"
         overlay
         bordered
         content-class="bg-grey-3"
       >
+               
+        <q-separator/>
+        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list v-for="(menuItem, index) in menuList" :key="index">
-
             <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
@@ -37,15 +38,31 @@
                 {{ menuItem.label }}
               </q-item-section>
             </q-item>
-
            <q-separator v-if="menuItem.separator" />
-
           </q-list>
+        </q-scroll-area>
+
+        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+          <div class="absolute-bottom bg-transparent">
+            <q-avatar size="56px" class="q-mb-sm">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+            <div class="text-weight-bold">Razvan Stoenescu</div>
+            <div>@rstoenescu</div>
+          </div>
+        </q-img>
+          
       </q-drawer>
 
       <q-page-container>
         <router-view/>
       </q-page-container>
+
+      <q-footer elevated>
+        <q-toolbar>
+          <q-toolbar-title>Footer</q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
     </q-layout>
 </template>
 
