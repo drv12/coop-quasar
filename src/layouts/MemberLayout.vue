@@ -1,16 +1,16 @@
 <template>
   <div>
-    <q-layout view="hHh Lpr hff">
+    <q-layout view="hhr lpR ffr">
       <q-header elevated>
         <q-toolbar class="glossy">
-          <!-- <q-btn flat round dense @click="drawer = !drawer" icon="menu" class="q-mr-sm" /> -->
+          <q-btn flat @click="drawer = !drawer" round dense icon="menu"
+           :class="'lt-md'"
+          />
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
 
           <q-toolbar-title>Hello! Member</q-toolbar-title>
-
-          <q-btn label="Log Out" flat dense/> 
         </q-toolbar>
       </q-header>
 
@@ -21,8 +21,8 @@
         bordered
         content-class="bg-grey-3"
       >
-        <q-scroll-area class="fit">
-          <q-list v-for="(menuItem, index) in menuList" :key="index" style="height: 69px">
+        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+          <q-list v-for="(menuItem, index) in menuList" :key="index">
             <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
               <q-item-section avatar> 
                 <q-icon :name="menuItem.icon" />
@@ -36,6 +36,10 @@
           </q-list>
         </q-scroll-area>
       </q-drawer>
+
+      <q-page-container>
+        <router-view/>
+      </q-page-container>
 
       <q-footer elevated>
         <q-toolbar class="glossy">

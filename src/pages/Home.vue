@@ -27,7 +27,7 @@
     <div class="q-pa-md doc-container">
       <div class="row">
         <div 
-          class="col-xs-12 col-sm-6 col-md-4 q-pa-md"
+          class="col-xs-12 col-sm-6 col-md-3 q-pa-md"
           v-for="card in cards"
           :key="card.title"
           >
@@ -71,10 +71,28 @@
 
 <script>
 const cards =  [
-        {icon: 'mdi-home', title: 'About', link: '/about'},
-        {icon: 'mdi-bank', title: 'Services' , link: '/services'},
-        {icon: 'mdi-lock', title: 'Online Inquiry', link: '/login'}
-      ]
+{
+  icon: 'mdi-home', 
+  title: 'Investment and Savings', 
+  link: '/about',
+  desc: ''
+},
+{
+  icon: 'mdi-bank', 
+  title: 'Loans', 
+  link: '/services'
+},
+{
+  icon: 'mdi-bank', 
+  title: 'Benefits', 
+  link: '/services'
+},
+{
+  icon: 'mdi-lock',
+  title: 'Account Inquiry',
+  link: '/login'
+}
+]
 
 export default {
   data () {
