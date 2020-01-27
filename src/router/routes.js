@@ -5,21 +5,23 @@ const routes = [
     component: () => import('layouts/WebLayout.vue'),
     redirect: '/home',
     children: [
-      { path: '/home', component: () => import('pages/Home.vue') },
-      { path: '/services', component: () => import('pages/Services.vue') }    
+      { path: '/home', component: () => import('pages/PublicPages/Home.vue') },
+      { path: '/about', component: () => import('pages/PublicPages/About.vue') },
+      { path: '/services', component: () => import('pages/PublicPages/Services.vue') }    
     ]
   },
   {
     path: '/dashboard',
     component: () => import('layouts/MemberLayout.vue'),
     children: [
-      { path: '/xx/homex', component: () => import('pages/Home.vue') },
-      { path: '/xx/servicesx', component: () => import('pages/Services.vue') }    
+      { path: '/member/dashboard', component: () => import('pages/MemberPages/Dashboard.vue') },
+      { path: '/member/profile', component: () => import('pages/MemberPages/Profile.vue')},
+      { path: '/member/investment', component: () => import('pages/MemberPages/Investment.vue')}    
     ]
   },
   {
     path: '/login',
-    component: () => import('pages/Login.vue') 
+    component: () => import('pages/PublicPages/Login.vue') 
   }
 ]
 

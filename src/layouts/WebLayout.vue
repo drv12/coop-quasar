@@ -1,5 +1,5 @@
 <template>
-    <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders">
+    <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders primary">
       <q-header elevated>
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
@@ -25,10 +25,9 @@
         overlay
         bordered
         content-class="bg-grey-3"
+        class="secondary"
       >
-               
-        <q-separator/>
-        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <q-scroll-area fit style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list v-for="(menuItem, index) in menuList" :key="index">
             <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
               <q-item-section avatar>

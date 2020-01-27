@@ -21,9 +21,9 @@
         bordered
         content-class="bg-grey-3"
       >
-        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <div style="margin-top: 100px; border-right: 1px solid #ddd"/>
           <q-list v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
               <q-item-section avatar> 
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -34,7 +34,6 @@
 
            <q-separator v-if="menuItem.separator" />
           </q-list>
-        </q-scroll-area>
       </q-drawer>
 
       <q-page-container>
@@ -53,9 +52,9 @@
 
 <script>
 const menuList = [
-  { route:'/member' ,icon: 'dashboard', label: 'Dashboard', separator: true },
-  { route:'/profile' ,icon: 'account_circle', label: 'Profile', separator: false },
-  { route:'/investment' ,icon: 'mdi-piggy-bank', label: 'Investment', separator: false },
+  { route:'/member/dashboard' ,icon: 'dashboard', label: 'Dashboard', separator: true },
+  { route:'/member/profile' ,icon: 'account_circle', label: 'Profile', separator: false },
+  { route:'/member/investment' ,icon: 'mdi-piggy-bank', label: 'Investment', separator: false },
   { route:'/credit' ,icon: 'mdi-credit-card', label: 'Credit', separator: false },
   { route:'/benefits' ,icon: 'mdi-gift', label: 'Benefits', separator: true },
   { route:'/contactus' ,icon: 'mdi-mail', label: 'Contact Us', separator: false },
