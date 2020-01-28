@@ -1,10 +1,28 @@
 <template>
     <q-layout>
-        <div>
+    <div class="q-pa-md">
+      <q-card>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab v-for="(menuItem, index) in menuList" :key="index" :name="menuItem.name" :label="menuItem.label" />
+        </q-tabs>
+
+        <q-separator />
+
+        <q-tab-panels v-model="tab" animated v-for="(menuItem, index) in menuList" :key="index">
+          <q-tab-panel :name="menuItem.name">
+            <div>
             <q-card class="my-card">
                 <q-card-section class="bg-secondary text-white">
-                    <div class="text-h6">Total Share of Stocks</div>
-                    <div class="text-h5"> 14000 </div>
+                    <div class="text-h6">{{menuItem.label}}</div>
+                    <div class="text-h5">{{menuItem.total}}</div>
                 </q-card-section>
 
                 <q-separator />
@@ -13,9 +31,7 @@
                     <q-btn flat>Search</q-btn>
                 </q-card-actions>
             </q-card>
-        </div>
-
-        <div class="q-pa-md">
+            <div class="q-pa-md">
             <q-table
             title="Treats"
             :data="data"
@@ -23,15 +39,28 @@
             row-key="name"
             />
         </div>
+        </div>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
+      </div>
 
-        </div> 
+        
     </q-layout> 
 </template>  
 
 <script>
+const menuList = [
+  { name:'shareofstocks' ,label: 'Share of Stocks', title: 'Total Share of Stocks', total: 10000 },
+  { name:'mgtfee' ,label: 'Management Fee', title: 'Total Management Fee', total: 8000 },
+  { name:'savingsdeposit' ,label: 'Savings Deposit', title: 'Total Savings Deposit', total: 9000 }
+]
+
 export default {
   data () {
     return {
+      menuList,
+      tab: 'shareofstocks',
       columns: [
         {
           name: 'name',

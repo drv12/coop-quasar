@@ -24,6 +24,15 @@
             </q-card>
 
             <q-card class="my-card">
+            <q-card-section class="bg-primary text-white">
+                <div class="text-h6">Capital Interest</div>
+                <div class="text-h5"> 280 </div>
+            </q-card-section>
+            </q-card>
+
+            <q-separator />
+
+            <q-card class="my-card">
             <q-card-section class="bg-purple text-white">
                 <div class="text-h6">Savings Deposit</div>
                 <div class="text-h5">5000</div>

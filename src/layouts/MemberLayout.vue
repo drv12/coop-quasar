@@ -54,7 +54,7 @@
 const menuList = [
   { route:'/member/dashboard' ,icon: 'dashboard', label: 'Dashboard', separator: true },
   { route:'/member/profile' ,icon: 'account_circle', label: 'Profile', separator: false },
-  { route:'/member/investment' ,icon: 'mdi-piggy-bank', label: 'Investment', separator: false },
+  { route:'/member/investment' ,icon: 'mdi-piggy-bank', label: 'Contributions', separator: false },
   { route:'/credit' ,icon: 'mdi-credit-card', label: 'Credit', separator: false },
   { route:'/benefits' ,icon: 'mdi-gift', label: 'Benefits', separator: true },
   { route:'/contactus' ,icon: 'mdi-mail', label: 'Contact Us', separator: false },
