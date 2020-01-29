@@ -7,6 +7,7 @@ const routes = [
     children: [
       { path: '/home', component: () => import('pages/PublicPages/Home.vue') },
       { path: '/about', component: () => import('pages/PublicPages/About.vue') },
+      { path: '/preregister', component: () => import('pages/PublicPages/Preregister.vue') },
       { path: '/services', component: () => import('pages/PublicPages/Services.vue') }    
     ]
   },
@@ -16,7 +17,7 @@ const routes = [
     children: [
       { path: '/member/dashboard', component: () => import('pages/MemberPages/Dashboard.vue') },
       { path: '/member/profile', component: () => import('pages/MemberPages/Profile.vue')},
-      { path: '/member/investment', component: () => import('pages/MemberPages/Investment.vue')}    
+      { path: '/member/transactions', component: () => import('pages/MemberPages/Transactions.vue')}    
     ]
   },
   {

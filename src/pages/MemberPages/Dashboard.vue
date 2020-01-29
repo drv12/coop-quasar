@@ -1,14 +1,5 @@
 <template>
     <q-layout>
-        <q-bar>
-            <q-btn dense flat round icon="lens" size="8.5px" color="red" />
-            <q-btn dense flat round icon="lens" size="8.5px" color="yellow" />
-            <q-btn dense flat round icon="lens" size="8.5px" color="green" />
-            <div class="col text-center text-weight-bold">
-                Dashboard
-            </div>
-        </q-bar>
-
         <div class="q-pa-md row items-start q-gutter-md">
             <q-card class="my-card">
             <q-card-section class="bg-primary text-white">
@@ -29,8 +20,6 @@
                 <div class="text-h5"> 280 </div>
             </q-card-section>
             </q-card>
-
-            <q-separator />
 
             <q-card class="my-card">
             <q-card-section class="bg-purple text-white">

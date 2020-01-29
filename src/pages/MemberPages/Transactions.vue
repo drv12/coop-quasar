@@ -33,7 +33,7 @@
             </q-card>
             <div class="q-pa-md">
             <q-table
-            title="Treats"
+            title="Transaction History"
             :data="data"
             :columns="columns"
             row-key="name"
@@ -53,7 +53,8 @@
 const menuList = [
   { name:'shareofstocks' ,label: 'Share of Stocks', title: 'Total Share of Stocks', total: 10000 },
   { name:'mgtfee' ,label: 'Management Fee', title: 'Total Management Fee', total: 8000 },
-  { name:'savingsdeposit' ,label: 'Savings Deposit', title: 'Total Savings Deposit', total: 9000 }
+  { name:'savings' ,label: 'Savings', title: 'Total Savings', total: 9000 },
+  { name:'loans' ,label: 'Loans', title: 'Total Loan Balance', total: 9000 }
 ]
 
 export default {

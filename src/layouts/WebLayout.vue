@@ -26,6 +26,7 @@
         bordered
         content-class="bg-grey-3"
         class="secondary"
+        :class="'lt-md'"
       >
         <q-scroll-area fit style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list v-for="(menuItem, index) in menuList" :key="index">
@@ -60,6 +61,7 @@
 <script>
 const menuList = [
   { route:'/home' ,icon: 'home', label: 'Home', separator: true },
+  { route:'/preregister' ,icon: 'mdi-face', label: 'Be a Member', separator: false },
   { route:'/services' ,icon: 'account_balance', label: 'Services', separator: false },
   { route:'/about' ,icon: 'info', label: 'About Us', separator: false },
   { route:'/login' ,icon: 'lock', label: 'Log In', separator: true }
