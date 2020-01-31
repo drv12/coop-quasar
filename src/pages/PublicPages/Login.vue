@@ -18,7 +18,7 @@
                                     square
                                     filled
                                     clearable
-                                    v-model="email"
+                                    v-model="formData.email"
                                     type="email"
                                     label="Email"
                                 />
@@ -26,7 +26,7 @@
                                     square
                                     filled
                                     clearable
-                                    v-model="password"
+                                    v-model="formData.password"
                                     type="password"
                                     label="Password"
                                 />
@@ -39,7 +39,7 @@
                             size="lg"
                             class="full-width"
                             label="Login"
-                            to="/member/dashboard"
+                            @click.prevent='signin'
                         />
                     </q-card-actions>
                     </q-card>
@@ -51,15 +51,25 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-name: "Login",
-data() {
-return {
-email: '',
-password: ''
-};
-},
-methods: {}
+    name: "Login",
+    data() {
+        return {
+            formData: {
+                email: '',
+                password: ''
+            }
+            };
+        },
+        methods: {
+            ...mapActions('store',['login']),
+
+            signin(){
+                this.login(this.formData)
+            },
+        }
 };
 </script>
 
