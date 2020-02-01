@@ -10,7 +10,7 @@
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
 
-          <q-toolbar-title>Hello! Member</q-toolbar-title>
+          <q-toolbar-title>Hello! {{ userDetails.name }}</q-toolbar-title>
         </q-toolbar>
       </q-header>
 
@@ -22,17 +22,33 @@
         content-class="bg-grey-3"
       >
         <div style="margin-top: 100px; border-right: 1px solid #ddd"/>
-          <q-list v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
-              <q-item-section avatar> 
-                <q-icon :name="menuItem.icon" />
-              </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
-            </q-item>
-
-           <q-separator v-if="menuItem.separator" />
+          <q-list>
+            <div v-for="(menuItem, index) in menuList" :key="index">
+              <q-item clickable
+              v-ripple 
+              :to="menuItem.route"
+              >
+                <q-item-section avatar> 
+                  <q-icon :name="menuItem.icon" />
+                </q-item-section>
+                <q-item-section>
+                  {{ menuItem.label }}
+                </q-item-section>
+              </q-item>
+            </div>
+              <q-item clickable
+              v-ripple
+              @click="logoutUser"
+              >
+                <q-item-section avatar> 
+                  <q-icon name="exit_to_app" />
+                </q-item-section>
+                <q-item-section>
+                  Log Out 
+                  <br>
+                  {{userDetails.name}}
+                </q-item-section>
+              </q-item>
           </q-list>
       </q-drawer>
 
@@ -51,6 +67,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 const menuList = [
   { route:'/member/dashboard' ,icon: 'dashboard', label: 'Dashboard', separator: true },
   { route:'/member/profile' ,icon: 'account_circle', label: 'Profile', separator: false },
@@ -58,8 +76,8 @@ const menuList = [
   // { route:'/credit' ,icon: 'mdi-credit-card', label: 'Credit', separator: false },
   { route:'/benefits' ,icon: 'mdi-gift', label: 'Benefits', separator: true },
   { route:'/contactus' ,icon: 'mdi-mail', label: 'Contact Us', separator: false },
-  { route:'/aboutus' ,icon: 'info', label: 'About Us', separator: true },
-  { route:'/logout' ,icon: 'exit_to_app', label: 'Log Out', separator: false }
+  { route:'/aboutus' ,icon: 'info', label: 'About Us', separator: true }
+  // { route:'/logout' ,icon: 'exit_to_app', label: 'Log Out', separator: false }
 ]
 
   export default {
@@ -69,6 +87,12 @@ const menuList = [
         drawer: false,
         menuList
       }
+    },
+    computed:{
+      ...mapState('store', ['userDetails'])
+    },
+    methods: {
+      ...mapActions('store', ['logoutUser'])
     }
   }
 </script>

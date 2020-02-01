@@ -19,6 +19,5 @@ var firebaseConfig = {
  let firebaseApp = firebase.initializeApp(firebaseConfig);
  let firebaseAuth = firebaseApp.auth();
  let firebaseDb = firebaseApp.firestore();
- console.log(firebaseApp)
 
  export {firebaseAuth, firebaseDb}

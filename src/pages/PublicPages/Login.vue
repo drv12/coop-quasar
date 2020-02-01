@@ -64,10 +64,10 @@ export default {
             };
         },
         methods: {
-            ...mapActions('store',['login']),
+            ...mapActions('store',['loginUser']),
 
             signin(){
-                this.login(this.formData)
+                this.loginUser(this.formData)
             },
         }
 };

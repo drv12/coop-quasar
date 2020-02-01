@@ -16,6 +16,13 @@
             :class="'gt-sm'"
             />
             </div>
+            <q-btn flat dark 
+            icon="lock" 
+            label="Log In" 
+            to="/login"
+            :class="'gt-sm'"
+            v-if="!userDetails.userId"
+            />
         </q-toolbar>
       </q-header>
 
@@ -29,16 +36,34 @@
         :class="'lt-md'"
       >
         <q-scroll-area fit style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-          <q-list v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.route">
-              <q-item-section avatar>
-                <q-icon :name="menuItem.icon" />
-              </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
-            </q-item>
-           <q-separator v-if="menuItem.separator" />
+          <q-list>
+            <div v-for="(menuItem, index) in menuList" :key="index">
+               <q-item clickable
+               v-ripple 
+               :to="menuItem.route"
+               >
+                  <q-item-section avatar>
+                    <q-icon :name="menuItem.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    {{ menuItem.label }}
+                  </q-item-section>
+               </q-item>
+            <q-separator v-if="menuItem.separator" />
+            </div>
+            <q-item clickable
+               v-ripple 
+               to="/login"
+               v-if="!userDetails.userId"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="lock"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Log In
+                  </q-item-section>
+               </q-item>
+           
           </q-list>
         </q-scroll-area>
 
@@ -59,12 +84,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 const menuList = [
   { route:'/home' ,icon: 'home', label: 'Home', separator: true },
   { route:'/preregister' ,icon: 'mdi-face', label: 'Be a Member', separator: false },
   { route:'/services' ,icon: 'account_balance', label: 'Services', separator: false },
-  { route:'/about' ,icon: 'info', label: 'About Us', separator: false },
-  { route:'/login' ,icon: 'lock', label: 'Log In', separator: true }
+  { route:'/about' ,icon: 'info', label: 'About Us', separator: false }
 ]
 
 export default {
@@ -74,6 +100,9 @@ export default {
       drawer: false,
       menuList
     }
+  },
+  computed: {
+    ...mapState('store', ['userDetails'])
   }
 }
 </script>

@@ -53,6 +53,8 @@
 </template> 
 
 <script>
+import { mapActions } from 'vuex'
+
 const PreRegFields = [
     {group:'Name',name: 'FirstName', label: 'First Name*', value:null},
     {group:'Name',name: 'LastName', label: 'Last Name*', value:null, visible:'hidden' },
@@ -79,6 +81,7 @@ export default {
   },
 
   methods: {
+    ...mapActions('store', ['preReg']),
     onSubmit () {
       if (this.accept !== true) {
         this.$q.notify({
