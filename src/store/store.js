@@ -17,7 +17,8 @@ const actions = {
         firebaseDb.collection("PreRegPersonalData").add({
                 Name: {
                 FirstName: payload.Name.FirstName,
-                LastName: payload.Name.LastName
+                LastName: payload.Name.LastName,
+                CivilStatus: payload.Name.CivilStatus
                 },
                 BirthData: {
                 BirthPlace: payload.BirthData.BirthPlace,
@@ -29,6 +30,7 @@ const actions = {
                 City: payload.Address.City
                 },
                 Employment: {
+                Occupation: payload.Employment.Occupation,
                 EmployerCompany: payload.Employment.EmployerCompany,
                 Salary: payload.Employment.Salary,
                 OtherIncome: payload.Employment.OtherIncome
@@ -76,12 +78,12 @@ const actions = {
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
                 });
-                // this.$router.push('/member/dashboard')
+                this.$router.push('/member/dashboard')
             }
             else {
                 //userlogout
                 commit('setUserDetails', {})
-                // this.$router.replace('/home')
+                this.$router.replace('/home')
             }
           });
     }

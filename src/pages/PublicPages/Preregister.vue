@@ -9,9 +9,9 @@
             
               <q-card-section class="q-pt-none text-center text-justify">
                 <div class="text-subtitle2">We are New GSIS Transport Cooperative. 
-                    Our Cooperative is duly registered with the Cooperative Development Authority (CDA), 
-                    the regulatory agency of the Government of the Republic of the Philippines
-                     over matters concerning the development of cooperatives in the country.
+                    We accept any applicant irregardless if they are transport operator or drivers of routes under the management of the transport cooperaive. 
+                    Interested Apllicants can start by undergoing our online Pre-registration. Information provided will be evaluated by the cooperative.
+                    However, applicants are advised to personally visit our office to properly apply for membership.
               </div>
               </q-card-section>
             </q-card>
@@ -51,7 +51,7 @@
                         <h4 class="row justify-center items-center" style="color: #26A69A;">Information Sheet</h4>
 
                         <strong class="row justify-center items-center" style="color: #26A69A;">
-                            Name
+                            Personal Data
                         </strong>
 
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
@@ -61,6 +61,10 @@
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
                         <q-input standard v-model="PreRegData.Name.LastName" label="Last Name"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Name.CivilStatus" label="Civil Status"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -100,6 +104,10 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
+                        <q-input standard v-model="PreRegData.Employment.Occupation" label="Occupation"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
                         <q-input standard v-model="PreRegData.Employment.EmployerCompany" label="Employer/ Company"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -142,7 +150,6 @@
                         <q-btn label="Reset" type="reset" color="primary" flat class="full-width	 justify-center items-center q-ml-sm" />                    
                     </div>
                 </q-form>
-                <button @click="printDiv('printdiv')">Print this component</button>
               </q-card-section>
           </q-card>
         </div>
@@ -160,7 +167,62 @@
         icon="create_new_folder"
         :done="step > 2"
       >
-        Print the accomplished form and sign it
+        <div>
+          <q-form
+            @submit="onSubmit"
+            @reset="onReset"
+            class="q-gutter-md"
+            id="page"
+          >
+            <p>&nbsp;</p>
+            <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
+            
+            <span style="padding-left: 150px;">I hereby apply for membership to the <strong>New GSIS Transport Service Cooperative.</strong></span>
+              <br><span style="text-align: left;">&nbsp;I agree to obey faithfully its rules and regulations as set down in its Articles of Cooperation and Bylaws, the decisions of the general membership meetings and those of the Board of Directors.</span>
+              <br><span style="text-align: left; padding-left: 30px;">I hereby pledge to:</span>
+              <ol>
+              <li style="text-align: left; padding-left: 30px;">Attend and finish the prescribed membership education courses.</li>
+              <li style="text-align: left; padding-left: 30px;">Pay the membership fee of P 500.</li>
+              <li style="text-align: left; padding-left: 30px;">Participate in the following savings program:
+              <ol style="list-style-type: lower-alpha;">
+              <li style="text-align: left; padding-left: 30px;">Subscribed fo at least 18 shares and pay for them either in lumpsum or installment, under the terms and conditions prescribed in the Membership Agreement.</li>
+              <li style="text-align: left; padding-left: 30px;">Contribute daily/weekly/bi-monthly/monthly atleast 2% of my salary into the share capital; and</li>
+              <li style="text-align: left; padding-left: 30px;">Contribute into the share capital at least 50% of the annual interest on capital and patronage refund due me.</li>
+              </ol>
+              </li>
+              <li style="text-align: left; padding-left: 30px;">Comply with the membership and subscription agreement. For your consideration, I hereby attach my information sheet.</li>
+              </ol>
+              <br><span style="float:right"> .................................................................</span>
+              <p style="padding-left: 640px;">Signature</p>
+                
+              <!-- <p style="padding-left: 90px;">&nbsp;Date</p> -->
+              <p style="padding-left: 75px;"><span style="text-decoration: underline;"><span class="w8qArf">&nbsp;</span><span class="LrzXr">{{datetodaydata}}</span></span></p>
+              <p style="padding-left: 100px;">Date</p>
+              <p><span style="text-decoration: underline;"><span class="w8qArf">&nbsp;</span><span class="LrzXr">65-C Shorthorn St, Project 8, Quezon City</span></span></p>
+              <p style="padding-left: 100px;">Place</p>
+
+              <div id="personaldata">
+              <strong>PERSONAL DATA</strong>
+                <br> <span style="float:left"> Name: {{ PreRegData.Name.FirstName }} {{ PreRegData.Name.LastName }} </span> 
+                    <span style="float:right">Civil Status: {{ PreRegData.Name.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                    <br><span style="float:left"> BirthPlace: {{ PreRegData.BirthData.BirthPlace }} </span> 
+                  <span style="float:right"> Date of birth: {{ PreRegData.BirthData.BirthDate }}  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                  <br><span style="float:left"> Present Address: {{ PreRegData.Address.Street }}, {{ PreRegData.Address.Barangay }}, {{ PreRegData.Address.City }} </span> 
+                <br><span style="float:left"> Occupation: {{ PreRegData.Employment.Occupation }} </span> 
+              <br><span style="float:left"> Employer or office: {{ PreRegData.Employment.EmployerCompany }} </span>
+              <span style="float:right"> Salary: {{ PreRegData.Employment.Salary }}  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+              <br><span style="float:left"> Other sources of income: {{ PreRegData.Employment.OtherIncome }} </span> 
+              <br><span style="float:left"> Nearest relative: {{ PreRegData.Family.NearestRelative.RelativeName }} </span>
+              <span style="float:right"> Relationship: {{ PreRegData.Family.NearestRelative.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+              <br><span style="float:left"> Number of Dependents: {{ PreRegData.Family.NoDependents }} </span>
+
+              <p>&nbsp;</p>
+              <h6 style="text-align: center;">EARN AND SAVE THE COOPERATIVE WAY</h6>
+            </div>
+          </q-form>
+        </div>
+        <q-btn @click="printDiv('page')" label="Print" type="submit" class="full-width justify-center items-center q-mb-md" color="primary"/>
+
 
         <q-stepper-navigation>
           <q-btn @click="step = 3" color="primary" label="Continue"></q-btn>
@@ -170,22 +232,17 @@
 
       <q-step
         :name="3"
-        title="Personally Pass the Signed Application to our Office"
+        title="Wait for a Confirmation Email and Visit our Office"
         icon="add_comment"
       >
-        Our office is located at "doon dito rito". 
+        Check your e-mail for additional instructions and supporting douments needed for the application. Our office is located at 65-C Shorthorn St, Project 8, Quezon City. 
 
         <q-stepper-navigation>
           <q-btn color="primary" label="Finish"></q-btn>
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
-    </q-stepper>
-
-   
-
-
-    
+    </q-stepper> 
   </div>
 </template> 
 
@@ -199,7 +256,8 @@ export default {
       PreRegData: {
         Name: {
         FirstName: '',
-        LastName: ''
+        LastName: '',
+        CivilStatus: ''
         },
         BirthData: {
         BirthPlace: '',
@@ -211,6 +269,7 @@ export default {
         City: ''
         },
         Employment: {
+        Occupation: '',
         EmployerCompany: '',
         Salary: '',
         OtherIncome: ''
@@ -223,7 +282,8 @@ export default {
         NoDependents: ''
         },
       },
-      accept: false
+      accept: false,
+      datetodaydata: '',
     }
   },
 
@@ -256,7 +316,47 @@ export default {
       this.FirstName = null
       this.LastName = null
       this.accept = false
+    },
+    datetoday(){
+      var myDate = new Date();
+      var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+      var date = ('0' + myDate.getDate()).slice(-2);
+      var year = myDate.getFullYear();
+      var formattedDate = year + '-' + month + '-' + date;
+      this.datetodaydata = formattedDate;
     }
+  },
+  mounted(){
+    this.datetoday();
   }
 }
 </script>
+
+<style>
+  .h6 {
+    text-align: center;
+    text-decoration: overline underline;
+  }
+
+  .page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 2cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    html, body {
+      width: 210mm;
+      height: 400mm;
+    }
+  }
+</style>

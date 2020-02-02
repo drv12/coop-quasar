@@ -40,9 +40,8 @@
           >
            
               <q-card-section>
-                 <q-icon style="font-size: 4.4em;" name="font_download" class="col col-md-12"/>
+                 <q-icon style="font-size: 4.4em;" :name="card.icon" class="full-width	"/>
                   <div class="text-h6 text-center">{{card.title}}</div>
-                  <div class="text-subtitle2">by John Doe</div>
               </q-card-section>
 
               <q-card-section class="q-pt-none text-center text-justify">
@@ -101,23 +100,23 @@
 <script>
 const cards =  [
 {
-  icon: 'mdi-home', 
+  icon: 'mdi-piggy-bank', 
   title: 'Investment and Savings', 
   link: '/about',
   desc: ''
 },
 {
-  icon: 'mdi-bank', 
+  icon: 'mdi-credit-card-clock', 
   title: 'Loans', 
   link: '/services'
 },
 {
-  icon: 'mdi-bank', 
+  icon: 'mdi-gift', 
   title: 'Benefits', 
   link: '/services'
 },
 {
-  icon: 'mdi-lock',
+  icon: 'mdi-account-cash',
   title: 'Account Inquiry',
   link: '/login'
 }
