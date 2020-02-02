@@ -14,7 +14,33 @@ const mutations = {
 
 const actions = {
     preReg({}, payload){
-        
+        firebaseDb.collection("PreRegPersonalData").add({
+                Name: {
+                FirstName: payload.Name.FirstName,
+                LastName: payload.Name.LastName
+                },
+                BirthData: {
+                BirthPlace: payload.BirthData.BirthPlace,
+                BirthDate: payload.BirthData.BirthDate
+                },
+                Address: {
+                Street: payload.Address.Street,
+                Barangay: payload.Address.Barangay,
+                City: payload.Address.City
+                },
+                Employment: {
+                EmployerCompany: payload.Employment.EmployerCompany,
+                Salary: payload.Employment.Salary,
+                OtherIncome: payload.Employment.OtherIncome
+                },
+                Family: {
+                NearestRelative: {
+                  RelativeName: payload.Family.NearestRelative.RelativeName,
+                  Relationship: payload.Family.NearestRelative.Relationship
+                },
+                NoDependents: payload.Family.NoDependents
+                }
+        });
     },
     loginUser({}, payload){
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
@@ -49,12 +75,12 @@ const actions = {
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
                 });
-                this.$router.push('/member/dashboard')
+                // this.$router.push('/member/dashboard')
             }
             else {
                 //userlogout
                 commit('setUserDetails', {})
-                this.$router.replace('/home')
+                // this.$router.replace('/home')
             }
           });
     }

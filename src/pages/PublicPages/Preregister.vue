@@ -13,25 +13,95 @@
           >
               <q-card-section>
                 <q-form
-                @submit="onSubmit"
+                @submit="register"
                 @reset="onReset"
                 class="q-gutter-md"
                 >
-                    <div v-for="(item, index) in PreRegFields" :key="index">
+                    <div>
+                        <h4 class="row justify-center items-center" style="color: #26A69A;">Application Form</h4>
 
-                        <strong :class=" item.visible + ' row justify-center items-center'" style="color: #26A69A;">
-                            {{item.group}}
+                        <strong class="row justify-center items-center" style="color: #26A69A;">
+                            Name
                         </strong>
 
-                        <q-separator :class="item.visible + ' q-mb-md q-pt-xs'" color="secondary" inset hidden = 'true'/>
-                        <q-input
-                        standard
-                        :type="item.type"
-                        v-model="item.value"
-                        :label="item.label"
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
+                        
+                        <q-input standard v-model="PreRegData.Name.FirstName" label="First Name"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
+                        <q-input standard v-model="PreRegData.Name.LastName" label="Last Name"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <strong class="row justify-center items-center" style="color: #26A69A;">
+                            Birth
+                        </strong>
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
+
+                         <q-input standard v-model="PreRegData.BirthData.BirthDate" label="Birthdate"
+                        type="date"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.BirthData.BirthPlace" label="Birthplace"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                         <strong class="row justify-center items-center" style="color: #26A69A;">
+                            Address
+                        </strong>
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
+                        
+                        <q-input standard v-model="PreRegData.Address.Street" label="Street"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Address.Barangay" label="Barangay"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Address.City" label="City"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <strong class="row justify-center items-center" style="color: #26A69A;">
+                            Employment
+                        </strong>
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
+
+                        <q-input standard v-model="PreRegData.Employment.EmployerCompany" label="Employer/ Company"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Employment.Salary" label="Salary"
+                        type="number"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Employment.OtherIncome" label="Other Sources of Income"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <strong class="row justify-center items-center" style="color: #26A69A;">
+                            Family
+                        </strong>
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
+
+                        <q-input standard v-model="PreRegData.Family.NearestRelative.RelativeName" label="Nearest Relative"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Family.NearestRelative.Relationship" label="Relationship"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Family.NoDependents" label="Number of Dependents"
+                        type="number"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
                     </div>
                     
                     <q-toggle v-model="accept" label="I accept the license and terms" />
@@ -55,52 +125,65 @@
 <script>
 import { mapActions } from 'vuex'
 
-const PreRegFields = [
-    {group:'Name',name: 'FirstName', label: 'First Name*', value:null},
-    {group:'Name',name: 'LastName', label: 'Last Name*', value:null, visible:'hidden' },
-    {group:'Birth Data',name: 'Birthplace', label: 'Birthplace*', value:null},
-    {group:'Birth Data',name: 'Birthdate', label: 'Birthdate*', value:null, type: 'date', visible:'hidden' },
-    {group:'Address',name: 'StreetAd', label: 'Street Address*', value:null},
-    {group:'Address',name: 'Barangay', label: 'Barangay*', value:null, visible:'hidden' },
-    {group:'Address',name: 'City', label: 'City*', value:null, visible:'hidden' },
-    {group:'Employment',name: 'EmployerCompany', label: 'Employer or Company*', value:null},
-    {group:'Employment',name: 'Salary', label: 'Salary*', value:null, type:'number', visible:'hidden' },
-    {group:'Employment',name: 'OtherIncome', label: 'Other Sources of Income*', value:null, visible:'hidden' },
-    {group:'Family',name: 'NearestRelative', label: 'Nearest Relative*', value:null},
-    {group:'Family',name: 'Relationship', label: 'Relationship*', value:null, visible:'hidden' },
-    {group:'Family',name: 'NoDependents', label: 'No. of Dependents*', value:null,  visible:'hidden', type: 'number' },
-]
-
 export default {
   data () {
     return {
-      PreRegFields,
-
+      PreRegData: {
+        Name: {
+        FirstName: '',
+        LastName: ''
+        },
+        BirthData: {
+        BirthPlace: '',
+        BirthDate: ''
+        },
+        Address: {
+        Street: '',
+        Barangay: '',
+        City: ''
+        },
+        Employment: {
+        EmployerCompany: '',
+        Salary: '',
+        OtherIncome: ''
+        },
+        Family: {
+        NearestRelative: {
+          RelativeName: '',
+          Relationship: ''
+        },
+        NoDependents: ''
+        },
+      },
       accept: false
     }
   },
 
   methods: {
     ...mapActions('store', ['preReg']),
-    onSubmit () {
-      if (this.accept !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'You need to accept the license and terms first'
-        })
-      }
-      else {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
-      }
+    register(){
+      this.preReg(this.PreRegData);
     },
-
+    // onSubmit () {
+    //   if (this.accept !== true) {
+    //     this.Notify({
+    //       color: 'red-5',
+    //       textColor: 'white',
+    //       icon: 'warning',
+    //       message: 'You need to accept the license and terms first'
+    //     })
+    //   }
+    //   else {
+    //     this.Notify({
+    //       color: 'green-4',
+    //       textColor: 'white',
+    //       icon: 'cloud_done',
+    //       message: 'Submitted'
+          
+    //     })
+                  
+    //   }
+    // },
     onReset () {
       this.FirstName = null
       this.LastName = null
