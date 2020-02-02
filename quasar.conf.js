@@ -32,7 +32,6 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      plugins: ['Notify'],
       iconSet: 'material-icons', // Quasar icon set
       config: {
         brand: {
@@ -63,7 +62,7 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie

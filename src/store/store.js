@@ -65,6 +65,7 @@ const actions = {
                         commit('setUserDetails', {
                             name: userDetails.name,
                             email: userDetails.email,
+                            designation: userDetails.designation,
                             userId: userId
                 })
                     } else {
