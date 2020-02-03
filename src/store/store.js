@@ -78,12 +78,12 @@ const actions = {
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
                 });
-                this.$router.push('/member/dashboard')
+                // this.$router.push('/member/dashboard')
             }
             else {
                 //userlogout
                 commit('setUserDetails', {})
-                this.$router.replace('/home')
+                // this.$router.replace('/home')
             }
           });
     }

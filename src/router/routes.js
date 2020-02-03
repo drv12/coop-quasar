@@ -23,6 +23,45 @@ const routes = [
   {
     path: '/login',
     component: () => import('pages/PublicPages/Login.vue') 
+  },
+  {
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    redirect: '/admin/dashboard',
+    children: [
+      {
+        path: "/admin/dashboard",
+        component: () => import("pages/AdminPages/Dashboard.vue")
+      },
+      {
+        path: "/admin/addmember",
+        component: () => import("pages/AdminPages/AddMember.vue")
+      },
+      {
+        path: "/admin/allmember",
+        component: () => import("pages/AdminPages/AllMember.vue")
+      },
+      {
+        path: "/admin/addpayment",
+        component: () => import("pages/AdminPages/AddPayment.vue")
+      },
+      {
+        path: "/admin/allpayment",
+        component: () => import("pages/AdminPages/AllPayment.vue")
+      },
+      {
+        path: "/admin/depositwithdraw",
+        component: () => import("pages/AdminPages/Deposit-Withdraw.vue")
+      },
+      {
+        path: "/admin/alltransaction",
+        component: () => import("pages/AdminPages/AllTransactions.vue")
+      },
+      {
+        path: "/admin/jeepneys",
+        component: () => import("pages/AdminPages/Jeepneys.vue")
+      }
+    ]
   }
 ]
 
