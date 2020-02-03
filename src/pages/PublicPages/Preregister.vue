@@ -221,7 +221,7 @@
             </div>
           </q-form>
         </div>
-        <q-btn @click="printDiv('page')" label="Print" type="submit" class="full-width justify-center items-center q-mb-md" color="primary"/>
+        <q-btn @click="printDiv('page')" label="Print" class="full-width justify-center items-center q-mb-md" color="primary"/>
 
 
         <q-stepper-navigation>
@@ -292,16 +292,35 @@ export default {
     register(){
       this.preReg(this.PreRegData);
     },
+    sastep(){
+      console.log(this.step);
+    },
     printDiv(divName){
-			var printContents = document.getElementById(divName).innerHTML;
-			var originalContents = document.body.innerHTML;
+			const prtHtml = document.getElementById(divName).innerHTML;
 
-			document.body.innerHTML = printContents;
+      // Get all stylesheets HTML
+      let stylesHtml = '';
+      for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
+        stylesHtml += node.outerHTML;
+      }
 
-			window.print();
+      // Open the print window
+      const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 
-			document.body.innerHTML = originalContents;
+      WinPrint.document.write(`<!DOCTYPE html>
+      <html>
+        <head>
+          ${stylesHtml}
+        </head>
+        <body>
+          ${prtHtml}
+        </body>
+      </html>`);
 
+      WinPrint.document.close();
+      WinPrint.focus();
+      WinPrint.print();
+      WinPrint.close();
 		},
     onSubmit () {
      this.$q.notify({
