@@ -11,10 +11,28 @@
              <!-- <span class="text-uppercase text-blue">Drivers Details</span> -->
              <div class="row">
 
-                        <div class="col-sm-12">
+                        <!-- Start of Upload Image -->
+                   <div class="col-sm-4">
+                     <div class="q-pa-md">
+
+                            <img :src="imageUrl" width='150' height='150' style="border-radius: 50%;">
+
+                       <q-input 
+                       type="file"
+                       v-model="MemberData.AccountData.ProfilePic" 
+                       hint="Profile Picture"
+                       accept="image/*"
+                       @change="onFilePicked">
+                        <template v-slot:prepend>
+                          <q-icon name="attach_file" />
+                        </template>
+                      </q-input>
+                     </div>
+                   </div>
+                        <!-- End of Upload Image -->
+                        <div class="col-sm-6">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
                         </div>
-
               <!-- Start of Firstname -->
                         <div class="col-sm-4">
                           <div class="q-pa-md">
@@ -59,17 +77,7 @@
                    </div>
                    </div>
                    <!-- End of Designation -->
-                   <!-- Start of Upload Image -->
-                   <div class="col-sm-4">
-                     <div class="q-pa-md">
-                       <q-file v-model="MemberData.AccountData.ProfilePic" label="Profile Picture">
-                        <template v-slot:prepend>
-                          <q-icon name="attach_file" />
-                        </template>
-                      </q-file>
-                     </div>
-                   </div>
-                        <!-- End of Upload Image -->
+                   
                         <!-- Start of Member ID -->
                         <div class="col-sm-4">
                           <div class="q-pa-md">
@@ -461,7 +469,8 @@ export default {
                options: ['Driver', 'Operator'],
                unit:'',
                units:[],
-               civilstatusoptions: ['Single', 'Married', 'Widow']
+               civilstatusoptions: ['Single', 'Married', 'Widow'],
+               imageUrl: null
         }
     },
     watch: {
@@ -470,6 +479,21 @@ export default {
     }
   },
     methods: {
+      onPickFile(){
+        this.$refs.fileInput.click();
+      },
+      onFilePicked(event){
+        const files = event.target.files
+        let filename = files[0].name
+        if (filename.lastIndexOf('.') <= 0){
+          return alter('Please add a valid file!')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+          this.imageUrl = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+      },
       log(){
         console.log(this.operatorprofile);
       },
@@ -498,9 +522,7 @@ export default {
  },
  computed: {
     qrvalue: function() {
-      return this.MemberData.AccountData.FirstName + " " + this.MemberData.AccountData.LastName +'\n'+
-      this.MemberData.AccountData.MemberId + '\n' + this.MemberData.AccountData.Designation +'\n'+
-      this.MemberData.DesignationData.Driver.Unit.PlateNo + '\n' + this.MemberData.DesignationData.Driver.Unit.Operator;
+      return this.MemberData.AccountData.MemberId;
     }
   },
   mounted () {

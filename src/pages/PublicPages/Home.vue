@@ -40,7 +40,7 @@
           >
            
               <q-card-section>
-                 <q-icon style="font-size: 4.4em;" :name="card.icon" class="full-width	"/>
+                 <q-icon style="font-size: 4.4em;" :name="card.icon" class="full-width"/>
                   <div class="text-h6 text-center">{{card.title}}</div>
               </q-card-section>
 
