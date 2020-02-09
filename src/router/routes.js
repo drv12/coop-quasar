@@ -30,11 +30,25 @@ const routes = [
     redirect: '/admin/dashboard',
     children: [
       {
+        path: "/admin/pendingregform/:penRegId",
+        props:true,
+        component: () => import("pages/AdminPages/PendingRegForm.vue")
+      },
+      {
+        path: "/admin/pendingreg",
+        component: () => import("pages/AdminPages/PendingReg.vue")
+      },
+      {
         path: "/admin/dashboard",
         component: () => import("pages/AdminPages/Dashboard.vue")
       },
       {
-        path: "/admin/addmember",
+        path: "/admin/addmember/:penRegId",
+        props: true,
+        component: () => import("pages/AdminPages/AddMember.vue")
+      },
+      {
+        path: "/admin/addmember/",
         component: () => import("pages/AdminPages/AddMember.vue")
       },
       {

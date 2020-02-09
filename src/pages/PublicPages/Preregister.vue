@@ -327,9 +327,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('store', ['preReg']),
+    ...mapActions('store', ['preRegData']),
     register(){
-      this.preReg(this.PreRegData);
+      this.preRegData(this.PreRegData);
     },
     dbtncolor(){
       if(this.PreRegData.Designation == 'Driver'){

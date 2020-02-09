@@ -1,19 +1,24 @@
 import {firebaseAuth, firebaseDb, firebaseSto} from 'boot/firebase'
 
-
-
 const state = {
-    userDetails: {}
+    userDetails: {},
+    PendingRegs: {}
 }
 
 const mutations = {
+    preRegData (state, payload){
+        state.PendingRegs.push(payload)
+    },
     setUserDetails(state, payload) {
         state.userDetails = payload
+    },
+    addPendingReg(state, payload) {
+        state.PendingRegs = payload.PendingRegData
     }
 }
 
 const actions = {
-    preReg({commit}, payload){
+    preRegData({commit}, payload){
         const PreRegPersonalData = {
             FirstName: payload.FirstName,
             LastName: payload.LastName,
@@ -28,7 +33,6 @@ const actions = {
             RelativeName: payload.RelativeName,
             Relationship: payload.Relationship,
             NoDependents: payload.NoDependents,
-            // LicenseImage: payload.LicenseImage,
             LicenseNo: payload.LicenseNo,
             LicenseExp: payload.LicenseExp,
             Designation: payload.Designation
@@ -39,7 +43,6 @@ const actions = {
         firebaseDb.collection("PreRegPersonalData").add(PreRegPersonalData)
         .then((doc) => {
             id = doc.id
-            console.log(id + 'gago')
             return id
         })
         .then(id => {
@@ -59,13 +62,6 @@ const actions = {
                 // Use to signal error if something goes wrong.
                 console.log(`Failed to upload file and get link - ${error}`);
              })
-            .then(() => {
-                commit('preReg', {
-                    ...PreRegPersonalData,
-                    imageUrl: imageUrl,
-                    id: id
-                })
-            })
         })
     },
     loginUser({}, payload){
@@ -80,7 +76,7 @@ const actions = {
     logoutUser(){
         firebaseAuth.signOut();
     },
-    handleAuthStateChanged({commit}){
+    handleAuthStateChanged({commit, dispatch, state}){
         firebaseAuth.onAuthStateChanged( user => {
             if (user) {
               //userlogin
@@ -102,6 +98,7 @@ const actions = {
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
                 });
+                dispatch('GetPendingReg')
                 // this.$router.push('/member/dashboard')
             }
             else {
@@ -109,12 +106,37 @@ const actions = {
                 commit('setUserDetails', {})
                 // this.$router.replace('/home')
             }
+          })
+    },
+    GetPendingReg({ commit }){
+        firebaseDb.collection('PreRegPersonalData').onSnapshot(function(querySnapshot) {
+            const PendingRegData = {}
+            querySnapshot.forEach(function(doc) {
+            PendingRegData[doc.id] = doc.data();
+            });
+            commit('addPendingReg', {
+                PendingRegData
+            })
           });
-    }
-    
+        }
+          
 }
 const getters = {
-
+    PendingRegs: state => {
+        return state.PendingRegs
+    },
+//     loadedPreRegs (state) {
+//         return state.loadedPendingRegData.sort((preRegA, preRegB) => {
+//             return preRegA.date > preRegB.date
+//         })
+//     },
+    // loadPreReg (state) {
+    //     return (penRegId) => {
+    //         return state.PendingRegs.find((PendingReg) => {
+    //             return PendingReg.id === penRegId
+    //         })
+    //     }
+    // }
 }
 
 export default {
