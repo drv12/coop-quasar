@@ -103,11 +103,19 @@
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
                          <strong class="row justify-center items-center" style="color: #26A69A;">
-                           Current Address
+                          Address and Contact Details
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
                         
                         <q-input standard v-model="PreRegData.Address" label="Address"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Phone" label="Phone No."
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="PreRegData.Email" label="Email Address"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -152,9 +160,9 @@
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
                         
-                        <div v-if="PreRegData.Designation == 'Driver'">
+                        <div>
                           <strong class="row justify-center items-center" style="color: #26A69A;">
-                            License Details
+                            {{PreRegData.Designation == 'Driver' ? 'License' : 'Valid ID'}}
                           </strong>
                           <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
@@ -162,20 +170,25 @@
 
                           <q-input 
                           type="file"
-                          v-model="PreRegData.LicensePic" 
-                          hint="License Picture"
-                          accept="image/*"
-                          @change="onFilePicked">
+                          :hint="PreRegData.Designation == 'Driver' ? 'License Picture' : 'ID Picture'"
+                          accept="image/*" 
+                          @change="onFilePicked"
+                          lazy-rules
+                          :rules="[ val => imageUrl && imageUrl.length > 0 || 'Please type something']"
+                          >
                             <template v-slot:prepend>
                               <q-icon name="attach_file" />
                             </template>
                           </q-input>
 
-                        <q-input standard v-model="PreRegData.LicenseNo" label="License Number"
+                        <q-input standard v-model="PreRegData.LicenseNo" 
+                        :label="PreRegData.Designation == 'Driver' ? 'License No.' : 'ID No.'"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard stack-label v-model="PreRegData.LicenseExp" label="License Expiration Date"
+                        <q-input standard stack-label 
+                        v-model="PreRegData.LicenseExp" 
+                        label="Expiration Date"
                         type="date"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -183,9 +196,6 @@
                         </div> 
                     </div>
 
-                    
-
-                    
                     <div>
                         <q-btn label="Submit" type="submit" class="full-width	 justify-center items-center q-mb-md" color="primary"/>
        
@@ -204,85 +214,18 @@
         </q-stepper-navigation>
       </q-step>
 
+
       <q-step
         :name="3"
-        title="Print the Application Form"
-        icon="create_new_folder"
-        :done="step > 3"
-      >
-        <div>
-          <q-form
-            @submit="onSubmit"
-            @reset="onReset"
-            class="q-gutter-md"
-            id="page"
-          >
-            <p>&nbsp;</p>
-            <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
-            
-            <span style="padding-left: 150px;">I hereby apply for membership to the <strong>New GSIS Transport Service Cooperative.</strong></span>
-              <br><span style="text-align: left;">&nbsp;I agree to obey faithfully its rules and regulations as set down in its Articles of Cooperation and Bylaws, the decisions of the general membership meetings and those of the Board of Directors.</span>
-              <br><span style="text-align: left; padding-left: 30px;">I hereby pledge to:</span>
-              <ol>
-              <li style="text-align: left; padding-left: 30px;">Attend and finish the prescribed membership education courses.</li>
-              <li style="text-align: left; padding-left: 30px;">Pay the membership fee of P 500.</li>
-              <li style="text-align: left; padding-left: 30px;">Participate in the following savings program:
-              <ol style="list-style-type: lower-alpha;">
-              <li style="text-align: left; padding-left: 30px;">Subscribed fo at least 18 shares and pay for them either in lumpsum or installment, under the terms and conditions prescribed in the Membership Agreement.</li>
-              <li style="text-align: left; padding-left: 30px;">Contribute daily/weekly/bi-monthly/monthly atleast 2% of my salary into the share capital; and</li>
-              <li style="text-align: left; padding-left: 30px;">Contribute into the share capital at least 50% of the annual interest on capital and patronage refund due me.</li>
-              </ol>
-              </li>
-              <li style="text-align: left; padding-left: 30px;">Comply with the membership and subscription agreement. For your consideration, I hereby attach my information sheet.</li>
-              </ol>
-              <br><span style="float:right"> .................................................</span>
-              <p style="float:right">Signature</p>
-                
-              <!-- <p style="padding-left: 90px;">&nbsp;Date</p> -->
-              <p style="padding-left: 75px;"><span style="text-decoration: underline;"><span class="w8qArf">&nbsp;</span><span class="LrzXr">{{datetodaydata}}</span></span></p>
-              <p style="padding-left: 100px;">Date</p>
-              <p><span style="text-decoration: underline;"><span class="w8qArf">&nbsp;</span><span class="LrzXr">65-C Shorthorn St, Project 8, Quezon City</span></span></p>
-              <p style="padding-left: 100px;">Place</p>
-
-              <div id="personaldata">
-              <strong>PERSONAL DATA</strong>
-                <br> <span style="float:left"> Name: {{ PreRegData.FirstName }} {{ PreRegData.LastName }} </span> 
-                    <span style="float:right">Civil Status: {{ PreRegData.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                    <br><span style="float:left"> BirthPlace: {{ PreRegData.BirthPlace }} </span> 
-                  <span style="float:right"> Date of birth: {{ PreRegData.BirthDate }}  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                  <br><span style="float:left"> Present Address: {{ PreRegData.Address }}</span> 
-                <br><span style="float:left"> Occupation: {{ PreRegData.Occupation }} </span> 
-              <br><span style="float:left"> Employer or office: {{ PreRegData.EmployerCompany }} </span>
-              <span style="float:right"> Salary: {{ PreRegData.Salary }}  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-              <br><span style="float:left"> Other sources of income: {{ PreRegData.OtherIncome }} </span> 
-              <br><span style="float:left"> Nearest relative: {{ PreRegData.RelativeName }} </span>
-              <span style="float:right"> Relationship: {{ PreRegData.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-              <br><span style="float:left"> Number of Dependents: {{ PreRegData.NoDependents }} </span>
-
-              <p>&nbsp;</p>
-              <h6 style="text-align: center;">EARN AND SAVE THE COOPERATIVE WAY</h6>
-            </div>
-          </q-form>
-        </div>
-        <q-btn @click="printDiv('page')" label="Print" class="full-width justify-center items-center q-mb-md" color="primary"/>
-
-
-        <q-stepper-navigation>
-          <q-btn @click="step = 4" color="primary" label="Continue"></q-btn>
-          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
-        </q-stepper-navigation>
-      </q-step>
-
-      <q-step
-        :name="4"
-        title="Wait for a Confirmation Email and Visit our Office"
+        title="Wait for a Confirmation Email"
         icon="add_comment"
       >
-        Check your e-mail for additional instructions and supporting douments needed for the application. Our office is located at 65-C Shorthorn St, Project 8, Quezon City. 
-
+        Your Application will be subjected to  evaluation. 
+        Upon approval an email will be sent to you. 
+        In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
           <q-btn color="primary" label="Finish"></q-btn>
-          <q-btn flat @click="step = 3" color="primary" label="Back" class="q-ml-sm"></q-btn>
+          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
     </q-stepper> 
@@ -299,10 +242,12 @@ export default {
       PreRegData: {
         FirstName: 'a',
         LastName: 'a',
-        CivilStatus: 'a',
+        CivilStatus: 'Single',
         BirthPlace: 'a',
         BirthDate: '2020-02-12',
         Address:'a',
+        Phone:'1121212',
+        Email:'sasas@gmail.com',
         Occupation: 'a',
         EmployerCompany: 'a',
         Salary: '1',
@@ -310,9 +255,8 @@ export default {
         RelativeName: 'a',
         Relationship: 'a',
         NoDependents: '1',
-        LicensePic:'',
-        LicenseNo:'a',
-        LicenseExp:'2020-02-12',
+        LicenseNo:'',
+        LicenseExp:'',
         Designation: 'a',
         LicenseImage: null
       },
@@ -328,7 +272,7 @@ export default {
 
   methods: {
     ...mapActions('store', ['preRegData']),
-    register(){
+    regPre(){
       this.preRegData(this.PreRegData);
     },
     dbtncolor(){
@@ -363,41 +307,15 @@ export default {
     sastep(){
       console.log(this.step);
     },
-    printDiv(divName){
-			const prtHtml = document.getElementById(divName).innerHTML;
-
-      // Get all stylesheets HTML
-      let stylesHtml = '';
-      for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
-        stylesHtml += node.outerHTML;
-      }
-
-      // Open the print window
-      const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-
-      WinPrint.document.write(`<!DOCTYPE html>
-      <html>
-        <head>
-          ${stylesHtml}
-        </head>
-        <body>
-          ${prtHtml}
-        </body>
-      </html>`);
-
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
-      WinPrint.close();
-		},
     onSubmit () {
+     this.regPre()
      this.$q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
           message: 'Submitted',
         })    
-        this.register();
+        step = 3
     },
     onReset () {
       this.FirstName = null

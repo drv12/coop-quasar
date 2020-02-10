@@ -43,9 +43,9 @@ const routes = [
         component: () => import("pages/AdminPages/Dashboard.vue")
       },
       {
-        path: "/admin/addmember/:penRegId",
+        path: "/admin/profile/:penRegId",
         props: true,
-        component: () => import("pages/AdminPages/AddMember.vue")
+        component: () => import("pages/AdminPages/AdminMemProfile.vue")
       },
       {
         path: "/admin/addmember/",

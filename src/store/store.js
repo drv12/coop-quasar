@@ -18,7 +18,12 @@ const mutations = {
 }
 
 const actions = {
-    preRegData({commit}, payload){
+    RegMember({}, payload){
+        firebaseDb.collection("MemberData").doc(payload.id).set(payload.PenReg.Data)
+        // console.log('payload:', payload)
+        // firebaseDb.collection("MemberData").add(payload)
+    },
+    preRegData({}, payload){
         const PreRegPersonalData = {
             FirstName: payload.FirstName,
             LastName: payload.LastName,
@@ -37,7 +42,6 @@ const actions = {
             LicenseExp: payload.LicenseExp,
             Designation: payload.Designation
         }
-        let imageUrl
         let id
         let childurl
         firebaseDb.collection("PreRegPersonalData").add(PreRegPersonalData)
@@ -52,7 +56,6 @@ const actions = {
             return firebaseSto.ref('PreReg/' + childurl).put(payload.LicenseImage)
             .then(snapshot => {
                 return snapshot.ref.getDownloadURL();
-                // return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrl: imageUrl})
             }).
             then(downloadURL => {
                 console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
@@ -118,7 +121,8 @@ const actions = {
                 PendingRegData
             })
           });
-        }
+    },
+    //get members dito
           
 }
 const getters = {

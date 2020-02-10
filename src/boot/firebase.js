@@ -7,14 +7,14 @@ import "firebase/storage";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyBhmGWgvFi2c9wTx_Sqnjs43PaaB1Li8y8",
-  authDomain: "coop-quasardb.firebaseapp.com",
-  databaseURL: "https://coop-quasardb.firebaseio.com",
-  projectId: "coop-quasardb",
-  storageBucket: "coop-quasardb.appspot.com",
-  messagingSenderId: "817220367490",
-  appId: "1:817220367490:web:3596cf24435329a51cb09b",
-  measurementId: "G-RJYPGWHR8P"
+  apiKey: "AIzaSyD0gmGQfKy8A4QKEj-rlyUNkyabzXsCMm0",
+  authDomain: "new-gsis-cooperative.firebaseapp.com",
+  databaseURL: "https://new-gsis-cooperative.firebaseio.com",
+  projectId: "new-gsis-cooperative",
+  storageBucket: "new-gsis-cooperative.appspot.com",
+  messagingSenderId: "521222059409",
+  appId: "1:521222059409:web:454082d24204f860585630",
+  measurementId: "G-EDNPCJRJF2"
 };
  // Initialize Firebase
  let firebaseApp = firebase.initializeApp(firebaseConfig);
