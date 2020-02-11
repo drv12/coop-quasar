@@ -12,7 +12,7 @@ export default {
     ...mapActions('store',['handleAuthStateChanged'])
   },
   mounted(){
-    this.handleAuthStateChanged()
+    this.handleAuthStateChanged();
   }
 }
 </script>

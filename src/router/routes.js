@@ -12,11 +12,24 @@ const routes = [
   },
   {
     path: '/dashboard',
+    meta: { isAdmin: true },
     component: () => import('layouts/MemberLayout.vue'),
     children: [
-      { path: '/member/dashboard', component: () => import('pages/MemberPages/Dashboard.vue') },
-      { path: '/member/profile', component: () => import('pages/MemberPages/Profile.vue')},
-      { path: '/member/transactions', component: () => import('pages/MemberPages/Transactions.vue')}    
+      { 
+        path: '/member/dashboard', 
+        meta: { isAdmin: true },
+        component: () => import('pages/MemberPages/Dashboard.vue') 
+      },
+      { 
+        path: '/member/profile', 
+        meta: { isAdmin: true },
+        component: () => import('pages/MemberPages/Profile.vue')
+      },
+      { 
+        path: '/member/transactions', 
+        meta: { isAdmin: true },
+        component: () => import('pages/MemberPages/Transactions.vue')
+    }    
     ]
   },
   {

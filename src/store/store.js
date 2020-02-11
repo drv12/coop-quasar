@@ -2,7 +2,8 @@ import {firebaseAuth, firebaseDb, firebaseSto} from 'boot/firebase'
 
 const state = {
     userDetails: {},
-    PendingRegs: {}
+    PendingRegs: {},
+    isAdmin: ''
 }
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
     },
     addPendingReg(state, payload) {
         state.PendingRegs = payload.PendingRegData
+    },
+    setAdmin(state) {
+        state.isAdmin = true
     }
 }
 
@@ -137,9 +141,13 @@ const actions = {
                             LastName: userDetails.LastName,
                             Email: userDetails.Email,
                             Designation: userDetails.Designation,
-                            userId: userId
-                })
-                    } else {
+                            userId: userId})
+                        if(userDetails.Designation == 'Admin'){
+                            commit('setAdmin')
+                        }
+                    }
+                    else 
+                    {
                         // doc.data() will be undefined in this case
                         console.log("No such document!");
                     }
@@ -148,6 +156,7 @@ const actions = {
                     console.log("Error getting document:", error);
                 });
                 dispatch('GetPendingReg')
+                // dispatch('userDesignation')
                 // this.$router.push('/member/dashboard')
             }
             else {
@@ -175,6 +184,9 @@ const getters = {
     PendingRegs: state => {
         return state.PendingRegs
     },
+    isAdmin: state => {
+        return state.isAdmin
+    }
 //     loadedPreRegs (state) {
 //         return state.loadedPendingRegData.sort((preRegA, preRegB) => {
 //             return preRegA.date > preRegB.date
