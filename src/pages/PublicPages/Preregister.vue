@@ -33,7 +33,6 @@
         <div class="row justify-center">
           <q-btn class="col q-ma-md" :color="dbtn1" @click="PreRegData.Designation = 'Driver'; dbtncolor();" label="Driver"/>
           <q-btn class="col q-ma-md" :color="dbtn2" @click="PreRegData.Designation = 'Operator'; dbtncolor();" label="Operator" />
-          <q-btn class="col q-ma-md" :color="dbtn3" @click="PreRegData.Designation = 'Other'; dbtncolor();" label="Other" />
         </div>
         
         <q-stepper-navigation>
@@ -49,7 +48,7 @@
       >
         Fill the fields with the rerquired information
 
-         <div class="q-pa-md doc-container" id="printdiv">
+         <div class="q-pa-md doc-container">
       <div class="row  justify-center">
         <div 
           class="col-xs-12 col-sm-12 col-md-10 q-pa-md"
@@ -173,11 +172,13 @@
                           :hint="PreRegData.Designation == 'Driver' ? 'License Picture' : 'ID Picture'"
                           accept="image/*" 
                           @change="onFilePicked"
+                          @onfocus="resetimginput"
+                          ref="imginput"
                           lazy-rules
-                          :rules="[ val => imageUrl && imageUrl.length > 0 || 'Please type something']"
+                          :rules="[ val => imageUrl && imageUrl.length > 0 || 'Please attach ID']"
                           >
                             <template v-slot:prepend>
-                              <q-icon name="attach_file" />
+                              <q-icon name="attach_file"/>
                             </template>
                           </q-input>
 
@@ -197,9 +198,14 @@
                     </div>
 
                     <div>
-                        <q-btn label="Submit" type="submit" class="full-width	 justify-center items-center q-mb-md" color="primary"/>
+                        <q-btn label="Submit" 
+                        type="submit" 
+                        class="full-width	justify-center items-center q-mb-md" 
+                        color="primary"/>
        
-                        <q-btn label="Reset" type="reset" color="primary" flat class="full-width	 justify-center items-center q-ml-sm" />                    
+                        <q-btn label="Reset" 
+                        type="reset" color="primary" 
+                        flat class="full-width justify-center items-center q-ml-sm" />                    
                     </div>
                 </q-form>
               </q-card-section>
@@ -209,7 +215,7 @@
     </div> 
 
         <q-stepper-navigation>
-          <q-btn @click="step = 3" color="primary" label="Continue"></q-btn>
+          <q-btn @click="step = 3" color="primary" label="Continue" ref="stepbtn"></q-btn>
           <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
@@ -279,15 +285,9 @@ export default {
       if(this.PreRegData.Designation == 'Driver'){
         this.dbtn1 = 'secondary'
         this.dbtn2 = 'primary'
-        this.dbtn3 = 'primary'
       }else if (this.PreRegData.Designation == 'Operator'){
         this.dbtn1 = 'primary'
         this.dbtn2 = 'secondary'
-        this.dbtn3 = 'primary'
-      }else if (this.PreRegData.Designation == 'Other'){
-        this.dbtn1 = 'primary'
-        this.dbtn2 = 'primary'
-        this.dbtn3 = 'secondary'
       }
     },
     onFilePicked(event){
@@ -302,10 +302,6 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
       this.PreRegData.LicenseImage = files[0]
-      console.log(this.PreRegData.LicenseImage)
-    },
-    sastep(){
-      console.log(this.step);
     },
     onSubmit () {
      this.regPre()
@@ -314,8 +310,8 @@ export default {
           textColor: 'white',
           icon: 'cloud_done',
           message: 'Submitted',
-        })    
-        step = 3
+        });
+        // setTimeout(this.$refs.stepbtn.click(), 3000)
     },
     onReset () {
       this.FirstName = null
@@ -329,6 +325,9 @@ export default {
       var year = myDate.getFullYear();
       var formattedDate = year + '-' + month + '-' + date;
       this.datetodaydata = formattedDate;
+    },
+    resetimginput(){
+      this.$refs.imginput.resetValidation()
     }
   },
   mounted(){
@@ -336,32 +335,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .h6 {
-    text-align: center;
-    text-decoration: overline underline;
-  }
-
-  .page {
-    width: 21cm;
-    min-height: 29.7cm;
-    padding: 2cm;
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  @page {
-    size: A4;
-    margin: 0;
-  }
-  @media print {
-    html, body {
-      width: 210mm;
-      height: 400mm;
-    }
-  }
-</style>

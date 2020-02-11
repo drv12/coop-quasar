@@ -113,9 +113,9 @@
                 class="col q-ma-md" 
                 color="primary" 
                 label="Approve"
-                @click="loadPreReg(penRegId)"
+                @click="regMember(); loadPreReg(penRegId)"
                 />
-                <q-btn class="col q-ma-md" @click="regMember()" color="primary" label="Reject"/>
+                <q-btn class="col q-ma-md" @click="" color="primary" label="Reject"/>
               </div>
           </q-card>
           
@@ -141,9 +141,9 @@ export default {
         }
   },
   methods: {
-    ...mapActions('store', ['RegMember']),
+    ...mapActions('store', ['regPreMember']),
     regMember(){
-      this.RegMember({
+      this.regPreMember({
         PenReg: this.PenReg,
         id: this.penRegId
       });
@@ -180,32 +180,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .h6 {
-    text-align: center;
-    text-decoration: overline underline;
-  }
-
-  .page {
-    width: 21cm;
-    min-height: 29.7cm;
-    padding: 2cm;
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  @page {
-    size: A4;
-    margin: 0;
-  }
-  @media print {
-    html, body {
-      width: 210mm;
-      height: 400mm;
-    }
-  }
-</style>

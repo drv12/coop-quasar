@@ -187,7 +187,6 @@
             <q-form
               class="q-gutter-md"
               id="page"
-              v-show="false"
             >
               <p>&nbsp;</p>
               <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
@@ -240,10 +239,10 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueQrcode from '@chenfengyuan/vue-qrcode'
+// import Vue from 'vue';
+// import VueQrcode from '@chenfengyuan/vue-qrcode'
 
-Vue.component(VueQrcode.name, VueQrcode);
+// Vue.component(VueQrcode.name, VueQrcode);
 
 export default {
     data(){
@@ -284,9 +283,6 @@ export default {
       var year = myDate.getFullYear();
       var formattedDate = year + '-' + month + '-' + date;
       this.datetodaydata = formattedDate;
-      },
-      onPickFile(){
-        this.$refs.fileInput.click();
       },
       onFilePicked(event){
         const files = event.target.files

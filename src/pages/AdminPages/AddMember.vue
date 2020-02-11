@@ -14,15 +14,31 @@
                         <!-- Start of Upload Image -->
                    <div class="col-sm-4">
                      <div class="q-pa-md">
-
-                            <img :src="imageUrl" width='150' height='150' style="border-radius: 50%;">
-
+                          <div style=" text-align: center;">
+                            <img :src="imageUrlPro" width='150' height='150' style="border-radius: 50%;">
+                          </div>
                        <q-input 
                        type="file"
-                       v-model="MemberData.ProfilePic" 
                        hint="Profile Picture"
                        accept="image/*"
-                       @change="onFilePicked">
+                       @change="onFilePickedPro">
+                        <template v-slot:prepend>
+                          <q-icon name="attach_file" />
+                        </template>
+                      </q-input>
+                     </div>
+                   </div>
+
+                   <div class="col-sm-4">
+                     <div class="q-pa-md">
+                          <div style=" text-align: center;">
+                            <img :src="imageUrlLic" width='150' height='150' style="border-radius: 50%;">
+                          </div>
+                       <q-input 
+                       type="file"
+                       hint="Profile Picture"
+                       accept="image/*"
+                       @change="onFilePickedLic">
                         <template v-slot:prepend>
                           <q-icon name="attach_file" />
                         </template>
@@ -30,9 +46,9 @@
                      </div>
                    </div>
                         <!-- End of Upload Image -->
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
-                        </div>
+                        </div> -->
               <!-- Start of Firstname -->
                         <div class="col-sm-4">
                           <div class="q-pa-md">
@@ -79,7 +95,7 @@
                    <!-- End of Designation -->
                    
                         <!-- Start of Member ID -->
-                        <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                           <div class="q-pa-md">
                             <q-input v-model="MemberData.MemberId" label="Member ID" mask="####-##########">
                               <template v-slot:before>
@@ -87,7 +103,7 @@
                               </template>
                             </q-input>
                           </div>
-                        </div>
+                        </div> -->
                         <!-- End of Member ID -->
                         <!-- Start of Date -->
                         <div class="col-sm-4">
@@ -390,7 +406,7 @@
                       </div>
                       <div align="right" class="">
                         <q-btn class="q-mr-md text-red" icon="cancel" type="reset" label="Reset" color="white" />
-                        <q-btn @click="page = 2" class="text-green" icon="check" label="Register" color="white" />
+                        <q-btn @click="regMember()" class="text-green" icon="check" label="Register" color="white" />
                       </div>
                     </q-card-section>
                   </div>
@@ -403,53 +419,51 @@
     
 <script>
 import Vue from 'vue';
-import VueQrcode from '@chenfengyuan/vue-qrcode'
+import { mapActions } from 'vuex'
+// import VueQrcode from '@chenfengyuan/vue-qrcode'
 
-Vue.component(VueQrcode.name, VueQrcode);
+// Vue.component(VueQrcode.name, VueQrcode);
 
 export default {
     data(){
         return{
             choices: false,
             page: 1,
-            MemberData:{
-                FirstName: '',
-                LastName: '',
-                CivilStatus: '',
-                Designation: '',
-                Email: '',
-                MemberId: '',
-                ProfilePic: null,
-                Password: '',
-                PlateNo:'',
-                Operator: '',
-                LicensePic: [],
-                LicenseNo: '',
-                LicenseExp: '',
-                  Unit:[
-                    {PlateNo: '', Driver: ''}
-                  ],
-                BirthDate: '',
-                BirthPlace: '',
-                Occupation: '',
-                Salary: '',
-                EmployerCompany: '',
-                OtherIncome: '',
-                RelativeName: '',
-                Relationship: '',
-                CurrentAddress: '',
-                Phone: ''
-              },
-
-               lines: [],
-               blockRemoval: true,
-               options: ['Driver', 'Operator'],
-               unit:'',
-               units:[],
-               civilstatusoptions: ['Single', 'Married', 'Widow'],
-               imageUrl: null,
-               Fname: ''
-        }
+            MemberData: {
+              FirstName: '',
+              LastName: '',
+              CivilStatus: '',
+              BirthPlace: '',
+              BirthDate: '',
+              Address:'',
+              Phone:'',
+              Email:'',
+              Occupation: '',
+              EmployerCompany: '',
+              Salary: '',
+              OtherIncome: '',
+              RelativeName: '',
+              Relationship: '',
+              NoDependents: '',
+              LicenseNo:'',
+              LicenseExp:'',
+              Designation: '',
+              imageFile: []
+            },
+            // UnitData: {
+            //   PlateNo: '',
+            //   Operator: '',
+            //   Driver: []
+            // },
+            lines: [],
+            blockRemoval: true,
+            options: ['Driver', 'Operator'],
+            unit:'',
+            units:[],
+            civilstatusoptions: ['Single', 'Married', 'Widow'],
+            imageUrlPro: null,
+            imageUrlLic: null
+              }
     },
     watch: {
     lines () {
@@ -457,13 +471,11 @@ export default {
     }
   },
     methods: {
-      test(){
-        this.Fname = this.PenReg.FirstName
-      },
-      onPickFile(){
-        this.$refs.fileInput.click();
-      },
-      onFilePicked(event){
+      ...mapActions('store', ['regAddMember']),
+    regMember(){
+      this.regAddMember(this.MemberData);
+    },
+      onFilePickedPro(event){
         const files = event.target.files
         let filename = files[0].name
         if (filename.lastIndexOf('.') <= 0){
@@ -471,9 +483,23 @@ export default {
         }
         const fileReader = new FileReader()
         fileReader.addEventListener('load', () => {
-          this.imageUrl = fileReader.result
+        this.imageUrlPro = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
+        this.MemberData.imageFile.push(files[0])
+      },
+      onFilePickedLic(event){
+        const files = event.target.files
+        let filename = files[0].name
+        if (filename.lastIndexOf('.') <= 0){
+          return alter('Please add a valid file!')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+        this.imageUrlLic = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.MemberData.imageFile.push(files[0])
       },
       log(){
         console.log(this.operatorprofile);
@@ -501,18 +527,13 @@ export default {
       if (!this.blockRemoval) this.lines.splice(lineId, 1)
     }   
  },
- props: ['penRegId'],
  computed: {
-    qrvalue: function() {
-      return this.MemberData.MemberId;
-    },
-    PenReg() {
-            return this.$store.state.store.PendingRegs[this.penRegId]
-    }
+    // qrvalue: function() {
+    //   return this.MemberData.MemberId;
+    // },
   },
   mounted () {
     this.addLine()
-    this.MemberData.FirstName = this.PenReg.FirstName
   }
 }
 </script>

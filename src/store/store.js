@@ -18,10 +18,55 @@ const mutations = {
 }
 
 const actions = {
-    RegMember({}, payload){
+    regAddMember({}, payload){
+        console.log('payload: ', payload)
+        const MemberData = {
+            FirstName: payload.FirstName,
+            LastName: payload.LastName,
+            CivilStatus: payload.CivilStatus,
+            BirthPlace: payload.BirthPlace,
+            BirthDate: payload.BirthDate,
+            Address: payload.Address,
+            Occupation: payload.Occupation,
+            EmployerCompany: payload.EmployerCompany,
+            Salary: payload.Salary,
+            OtherIncome: payload.OtherIncome,
+            RelativeName: payload.RelativeName,
+            Relationship: payload.Relationship,
+            NoDependents: payload.NoDependents,
+            LicenseNo: payload.LicenseNo,
+            LicenseExp: payload.LicenseExp,
+            Designation: payload.Designation,
+        }
+        let id
+        let childurl
+        firebaseDb.collection("MemberData").add(MemberData)
+        .then((doc) => {
+            id = doc.id
+            return id
+        })
+        .then(id => {
+            payload.imageFile.forEach(function (File, key) {
+                const filename = File.name
+                const ext = filename.slice(filename.lastIndexOf('.'))
+                childurl = id + key + '.'+ ext
+                return firebaseSto.ref('MemberPics/' + childurl).put(File)
+                .then(snapshot => {
+                    return snapshot.ref.getDownloadURL();
+                })
+                .then(downloadURL => {
+                    console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
+                    return firebaseDb.collection("MemberData").doc(id).update({[key]: downloadURL});
+                })
+                .catch(error => {
+                    // Use to signal error if something goes wrong.
+                    console.log(`Failed to upload file and get link - ${error}`);
+                })
+            })
+        })
+    },
+    regMember({}, payload){
         firebaseDb.collection("MemberData").doc(payload.id).set(payload.PenReg.Data)
-        // console.log('payload:', payload)
-        // firebaseDb.collection("MemberData").add(payload)
     },
     preRegData({}, payload){
         const PreRegPersonalData = {
@@ -88,9 +133,10 @@ const actions = {
                     if (doc.exists) {
                         let userDetails = doc.data()
                         commit('setUserDetails', {
-                            name: userDetails.name,
-                            email: userDetails.email,
-                            designation: userDetails.designation,
+                            FirstName: userDetails.FirstName,
+                            LastName: userDetails.LastName,
+                            Email: userDetails.Email,
+                            Designation: userDetails.Designation,
                             userId: userId
                 })
                     } else {
