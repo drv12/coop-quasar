@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lff">
-    <q-header elevated class="bg-blue text-white">
+    <q-header elevated class="bg-teal text-white">
       <q-toolbar>
         <q-btn flat round dense icon="menu" @click="left = !left" />
 
@@ -70,6 +70,16 @@
                       <q-icon name="list_alt" />
                     </q-item-section>
                       <q-item-section class="text-uppercase">All Members</q-item-section>
+                  </q-item>
+                    <q-item
+                    expand-separator 
+                    to="/admin/pendingreg"
+                    exact
+                    >
+                    <q-item-section avatar>
+                      <q-icon name="mdi-timer" />
+                    </q-item-section>
+                      <q-item-section class="text-uppercase">Pending Registration</q-item-section>
                   </q-item>
            </q-expansion-item>
           <!-- End of Sidemenu Member -->
@@ -162,7 +172,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer bordered class="bg-blue text-white">
+    <q-footer bordered class="bg-teal text-white">
       <q-toolbar>
         <q-toolbar-title>
           <!-- <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" /> -->
@@ -201,11 +211,13 @@ export default {
       //    ],
       //    }
       //   ],
-      left: false
+      left: true
     };
   }
 };
 </script>
 <style scoped>
-  
+.q-item.q-router-link--active, .q-item--active{
+  color:teal;
+  }
 </style>

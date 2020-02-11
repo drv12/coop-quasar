@@ -19,12 +19,13 @@
 
       <q-stepper
       v-model="step"
-      color="primary"
+      color="teal"
       animated
       vertical
     >
       <q-step
         :name="1"
+        color="teal"
         title="Apply As?"
         icon="settings"
         :done="step > 1"
@@ -37,7 +38,7 @@
         </div>
         
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="Continue"></q-btn>
+          <q-btn @click="step = 2" color="teal" label="Continue"></q-btn>
         </q-stepper-navigation>
       </q-step>
 
@@ -45,6 +46,7 @@
         :name="2"
         title="Answer the Application Form"
         icon="settings"
+        color="teal"
         :done="step > 2"
       >
         Fill the fields with the rerquired information
@@ -197,9 +199,9 @@
                     </div>
 
                     <div>
-                        <q-btn label="Submit" type="submit" class="full-width	 justify-center items-center q-mb-md" color="primary"/>
+                        <q-btn label="Submit" type="submit" class="full-width	 justify-center items-center q-mb-md" color="teal-9"/>
        
-                        <q-btn label="Reset" type="reset" color="primary" flat class="full-width	 justify-center items-center q-ml-sm" />                    
+                        <q-btn label="Reset" type="reset" color="teal" flat class="full-width	 justify-center items-center q-ml-sm" />                    
                     </div>
                 </q-form>
               </q-card-section>
@@ -209,23 +211,24 @@
     </div> 
 
         <q-stepper-navigation>
-          <q-btn @click="step = 3" color="primary" label="Continue"></q-btn>
-          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm"></q-btn>
+          <q-btn @click="step = 3" color="teal" label="Continue"></q-btn>
+          <q-btn flat @click="step = 1" color="teal" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
 
 
       <q-step
         :name="3"
-        title="Wait for a Confirmation Email"
-        icon="add_comment"
+        title="Wait for Email Confirmation"
+        color="teal"
+        icon="mdi-timer"
       >
         Your Application will be subjected to  evaluation. 
         Upon approval an email will be sent to you. 
         In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
-          <q-btn color="primary" label="Finish"></q-btn>
-          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
+          <q-btn color="teal" label="Finish"></q-btn>
+          <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
     </q-stepper> 
@@ -261,9 +264,9 @@ export default {
         LicenseImage: null
       },
       accept: false,
-      dbtn1: 'primary',
-      dbtn2: 'primary',
-      dbtn3: 'primary',
+      dbtn1: 'teal-5',
+      dbtn2: 'teal-5',
+      dbtn3: 'teal-5',
       datetodaydata: '',
       imageUrl: null
       
@@ -277,17 +280,17 @@ export default {
     },
     dbtncolor(){
       if(this.PreRegData.Designation == 'Driver'){
-        this.dbtn1 = 'secondary'
-        this.dbtn2 = 'primary'
-        this.dbtn3 = 'primary'
+        this.dbtn1 = 'teal-9'
+        this.dbtn2 = 'teal-5'
+        this.dbtn3 = 'teal-5'
       }else if (this.PreRegData.Designation == 'Operator'){
-        this.dbtn1 = 'primary'
-        this.dbtn2 = 'secondary'
-        this.dbtn3 = 'primary'
+        this.dbtn1 = 'teal-5'
+        this.dbtn2 = 'teal-9'
+        this.dbtn3 = 'teal-5'
       }else if (this.PreRegData.Designation == 'Other'){
-        this.dbtn1 = 'primary'
-        this.dbtn2 = 'primary'
-        this.dbtn3 = 'secondary'
+        this.dbtn1 = 'teal-5'
+        this.dbtn2 = 'teal-5'
+        this.dbtn3 = 'teal-9'
       }
     },
     onFilePicked(event){

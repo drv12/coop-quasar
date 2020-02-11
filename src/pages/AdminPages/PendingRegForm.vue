@@ -111,11 +111,11 @@
               <div class="row justify-center">
                 <q-btn 
                 class="col q-ma-md" 
-                color="primary" 
+                color="teal" 
                 label="Approve"
                 @click="loadPreReg(penRegId)"
                 />
-                <q-btn class="col q-ma-md" @click="regMember()" color="primary" label="Reject"/>
+                <q-btn class="col q-ma-md" @click="regMember()" color="teal" label="Reject"/>
               </div>
           </q-card>
           

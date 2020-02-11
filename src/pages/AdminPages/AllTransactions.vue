@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Savings Account <q-icon name="mdi-arrow-right-box" /> All Transaction</h6>
+      <h6 class="q-ma-none q-pl-md q-pt-md  text-teal-4">Savings Account <q-icon name="mdi-arrow-right-box" /> All Transaction</h6>
        <q-separator />
        <div class="q-pa-md">
              <q-table 

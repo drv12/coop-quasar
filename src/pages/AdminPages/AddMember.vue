@@ -1,25 +1,25 @@
 <template>
   <div>
     <q-page>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members <q-icon name="mdi-arrow-right-box" /> Add Members</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md  text-teal-4">Members <q-icon name="mdi-arrow-right-box" /> Add Members</h6>
      <q-separator />
        <div class="q-pa-md">    
          <div class="q-gutter-y-md full-width">
         <q-form @reset="Clear" >
-          <div >
+          <div class="q-pa-md">
+            <q-card class="q-pa-md">
            <q-card-section horizontal class="col">
              <!-- <span class="text-uppercase text-blue">Drivers Details</span> -->
              <div class="row">
-
-                        <!-- Start of Upload Image -->
-                   <div class="col-sm-4">
+                  <!-- Start of Upload Image -->
+                   <div class="col-lg-4">
                      <div class="q-pa-md">
-
-                            <img :src="imageUrl" width='150' height='150' style="border-radius: 50%;">
-
+                       <img :src="imageUrl" width='150' height='150' style="border-radius: 50%;">
                        <q-input 
+                       class="float-right on-right q-mt-xl q-pt-lg"
+                       color="teal"
                        type="file"
-                       v-model="MemberData.ProfilePic" 
+                      v-model="MemberData.ProfilePic" 
                        hint="Profile Picture"
                        accept="image/*"
                        @change="onFilePicked">
@@ -29,14 +29,15 @@
                       </q-input>
                      </div>
                    </div>
-                        <!-- End of Upload Image -->
-                        <div class="col-sm-6">
+                    <q-separator />
+                    <!-- End of Upload Image -->
+                        <!-- <div class="col-lg-4">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
-                        </div>
+                        </div> -->
               <!-- Start of Firstname -->
-                        <div class="col-sm-4">
+                        <div class="q-mt-lg q-pt-lg col-lg-4">
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.FirstName" label="First name" >
+                            <q-input color="teal" v-model="MemberData.FirstName" label="First name" >
                             <template v-slot:before>
                               <q-icon name="mdi-human-handsup" />
                             </template>
@@ -45,9 +46,9 @@
                         </div>
                         <!-- End of Firstname -->
                <!-- Start of Lastname -->
-                        <div class="col-sm-4">
+                        <div class="q-mt-lg q-pt-lg col-lg-4">
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.LastName" label="Last name" 
+                            <q-input color="teal" v-model="MemberData.LastName" label="Last name" 
                             >
                             <template v-slot:before>
                               <q-icon name="mdi-human-handsdown" />
@@ -57,9 +58,9 @@
                         </div>
                         <!-- End of Lastname -->
                <!-- Start of Designation -->
-               <div class="col-sm-4">
+               <div class="col-lg-4">
                  <div class="q-pa-md">
-                  <q-select v-model="MemberData.Designation" :options="options" label="Designation">
+                  <q-select color="teal" v-model="MemberData.Designation" :options="options" label="Designation">
                   <template class="q-pa-md" v-slot:before>
                       <q-icon name="account_box" />
                     </template>
@@ -67,7 +68,7 @@
                   <!-- <q-input
                   color="blue-12"
                     disable
-                    v-model="driversposition"
+                    color="teal" v-model="driversposition"
                     label="Designation"
                   >
                     <template class="q-pa-md" v-slot:before>
@@ -79,9 +80,9 @@
                    <!-- End of Designation -->
                    
                         <!-- Start of Member ID -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.MemberId" label="Member ID" mask="####-##########">
+                            <q-input color="teal" v-model="MemberData.MemberId" label="Member ID" mask="####-##########">
                               <template v-slot:before>
                                 <q-icon name="mdi-comment-account-outline" />
                               </template>
@@ -90,10 +91,10 @@
                         </div>
                         <!-- End of Member ID -->
                         <!-- Start of Date -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
                              <!-- di ko gets -->
-                            <q-input label="Year/Month/Date" v-model="MemberData.BirthDate" mask="date" hint="Birthday" :rules="['date']">
+                            <q-input label="Year/Month/Date" color="teal" v-model="MemberData.BirthDate" mask="date" hint="Birthday" :rules="['date']">
                               <template class="q-pa-none q-md-none" v-slot:before>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy
@@ -101,7 +102,7 @@
                                     transition-show="scale"
                                     transition-hide="scale"
                                   >
-                                    <!-- <q-date v-model="driversentrydate" @input="() => $refs.qDateProxy.hide()" /> -->
+                                    <!-- <q-date color="teal" v-model="driversentrydate" @input="() => $refs.qDateProxy.hide()" /> -->
                                   </q-popup-proxy>
                                 </q-icon>
                               </template>
@@ -110,10 +111,10 @@
                         </div>
                         <!-- End of Date -->
                         <!-- Start of Status -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
                               <q-select
-                                color="blue-12"
+                                color="teal" 
                                 v-model="MemberData.CivilStatus"
                                 :options="civilstatusoptions"
                                 label="Civil Status"
@@ -126,9 +127,9 @@
                             </div>
                           <!-- End of Status -->
                           <!-- Start of Occupation -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.Occupation" label="Occupation" >
+                              <q-input color="teal" v-model="MemberData.Occupation" label="Occupation" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -137,9 +138,9 @@
                           </div>
                         <!-- End of Occupation -->
                         <!-- Start of Employer or Office -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" >
+                              <q-input color="teal" v-model="MemberData.EmployerCompany" label="Employer or Office" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -148,9 +149,9 @@
                           </div>
                         <!-- Start of Employer or Office -->
                         <!-- Start of Other sources of Income -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.Salary" label="Other sources of Income" >
+                              <q-input color="teal" v-model="MemberData.Salary" label="Other sources of Income" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -159,9 +160,9 @@
                           </div>
                         <!-- Start of Other sources of Income -->
                         <!-- Start of Nearest Relative -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.RelativeName" label="Nearest Relative" >
+                              <q-input color="teal" v-model="MemberData.RelativeName" label="Nearest Relative" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -170,9 +171,9 @@
                           </div>
                         <!-- Start of Nearest Relative -->
                           <!-- Start of Number of dependents -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.NoDependents" label="Number of dependents" >
+                              <q-input color="teal" v-model="MemberData.NoDependents" label="Number of dependents" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -181,9 +182,9 @@
                           </div>
                         <!-- Start of Number of dependents -->
                         <!-- Start of Relationships -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                             <div class="q-pa-md">
-                              <q-input v-model="MemberData.Relationship" label="Relationships" >
+                              <q-input color="teal" v-model="MemberData.Relationship" label="Relationships" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -192,9 +193,9 @@
                           </div>
                         <!-- Start of Relationships -->
                         <!-- Start of Birth place -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
-                            <q-input label="Birth place" v-model="MemberData.BirthPlace">
+                            <q-input label="Birth place" color="teal" v-model="MemberData.BirthPlace">
                               <template v-slot:before>
                                 <q-icon name="mdi-home-map-marker" />
                               </template>
@@ -203,9 +204,9 @@
                         </div>
                         <!-- End of Birth place -->
                         <!-- Start of Address -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class=" q-pa-md">
-                            <q-input v-model="MemberData.CurrentAddress" label="Address" autogrow 
+                            <q-input color="teal" v-model="MemberData.CurrentAddress" label="Address" autogrow 
                             >
                             <template v-slot:before>
                               <q-icon name="mdi-home" />
@@ -215,9 +216,9 @@
                         </div>
                         <!-- End of Address -->
                         <!-- Start of Phone -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.Phone" label="Phone" mask="(##) - (####) - (#####)" >
+                            <q-input color="teal" v-model="MemberData.Phone" label="Phone" mask="(##) - (####) - (#####)" >
                               <template v-slot:before>
                                 <q-icon name="mdi-cellphone" />
                               </template>
@@ -225,9 +226,9 @@
                           </div>
                         </div>
                         <!-- End of Phone -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4">
                               <div class="q-pa-md">
-                                <q-file color="purple-12" v-model="MemberData.LicensePic" label="License Picture">
+                                <q-file color="teal" v-model="MemberData.LicensePic" label="License Picture">
                                   <template v-slot:prepend>
                                     <q-icon name="attach_file" />
                                   </template>
@@ -235,10 +236,10 @@
                               </div>
                         </div>
                         <!-- End of License Image -->
-                        <div class="col-sm-4" v-if="MemberData.Designation=='Driver'">
+                        <div class="col-lg-4" v-if="MemberData.Designation=='Driver'">
                           <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.Operator" label="Operator">
+                            <q-input color="teal" v-model="MemberData.Operator" label="Operator">
                               <template v-slot:before>
                                 <q-icon name="mdi-comment-account-outline" />
                               </template>
@@ -246,10 +247,10 @@
                           </div>
                         </div>  
                         
-                         <div class="col-sm-4">
+                         <div class="col-lg-4">
                           <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.PlateNo" label="License Plate">
+                            <q-input color="teal" v-model="MemberData.PlateNo" label="License Plate">
                               <template v-slot:before>
                                 <q-icon name="mdi-comment-account-outline" />
                               </template>
@@ -259,9 +260,9 @@
                       
 
                         <!-- Start of Email -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
-                            <q-input label="Email" v-model="MemberData.Email" type="email" suffix="@newgsiscoop.ph">
+                            <q-input label="Email" color="teal" v-model="MemberData.Email" type="email" suffix="@newgsiscoop.ph">
                               <template v-slot:before>
                                 <q-icon name="mail" />
                               </template>
@@ -270,11 +271,11 @@
                         </div>
                         <!-- End of Email -->
                         <!-- Start of Password -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
                             <q-input
                               label="Password"
-                              v-model="MemberData.Password"
+                              color="teal" v-model="MemberData.Password"
                               :type="MemberData.Password ? 'password' : 'text'"
                             >
                               <template v-slot:before>
@@ -294,11 +295,11 @@
                         </div>
                         <!-- End of Password -->
                         <!-- Start of Confirm Password -->
-                        <!-- <div class="col-sm-4">
+                        <!-- <div class="col-lg-4">
                           <div class="q-pa-md">
                             <q-input
                               label="Confirm Password"
-                              v-model="driverscpassword"
+                              color="teal" v-model="driverscpassword"
                               :type="driverscisPwd ? 'password' : 'text'"
                             >
                               <template v-slot:before>
@@ -320,9 +321,9 @@
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 
                         <template v-show="template-1" class="template-1">
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
-                            <q-input v-model="MemberData.LicenseNo" label="License number" mask="####-##########">
+                            <q-input color="teal" v-model="MemberData.LicenseNo" label="License number" mask="####-##########">
                               <template v-slot:before>
                                 <q-icon name="mdi-account-card-details" />
                               </template>
@@ -331,11 +332,11 @@
                         </div>
                         <!-- End of License number -->
                         <!-- Start of Expiration date of Drivers License -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                           <div class="q-pa-md">
                               <q-input
                                 label="Year/Month/Date"
-                                v-model="MemberData.Expiration"
+                                color="teal" v-model="MemberData.Expiration"
                                 mask="date"
                                 :rules="['date']"
                                 hint="Expiration Date"
@@ -348,7 +349,7 @@
                                       transition-hide="scale"
                                     >
                                       <q-date
-                                        v-model="MemberData.Expiration"
+                                        color="teal" v-model="MemberData.Expiration"
                                         @input="() => $refs.qDateProxy.hide()"
                                       />
                                     </q-popup-proxy>
@@ -360,10 +361,10 @@
                         </template>
                         <!-- End of Expiration date of Drivers License -->
 
-                        <div v-for="(line, index) in lines" v-bind:key="index" class="col-sm-4">
+                        <div v-for="(line, index) in lines" v-bind:key="index" class="col-lg-4">
                             <div class="q-pa-md" v-if="MemberData.Designation == 'Operator'">
                                     <q-input
-                                        v-model="line.number"
+                                        color="teal" v-model="line.number"
                                         float-label="Phone Number"
                                         numeric-keyboard-toggle
                                         placeholder="Jeep & License plate"
@@ -382,17 +383,19 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-lg-4">
                             <div class="q-pa-md">
                             </div>
                         </div>
                         <!-- End of Row -->
-                      </div>
-                      <div align="right" class="">
-                        <q-btn class="q-mr-md text-red" icon="cancel" type="reset" label="Reset" color="white" />
-                        <q-btn @click="page = 2" class="text-green" icon="check" label="Register" color="white" />
+
+                         <div class="absolute-bottom-right">
+                            <q-btn class="q-mr-md text-red" icon="cancel" type="reset" label="Reset" color="white" />
+                            <q-btn @click="page = 2" class="text-green" icon="check" label="Register" color="white" />
+                         </div>
                       </div>
                     </q-card-section>
+                    </q-card>
                   </div>
               </q-form>
           </div>   

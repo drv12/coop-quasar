@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Dashboard</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md  text-teal-4">Dashboard</h6>
     <q-separator />
     <div class="row">
       <div class="col-xs-12 col-md-3 col-sm-6">
