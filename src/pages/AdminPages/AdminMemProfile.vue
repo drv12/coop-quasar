@@ -24,11 +24,11 @@
             <q-img
             style="height:200px; width:200px; border-radius: 50%;"
             class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
+            :src="PenReg.imageUrl"
           />
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
             <div class="q-pa-md">
-              <q-input label="First Name" readonly>
+              <q-input v-model="PenReg.FirstName" label="First Name" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Last Name" readonly>
+              <q-input v-model="PenReg.LastName" label="Last Name" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
+              <q-select v-model="PenReg.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
+              <q-select v-model="PenReg.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -62,7 +62,7 @@
 
         <q-card-section class="col-md-4 q-pt-md">
             <div class="q-pa-md">
-              <q-input label="BirthDate" stack-label type="date" readonly>
+              <q-input v-model="PenReg.BirthDate" label="BirthDate" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="BirthPlace" readonly>
+              <q-input v-model="PenReg.BirthPlace" label="BirthPlace" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -78,7 +78,7 @@
             </div>
 
           <div class="q-pa-md">
-              <q-input label="Occupation" readonly>
+              <q-input v-model="PenReg.Occupation" label="Occupation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Employer or Office" readonly>
+              <q-input v-model="PenReg.EmployerCompany" label="Employer or Office" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -94,7 +94,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Other Sources of Income" readonly>
+              <q-input v-model="PenReg.OtherIncome" label="Other Sources of Income" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -102,7 +102,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Nearest Relative" readonly>
+              <q-input v-model="PenReg.RelativeName" label="Nearest Relative" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -110,7 +110,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Relationship" readonly>
+              <q-input v-model="PenReg.Relationship" label="Relationship" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -118,7 +118,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Number of Dependents" readonly>
+              <q-input v-model="PenReg.NoDependents" label="Number of Dependents" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -138,7 +138,7 @@
 
           <div class="col-sm-4">
               <div class="q-pa-md">
-              <q-input label="License No." readonly>
+              <q-input v-model="PenReg.LicenseNo" label="License No." readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -148,7 +148,7 @@
 
         <div class="col-sm-4 col-sm-12 col-xs-12">
               <div class="q-pa-md">
-              <q-input label="License Expiration" stack-label type="date" readonly>
+              <q-input v-model="PenReg.LicenseExp" label="License Expiration" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -157,7 +157,7 @@
         </div>
 
         <div class="q-pa-md">
-              <q-input label="Adress" readonly>
+              <q-input v-model="PenReg.Address" label="Adress" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -165,7 +165,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Phone" readonly>
+              <q-input v-model="PenReg.Phone" label="Phone" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -173,7 +173,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input label="Email" readonly>
+              <q-input v-model="PenReg.Email" label="Email" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -322,7 +322,7 @@ export default {
     //   return this.MemberData.MemberId;
     // },
     PenReg() {
-            return this.$store.state.store.PendingRegs[this.penRegId]
+            return this.$store.state.store.MemberData[this.penRegId]
     }
   },
   mounted () {

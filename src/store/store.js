@@ -3,7 +3,11 @@ import {firebaseAuth, firebaseDb, firebaseSto} from 'boot/firebase'
 const state = {
     userDetails: {},
     PendingRegs: {},
-    isAdmin: ''
+    MemberData: {},
+    isAdmin: '',
+    isCollector: '',
+    isDriver: '',
+    isOperator: ''
 }
 
 const mutations = {
@@ -16,8 +20,20 @@ const mutations = {
     addPendingReg(state, payload) {
         state.PendingRegs = payload.PendingRegData
     },
+    addMemberData (state, payload){
+        state.MemberData = payload.MemberData
+    },
     setAdmin(state) {
         state.isAdmin = true
+    },
+    setCollector(state) {
+        state.isCollector = true
+    },
+    setDriver(state) {
+        state.isDriver = true
+    },
+    setOperator(state) {
+        state.isOperator = true
     }
 }
 
@@ -69,8 +85,15 @@ const actions = {
             })
         })
     },
-    regMember({}, payload){
-        firebaseDb.collection("MemberData").doc(payload.id).set(payload.PenReg.Data)
+    regPreMember({}, payload){
+        firebaseDb.collection("MemberData").doc(payload.id).set(payload.PenReg)
+        .then(function() {
+            firebaseDb.collection("PreRegPersonalData").doc(payload.id).delete().then(function() {
+                console.log("Document successfully deleted!");
+            }).catch(function(error) {
+                console.error("Error removing document: ", error);
+            });
+        })
     },
     preRegData({}, payload){
         const PreRegPersonalData = {
@@ -80,6 +103,8 @@ const actions = {
             BirthPlace: payload.BirthPlace,
             BirthDate: payload.BirthDate,
             Address: payload.Address,
+            Phone: payload.Phone,
+            Email: payload.Email,
             Occupation: payload.Occupation,
             EmployerCompany: payload.EmployerCompany,
             Salary: payload.Salary,
@@ -108,7 +133,7 @@ const actions = {
             }).
             then(downloadURL => {
                 console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrl: downloadURL});
+                return firebaseDb.collection("PreRegPersonalData").doc(id).update({1: downloadURL});
             })
             .catch(error => {
                 // Use to signal error if something goes wrong.
@@ -142,8 +167,15 @@ const actions = {
                             Email: userDetails.Email,
                             Designation: userDetails.Designation,
                             userId: userId})
+
                         if(userDetails.Designation == 'Admin'){
                             commit('setAdmin')
+                        } else if (userDetails.Designation == 'Collector'){
+                            commit('setCollector')
+                        }else if (userDetails.Designation == 'Operator'){
+                            commit('setOperator')
+                        }else if (userDetails.Designation == 'Driver'){
+                            commit('setDriver')
                         }
                     }
                     else 
@@ -156,13 +188,16 @@ const actions = {
                     console.log("Error getting document:", error);
                 });
                 dispatch('GetPendingReg')
+                .then(function() {
+                    dispatch('GetMembers')
+                })
                 // dispatch('userDesignation')
                 // this.$router.push('/member/dashboard')
             }
             else {
                 //userlogout
                 commit('setUserDetails', {})
-                // this.$router.replace('/home')
+                this.$router.replace('/home')
             }
           })
     },
@@ -178,6 +213,17 @@ const actions = {
           });
     },
     //get members dito
+    GetMembers({ commit }){
+        firebaseDb.collection('MemberData').onSnapshot(function(querySnapshot) {
+            const MemberData = {}
+            querySnapshot.forEach(function(doc) {
+            MemberData[doc.id] = doc.data();
+            });
+            commit('addMemberData', {
+                MemberData
+            })
+          });
+    }
           
 }
 const getters = {
@@ -186,6 +232,15 @@ const getters = {
     },
     isAdmin: state => {
         return state.isAdmin
+    },
+    isCollector: state => {
+        return state.isCollector
+    },
+    isDriver: state => {
+        return state.isDriver
+    },
+    isOperator: state => {
+        return state.isOperator
     }
 //     loadedPreRegs (state) {
 //         return state.loadedPendingRegData.sort((preRegA, preRegB) => {

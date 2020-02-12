@@ -12,22 +12,22 @@ const routes = [
   },
   {
     path: '/dashboard',
-    meta: { isAdmin: true },
+    meta: { isAdmin: true, isCollector: true },
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
         path: '/member/dashboard', 
-        meta: { isAdmin: true },
+        meta: { isAdmin: true, isCollector: true },
         component: () => import('pages/MemberPages/Dashboard.vue') 
       },
       { 
         path: '/member/profile', 
-        meta: { isAdmin: true },
+        meta: { isAdmin: true, isCollector: true },
         component: () => import('pages/MemberPages/Profile.vue')
       },
       { 
         path: '/member/transactions', 
-        meta: { isAdmin: true },
+        meta: { isAdmin: true, isCollector: true },
         component: () => import('pages/MemberPages/Transactions.vue')
     }    
     ]
@@ -44,47 +44,58 @@ const routes = [
       {
         path: "/admin/pendingregform/:penRegId",
         props:true,
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/PendingRegForm.vue")
       },
       {
         path: "/admin/pendingreg",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/PendingReg.vue")
       },
       {
         path: "/admin/dashboard",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/Dashboard.vue")
       },
       {
         path: "/admin/profile/:penRegId",
         props: true,
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AdminMemProfile.vue")
       },
       {
         path: "/admin/addmember/",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AddMember.vue")
       },
       {
         path: "/admin/allmember",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AllMember.vue")
       },
       {
         path: "/admin/addpayment",
+        meta: {isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AddPayment.vue")
       },
       {
         path: "/admin/allpayment",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AllPayment.vue")
       },
       {
         path: "/admin/depositwithdraw",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/Deposit-Withdraw.vue")
       },
       {
         path: "/admin/alltransaction",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/AllTransactions.vue")
       },
       {
         path: "/admin/jeepneys",
+        meta: {isCollector: true , isDriver: true, isOperator: true},
         component: () => import("pages/AdminPages/Jeepneys.vue")
       }
     ]

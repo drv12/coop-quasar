@@ -44,5 +44,59 @@ export default function ({store}) {
     }
   })
 
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.isAdmin)) {
+  
+      let authenticated = store.getters['store/isCollector']
+      
+      if (!authenticated) {
+        next({
+          path: '/admin/dashboard',
+          query: { redirect: to.fullPath }
+        })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  })
+
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.isAdmin)) {
+  
+      let authenticated = store.getters['store/isDriver']
+      
+      if (!authenticated) {
+        next({
+          path: '/admin/dashboard',
+          query: { redirect: to.fullPath }
+        })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  })
+
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.isAdmin)) {
+  
+      let authenticated = store.getters['store/isOperator']
+      
+      if (!authenticated) {
+        next({
+          path: '/admin/dashboard',
+          query: { redirect: to.fullPath }
+        })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  })
+
   return Router
 }

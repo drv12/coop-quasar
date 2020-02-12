@@ -54,6 +54,14 @@
                         <q-input standard v-model="PenReg.Address" label="Address"
                         readonly
                         />
+
+                        <q-input standard v-model="PenReg.Phone" label="Phone"
+                        readonly
+                        />
+
+                        <q-input standard v-model="PenReg.Email" label="Email"
+                        readonly
+                        />
                         <strong class="row justify-center items-center" style="color: #26A69A;">
                             Employment
                         </strong>
