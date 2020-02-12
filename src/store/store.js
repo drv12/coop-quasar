@@ -141,6 +141,13 @@ const actions = {
              })
         })
     },
+    rejectPreReg ({}, payload){
+        firebaseDb.collection("PreRegPersonalData").doc(payload.id).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    },
     loginUser({}, payload){
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
         .then( response => {

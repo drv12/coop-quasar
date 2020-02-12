@@ -123,7 +123,11 @@
                 label="Approve"
                 @click="regMember(); loadPreReg(penRegId)"
                 />
-                <q-btn class="col q-ma-md" @click="" color="primary" label="Reject"/>
+                <q-btn class="col q-ma-md" 
+                @click="rejectMember"
+                to="/admin/pendingreg/"
+                color="primary" 
+                label="Reject"/>
               </div>
           </q-card>
           
@@ -149,10 +153,15 @@ export default {
         }
   },
   methods: {
-    ...mapActions('store', ['regPreMember']),
+    ...mapActions('store', ['regPreMember', 'rejectPreReg']),
     regMember(){
       this.regPreMember({
         PenReg: this.PenReg,
+        id: this.penRegId
+      });
+    },
+    rejectMember(){
+      this.rejectPreReg({
         id: this.penRegId
       });
     },
