@@ -2,7 +2,56 @@
     <div class="q-pa-md">
         <q-card class="my-card" flat bordered>
         <q-card-actions align="right">
-            <q-btn flat round icon="event" />
+          <q-btn @click="inception = true" flat v-if="PenReg.MembershipFee">
+            Membership Fee: {{ PenReg.MembershipFee }}
+            </q-btn>
+
+            <div>
+              <q-dialog v-model="inception">
+                <q-card>
+                  <q-card-section>
+                    <div class="text-h6">Membership Fee Payment</div>
+                  </q-card-section>
+
+                  <!-- <q-card-section class="q-pt-none">
+                    <div class="q-pa-md">
+                      <q-input v-model="Payment.MemberID" label="Member ID" readonly>
+                        <template v-slot:before>
+                        <q-icon name="mdi-human-handsup" />
+                        </template>
+                      </q-input>
+                    </div>
+                  </q-card-section> -->
+
+                  <q-card-section class="q-pt-none">
+                    <div class="q-pa-md">
+                      <q-input v-model="Payment.OrNo" label="OR No">
+                        <template v-slot:before>
+                        <q-icon name="mdi-human-handsup" />
+                        </template>
+                      </q-input>
+                    </div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    <div class="q-pa-md">
+                      <q-input v-model="Payment.Amount" label="Amount">
+                        <template v-slot:before>
+                        <q-icon name="mdi-human-handsup" />
+                        </template>
+                      </q-input>
+                    </div>
+                  </q-card-section>
+
+                  <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Pay Fee" @click="PayFee" />
+                    <q-btn flat label="Close" v-close-popup />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+            </div>
+
+            <q-btn flat round icon="event"/>
             <q-btn @click="printDiv('page')" flat>
             Print Contract
             </q-btn>
@@ -239,6 +288,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 // import Vue from 'vue';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
@@ -247,10 +297,24 @@
 export default {
     data(){
         return{
-            datetodaydata: ''
+            datetodaydata: '',
+            inception: false,
+            Payment: {
+              Fee: 'Membership Fee',
+              MemberID: this.penRegId,
+              OrNo: '',
+              Amount: ''
+            }
         }
     },
     methods: {
+      ...mapActions('store', ['AddPayment']),
+      PayFee(){
+        this.AddPayment({
+          Payment: this.Payment,
+          Date: this.datetodaydata
+        })
+      },
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;
         // Get all stylesheets HTML
@@ -322,7 +386,7 @@ export default {
     //   return this.MemberData.MemberId;
     // },
     PenReg() {
-            return this.$store.state.store.MemberData[this.penRegId]
+      return this.$store.state.store.MemberData[this.penRegId]
     }
   },
   mounted () {

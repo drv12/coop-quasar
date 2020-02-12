@@ -264,6 +264,7 @@ export default {
         LicenseNo:'',
         LicenseExp:'',
         Designation: 'a',
+        MembershipFee: 'To be Paid',
         LicenseImage: null
       },
       accept: false,

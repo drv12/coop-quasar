@@ -21,5 +21,6 @@ var firebaseConfig = {
  let firebaseAuth = firebaseApp.auth();
  let firebaseDb = firebaseApp.firestore();
  let firebaseSto = firebaseApp.storage();
+ let firefirestore = firebase.firestore;
 
- export {firebaseAuth, firebaseDb, firebaseSto}
+ export {firebaseAuth, firebaseDb, firebaseSto, firefirestore}

@@ -1,4 +1,4 @@
-import {firebaseAuth, firebaseDb, firebaseSto} from 'boot/firebase'
+import {firebaseAuth, firebaseDb, firebaseSto, firefirestore} from 'boot/firebase'
 
 const state = {
     userDetails: {},
@@ -114,6 +114,7 @@ const actions = {
             NoDependents: payload.NoDependents,
             LicenseNo: payload.LicenseNo,
             LicenseExp: payload.LicenseExp,
+            MembershipFee: payload.MembershipFee,
             Designation: payload.Designation
         }
         let id
@@ -230,6 +231,12 @@ const actions = {
                 MemberData
             })
           });
+    },
+    AddPayment({}, payload){
+        firebaseDb.collection("Transactions").doc(payload.Date).collection("Payment").doc().set(payload.Payment)
+        .then(function() {
+        firebaseDb.collection("MemberData").doc(payload.Payment.MemberID).update({MembershipFee: firefirestore.FieldValue.delete()})
+        })
     }
           
 }
