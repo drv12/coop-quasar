@@ -58,9 +58,6 @@
             <q-btn flat color="primary">
             Print ID
             </q-btn>
-            <q-btn flat>
-            Update
-            </q-btn>
             <q-btn flat color="primary">
             Resign
             </q-btn>
@@ -70,14 +67,22 @@
 
         <q-card-section class="row">
         <q-card-section class="col-md-4 col-sm-12 col-xs-12 q-pt-md">
-            <q-img
+            <img
             style="height:200px; width:200px; border-radius: 50%;"
             class="rounded-borders"
-            :src="PenReg.imageUrl"
+            :src="PenReg.imageUrl0"
           />
+          <q-btn @click="onFileClick1">Change Profile Picture</q-btn>
+          <input type="file" accept="image/*" ref="fileInput1" @change="onFilePickedPro" v-show="false">
+
+
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
             <div class="q-pa-md">
-              <q-input v-model="PenReg.FirstName" label="First Name" readonly>
+              <q-input 
+              v-model="PenReg.FirstName" 
+              label="First Name" 
+              readonly
+              >
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -87,7 +92,7 @@
             <div class="q-pa-md">
               <q-input v-model="PenReg.LastName" label="Last Name" readonly>
                 <template v-slot:before>
-                 <q-icon name="mdi-human-handsup" />
+                 <q-icon name="mdi-human-handsup"/>
                 </template>
               </q-input>
             </div>
@@ -181,8 +186,12 @@
           <div class="col-sm-4">
               <q-img
                 class="rounded-borders"
-                src="https://cdn.quasar.dev/img/parallax2.jpg"
+                :src="PenReg.imageUrl1"
             />
+
+          <q-btn @click="onFileClick2">Change License Picture</q-btn>
+          <input type="file" accept="image/*" ref="fileInput2" @change="onFilePickedLic" v-show="false">
+
           </div>
 
           <div class="col-sm-4">
@@ -236,6 +245,7 @@
             <q-form
               class="q-gutter-md"
               id="page"
+              v-show="false"
             >
               <p>&nbsp;</p>
               <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
@@ -304,10 +314,36 @@ export default {
               MemberID: this.penRegId,
               OrNo: '',
               Amount: ''
-            }
+            },
+            MemberData: {
+              FirstName: '',
+              LastName: '',
+              CivilStatus: '',
+              BirthPlace: '',
+              BirthDate: '',
+              Address:'',
+              Phone:'',
+              Email:'',
+              Occupation: '',
+              EmployerCompany: '',
+              Salary: '',
+              OtherIncome: '',
+              RelativeName: '',
+              Relationship: '',
+              NoDependents: '',
+              LicenseNo:'',
+              LicenseExp:'',
+              Designation: '',
+              imageFile: []
+            },
+            // imageUrlPro: this.PenReg.imageUrl0,
+            // imageUrlLic: this.PenReg.imageUrl1
         }
     },
     methods: {
+      imglog(){
+        console.log(this.MemberData.imageFile)
+      },
       ...mapActions('store', ['AddPayment']),
       PayFee(){
         this.AddPayment({
@@ -341,14 +377,20 @@ export default {
         WinPrint.close();
       },
       datetoday(){
-      var myDate = new Date();
-      var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
-      var date = ('0' + myDate.getDate()).slice(-2);
-      var year = myDate.getFullYear();
-      var formattedDate = year + '-' + month + '-' + date;
-      this.datetodaydata = formattedDate;
-      },
-      onFilePicked(event){
+        var myDate = new Date();
+        var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+        var date = ('0' + myDate.getDate()).slice(-2);
+        var year = myDate.getFullYear();
+        var formattedDate = year + '-' + month + '-' + date;
+        this.datetodaydata = formattedDate;
+        },
+      onFileClick1(){
+        this.$refs.fileInput1.click()
+      },  
+      onFileClick2(){
+        this.$refs.fileInput2.click()
+      }, 
+      onFilePickedPro(event){
         const files = event.target.files
         let filename = files[0].name
         if (filename.lastIndexOf('.') <= 0){
@@ -356,9 +398,23 @@ export default {
         }
         const fileReader = new FileReader()
         fileReader.addEventListener('load', () => {
-          this.imageUrl = fileReader.result
+        this.PenReg.imageUrl0 = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
+        this.MemberData.imageFile.push(files[0])
+      },
+      onFilePickedLic(event){
+        const files = event.target.files
+        let filename = files[0].name
+        if (filename.lastIndexOf('.') <= 0){
+          return alter('Please add a valid file!')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+        this.PenReg.imageUrl1 = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.MemberData.imageFile.push(files[0])
       },
       log(){
         console.log(this.operatorprofile);
@@ -378,15 +434,15 @@ export default {
     },
      removeLine (lineId) {
       if (!this.blockRemoval) this.lines.splice(lineId, 1)
-    }   
+    }
  },
  props: ['penRegId'],
  computed: {
     // qrvalue: function() {
     //   return this.MemberData.MemberId;
     // },
-    PenReg() {
-      return this.$store.state.store.MemberData[this.penRegId]
+    PenReg () {
+        return this.$store.state.store.MemberData[this.penRegId]
     }
   },
   mounted () {

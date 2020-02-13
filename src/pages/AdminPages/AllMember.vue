@@ -3,6 +3,8 @@
     <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members <q-icon name="mdi-arrow-right-box" /> All Members</h6>
     <q-separator />
     <div class="q-pa-md">
+      
+
       <!-- <q-toolbar class="bg-white text-blue"> -->
        <!-- Start of Manage Unit -->
             <!-- <q-btn
@@ -64,6 +66,7 @@
     
     </q-table> -->
      <!-- <div class="q-pa-sm q-gutter-sm"> -->
+      
         <q-table title="ALL MEMBERS" :data="data" :columns="columns" row-key="name">
            <!-- <template v-slot:top>
           <q-btn dense color="secondary" label="Add Row" @click="show_dialog = true"></q-btn> -->
@@ -131,22 +134,23 @@
       <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="desc" :props="props">
-              {{ props.row.name }}
+              {{ props.row.id }}
             </q-td>
             <q-td key="lastname" :props="props">
-              {{ props.row.lastname }}
+              {{ props.row.LastName }}
             </q-td>
             <q-td key="firstname" :props="props">
-              <div class="text-pre-wrap">{{ props.row.firstname }}</div>
+              <div class="text-pre-wrap">{{ props.row.FirstName }}</div>
             </q-td>
             <q-td key="designation" :props="props">
-              {{ props.row.designation }}
+              {{ props.row.Designation }}
               <!-- <q-popup-edit v-model="props.row.carbs" title="Update Job Description" buttons persistent> -->
                 <!-- <q-input type="number" v-model="props.row.carbs" dense autofocus hint="Use buttons to close" ></q-input> -->
               <!-- </q-popup-edit> -->
             </q-td>
-            <q-td key="licenseplate" :props="props">{{ props.row.licenseplate }}</q-td>
-            <q-td key="phonenumber" :props="props">{{ props.row.phonenumber }}</q-td>
+            <!-- <q-td key="licenseplate" :props="props">{{ props.row.licenseplate }}</q-td> -->
+            <q-td key="phonenumber" :props="props">{{ props.row.Phone }}</q-td>
+            <q-td key="phonenumber" :props="props">{{ props.row.Email }}</q-td>
             <q-td key="status" :props="props">
               
               <q-btn size="xs" v-if="active" color="green" label="Active" @click="active = !active">
@@ -162,18 +166,22 @@
             </q-td>
           
             <q-td key="actions" :props="props">
-              <q-btn color="blue" size="xs" icon="mdi-account-edit" @click="editItem(props.row)" />
+              <!-- <q-btn color="blue" size="xs" icon="mdi-account-edit" @click="editItem(props.row)" />
               <span class="q-px-xs"/>
-              <q-btn color="red" size="xs" classs="q-ml-md"  icon="mdi-delete"  @click="deleteItem(props.row)"/>
+              <q-btn color="red" size="xs" classs="q-ml-md"  icon="mdi-delete"  @click="deleteItem(props.row)"/> -->
+              <q-btn color="red" size="xs" classs="q-ml-md"  icon="mdi-delete" to=""  @click="loadProfile(props.row.id)"/>
             </q-td>
           </q-tr>
         </template>
     </q-table>
-     </div>
+    <q-btn @click="log">try</q-btn>
+          </div>
     </div>
   <!-- </div> -->
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -206,28 +214,23 @@ export default {
         { name: "phonenumber", align: 'center', label: "Phone number", field: "phonenumber"},
         { name: "status", label: "Status", align: 'center', field: "status" },
         { name: "actions", align: 'center', label: "Actions", field: "actions"}
-      ],
-      data: [
-        {
-          name: '2020-2626',
-          lastname: 'Macatangay',
-          firstname: 'Jm',
-          designation: 'Operator',
-          licenseplate: 'GRZ-2626',
-          phonenumber: '262626'
-        },
-        {
-          name: '2626-2020',
-          lastname: 'Macatangay',
-          firstname: 'John Michaelangelo',
-          designation: 'Driver',
-          licenseplate: 'GRZ-012612',
-          phonenumber: '262626'
-        },
       ]
     };
   },
+  computed: {
+    ...mapGetters('store', ['MemberData']),
+    data(){
+      return Object.values(this.MemberData)
+    }
+
+  },
   methods: {
+    loadProfile(id) {
+            this.$router.push('/admin/profile/' + id)
+        },
+    log(){
+      console.log(this.id)
+    },
     editItem (item) {
         this.editedIndex = this.columns.indexOf(item)
         this.editedItem = Object.assign({}, item)

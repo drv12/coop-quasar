@@ -35,7 +35,7 @@
             label="Member Dashboard" 
             to="/member/dashboard"
             :class="'gt-sm'"
-            v-if="userDetails.Designation == 'Member'"
+            v-if="userDetails.Designation == 'Driver'"
             />
             <q-btn flat dark 
             icon="lock" 

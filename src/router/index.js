@@ -34,7 +34,9 @@ export default function ({store}) {
         if(dsg == 'Admin'){
           next()
         } else {
-          next ({ path: '/'})
+          next (
+            // { path: '/'}
+          )
         }
       }
   
@@ -43,7 +45,9 @@ export default function ({store}) {
         if(dsg == 'Collector'){
           next()
         } else {
-          next ({ path: '/'})
+          next (
+            // { path: '/'}
+          )
         }
       }
 
@@ -53,115 +57,14 @@ export default function ({store}) {
         } else {
           console.log('Member')
           next (
-            { path: '/'})
+            // { path: '/'}
+            )
         }
       }
 
       next()
     })
   })
-
-  // store.dispatch('store/handleAuthStateChanged').then(() => {
-  //   console.log(store.getters['store/isAdmin'])
-    // if(store.getters['store/isAdmin']){
-    //     Router.push('/admin/dashboard')
-    // }
-    // if(store.getters['store/isDriver'])
-    // {
-    //   Router.push('/member/dashboard')
-    // }
-    // if(store.getters['store/isCollector']){
-    //   Router.push('/admin/dashboard')
-    // }
-    // if(store.getters['store/isOperator'])
-    // {
-    //   Router.push('/member/dashboard')
-    // }
-    // Router.beforeEach((to, from, next) => {
-    //   if (to.matched.some(record => record.meta.isDesignation)) {
-    //     let authenticated = store.getters['store/Designation']
-    //     console.log('isAdmin', authenticated)
-    //     if (authenticated == 'Admin') {
-    //       next({
-    //         path: '/admin/dashboard',
-    //         query: { redirect: to.fullPath}
-    //       })
-    //     } else if (authenticated == 'Collector') {
-    //       next({
-    //         path: '/admin/dashboard',
-    //         query: { redirect: to.fullPath}
-    //       })
-    //     } else if (authenticated == 'Driver') {
-    //       next({
-    //         path: '/member/dashboard',
-    //         query: { redirect: to.fullPath}
-    //       })
-    //     } else if (authenticated == 'Operator') {
-    //       next({
-    //         path: '/member/dashboard',
-    //         query: { redirect: to.fullPath}
-    //       })
-    //     }
-    //   } else {
-    //     next()
-    //   }
-    // })
-
-  // })
-
-  // Router.beforeEach((to, from, next) => {
-  //   if (to.matched.some(record => record.meta.isAdmin)) {
-  
-  //     let authenticated = store.getters['store/isCollector']
-      
-  //     if (!authenticated) {
-  //       next({
-  //         path: '/admin/dashboard',
-  //         query: { redirect: to.fullPath }
-  //       })
-  //     } else {
-  //       next()
-  //     }
-  //   } else {
-  //     next()
-  //   }
-  // })
-
-  // Router.beforeEach((to, from, next) => {
-  //   if (to.matched.some(record => record.meta.isDriver)) {
-  //     let authenticated = store.getters['store/isDriver']
-  //     console.log('isDriver', authenticated)
-  //     if (!authenticated) {
-  //       next({
-  //         path: '/member/dashboard',
-  //         query: { redirect: to.fullPath }
-  //       })
-  //     } else {
-  //       next()
-  //     }
-  //   } else {
-  //     next()
-  //   }
-  // })
-
-  // Router.beforeEach((to, from, next) => {
-  //   if (to.matched.some(record => record.meta.isAdmin)) {
-  
-  //     let authenticated = store.getters['store/isOperator']
-      
-  //     if (!authenticated) {
-  //       next({
-  //         path: '/admin/dashboard',
-  //         query: { redirect: to.fullPath }
-  //       })
-  //     } else {
-  //       next()
-  //     }
-  //   } else {
-  //     next()
-  //   }
-  // })
-
   return Router
 }
 

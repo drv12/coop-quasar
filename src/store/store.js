@@ -64,7 +64,7 @@ const actions = {
                 })
                 .then(downloadURL => {
                     console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-                    return firebaseDb.collection("MemberData").doc(id).update({[key]: downloadURL});
+                    return firebaseDb.collection("MemberData").doc(id).update({['imageUrl'+key]: downloadURL});
                 })
                 .catch(error => {
                     // Use to signal error if something goes wrong.
@@ -122,7 +122,7 @@ const actions = {
             }).
             then(downloadURL => {
                 console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-                return firebaseDb.collection("PreRegPersonalData").doc(id).update({1: downloadURL});
+                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrl0: downloadURL});
             })
             .catch(error => {
                 // Use to signal error if something goes wrong.
@@ -178,7 +178,7 @@ const actions = {
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
                 })
-                this.$router.push('/')
+                // this.$router.push('/')
                 dispatch('GetPendingReg')
                 .then(function() {
                     dispatch('GetMembers')
@@ -192,6 +192,7 @@ const actions = {
             }
           })
     },
+    //get pending regitrations
     GetPendingReg({ commit }){
         firebaseDb.collection('PreRegPersonalData').onSnapshot(function(querySnapshot) {
             const PendingRegData = {}
@@ -215,6 +216,7 @@ const actions = {
             })
           });
     },
+    //addpayment
     AddPayment({}, payload){
         firebaseDb.collection("Transactions").doc(payload.Date).collection("Payment").doc().set(payload.Payment)
         .then(function() {
@@ -227,21 +229,12 @@ const getters = {
     PendingRegs: state => {
         return state.PendingRegs
     },
+    MemberData: state => {
+        return state.MemberData
+    },
     Designation: state => {
         return state.Designation
     }
-//     loadedPreRegs (state) {
-//         return state.loadedPendingRegData.sort((preRegA, preRegB) => {
-//             return preRegA.date > preRegB.date
-//         })
-//     },
-    // loadPreReg (state) {
-    //     return (penRegId) => {
-    //         return state.PendingRegs.find((PendingReg) => {
-    //             return PendingReg.id === penRegId
-    //         })
-    //     }
-    // }
 }
 
 export default {
