@@ -4,10 +4,7 @@ const state = {
     userDetails: {},
     PendingRegs: {},
     MemberData: {},
-    isAdmin: '',
-    isCollector: '',
-    isDriver: '',
-    isOperator: ''
+    Designation: ''
 }
 
 const mutations = {
@@ -23,17 +20,8 @@ const mutations = {
     addMemberData (state, payload){
         state.MemberData = payload.MemberData
     },
-    setAdmin(state) {
-        state.isAdmin = true
-    },
-    setCollector(state) {
-        state.isCollector = true
-    },
-    setDriver(state) {
-        state.isDriver = true
-    },
-    setOperator(state) {
-        state.isOperator = true
+    setDesignation(state, payload) {
+        state.Designation = payload.Designation
     }
 }
 
@@ -175,16 +163,11 @@ const actions = {
                             Email: userDetails.Email,
                             Designation: userDetails.Designation,
                             userId: userId})
-
-                        if(userDetails.Designation == 'Admin'){
-                            commit('setAdmin')
-                        } else if (userDetails.Designation == 'Collector'){
-                            commit('setCollector')
-                        }else if (userDetails.Designation == 'Operator'){
-                            commit('setOperator')
-                        }else if (userDetails.Designation == 'Driver'){
-                            commit('setDriver')
-                        }
+                        
+                            commit('setDesignation', {
+                                Designation: userDetails.Designation
+                                }
+                            )
                     }
                     else 
                     {
@@ -194,18 +177,18 @@ const actions = {
                     
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
-                });
+                })
+                this.$router.push('/')
                 dispatch('GetPendingReg')
                 .then(function() {
                     dispatch('GetMembers')
                 })
-                // dispatch('userDesignation')
-                // this.$router.push('/member/dashboard')
+                
             }
             else {
                 //userlogout
                 commit('setUserDetails', {})
-                this.$router.replace('/home')
+                // this.$router.replace('/')
             }
           })
     },
@@ -244,17 +227,8 @@ const getters = {
     PendingRegs: state => {
         return state.PendingRegs
     },
-    isAdmin: state => {
-        return state.isAdmin
-    },
-    isCollector: state => {
-        return state.isCollector
-    },
-    isDriver: state => {
-        return state.isDriver
-    },
-    isOperator: state => {
-        return state.isOperator
+    Designation: state => {
+        return state.Designation
     }
 //     loadedPreRegs (state) {
 //         return state.loadedPendingRegData.sort((preRegA, preRegB) => {

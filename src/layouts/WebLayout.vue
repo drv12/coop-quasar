@@ -23,6 +23,27 @@
             :class="'gt-sm'"
             v-if="!userDetails.userId"
             />
+            <q-btn flat dark 
+            icon="lock" 
+            label="Admin Dashboard" 
+            to="/admin/dashboard"
+            :class="'gt-sm'"
+            v-if="userDetails.Designation == 'Admin'"
+            />
+            <q-btn flat dark 
+            icon="lock" 
+            label="Member Dashboard" 
+            to="/member/dashboard"
+            :class="'gt-sm'"
+            v-if="userDetails.Designation == 'Member'"
+            />
+            <q-btn flat dark 
+            icon="lock" 
+            label="Logout" 
+            :class="'gt-sm'"
+            v-if="userDetails.userId"
+            @click="logoutUser"
+            />
         </q-toolbar>
       </q-header>
 
@@ -63,6 +84,45 @@
                     Log In
                   </q-item-section>
                </q-item>
+               <q-item clickable
+               v-ripple 
+               to="/admin/dashboard"
+               v-if="userDetails.Designation == 'Admin'"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="lock"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Admin Dashboard
+                  </q-item-section>
+               </q-item>
+
+               <q-item clickable
+               v-ripple 
+               to="/member/dashboard"
+               v-if="userDetails.Designation == 'Driver'"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="lock"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Member Dashboard
+                  </q-item-section>
+               </q-item>
+
+
+               <q-item clickable
+               v-ripple 
+               @click="logoutUser"
+               v-if="userDetails.userId"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="lock"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Log Out
+                  </q-item-section>
+               </q-item>
            
           </q-list>
         </q-scroll-area>
@@ -84,7 +144,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 const menuList = [
   { route:'/home' ,icon: 'home', label: 'Home', separator: true },
@@ -103,6 +163,9 @@ export default {
   },
   computed: {
     ...mapState('store', ['userDetails'])
+  },
+  methods: {
+    ...mapActions('store', ['logoutUser'])
   }
 }
 </script>
