@@ -52,13 +52,13 @@
             </div>
 
             <q-btn flat round icon="event"/>
-            <q-btn @click="printDiv('page')" flat>
+            <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>
-            <q-btn flat color="primary">
+            <q-btn flat color="teal-4">
             Print ID
             </q-btn>
-            <q-btn flat color="primary">
+            <q-btn flat color="teal-4">
             Resign
             </q-btn>
         </q-card-actions>
@@ -114,7 +114,7 @@
             </div>
         </q-card-section>
 
-        <q-card-section class="col-md-4 q-pt-md">
+        <q-card-section class="col-md-4 col-sm-12 col-xs-12 q-pt-md">
             <div class="q-pa-md">
               <q-input v-model="PenReg.BirthDate" label="BirthDate" stack-label type="date" readonly>
                 <template v-slot:before>

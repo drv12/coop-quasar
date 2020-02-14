@@ -1,6 +1,6 @@
 <template>
  <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue"> Pre-Registration <q-icon name="mdi-arrow-right-box" /> Pending </h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4"> Pre-Registration <q-icon name="mdi-arrow-right-box" /> Pending </h6>
     <q-separator />
      <div class="q-pa-md">
 
@@ -13,7 +13,7 @@
 
                 <q-card
                 class="my-card text-white"
-                style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%); opacity: 0.9;"
+                style="background-image: linear-gradient(to top, #0ba360 100%, #3cba92 100%); opacity: 0.9;"
                 inline
                 >
 
@@ -24,16 +24,16 @@
                     />
                     <div>
                     <q-card-section class = "full-width q-mb-xl">
-                        <div class="text-h4">{{PendingReg.FirstName}} {{PendingReg.LastName}}</div>
-                        {{ PendingReg.Designation }}
+                        <div class="text-h4 text-uppercase">{{PendingReg.FirstName}} {{PendingReg.LastName}}</div>
+                        <div class="text-h6">{{ PendingReg.Designation }}</div>
                         <br>
                         {{ PendingReg.Date }}
                     </q-card-section>
                     <q-separator/>
                     <q-card-actions class = "row q-mt-xl">
                         <q-btn flat color="white"
-                        label="View Application"
-                        icon="arrow_forward"
+                        label="View Application Form"
+                        icon="mdi-eye-outline"
                         @click="loadPreReg(id)"/>
                     </q-card-actions>
                     </div>

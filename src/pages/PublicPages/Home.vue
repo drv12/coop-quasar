@@ -35,7 +35,7 @@
 
           <q-card
           class="my-card text-white"
-          style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%); height: 300px; opacity: 0.9;"
+          style="background-image: linear-gradient(#0ba360 100%, #3cba92 0%); height: 300px; opacity: 0.9;"
           inline
           >
            

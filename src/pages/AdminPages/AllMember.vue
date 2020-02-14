@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members <q-icon name="mdi-arrow-right-box" /> All Members</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Members <q-icon name="mdi-arrow-right-box" /> All Members</h6>
     <q-separator />
     <div class="q-pa-md">
       
@@ -72,7 +72,7 @@
           <q-btn dense color="secondary" label="Add Row" @click="show_dialog = true"></q-btn> -->
          
        <template v-slot:top>
-         <span class="text-blue text-uppercase text-h5">Members</span>
+         <span class="text-teal text-uppercase text-h5">Members</span>
              <q-space/>
             <q-input
               v-model="search"

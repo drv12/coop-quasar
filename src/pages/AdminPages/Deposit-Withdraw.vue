@@ -1,11 +1,11 @@
 <template>
     <div>
         <q-page>
-      <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Savings Account <q-icon name="mdi-arrow-right-box" /> Desposit/Withdraw</h6>
+      <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Savings Account <q-icon name="mdi-arrow-right-box" /> Desposit/Withdraw</h6>
        <q-separator />
         <div v-if="!tab.length" class="no-choice absolute-center">
-          <q-icon name="mdi-bank" size="160px" color="blue"/>
-             <div class="text-h6 text-primary text-center">
+          <q-icon name="mdi-bank" size="160px" color="teal"/>
+             <div class="text-h6 text-teal text-center">
                  Withdraw/Deposit
             </div>
         </div>
@@ -18,8 +18,8 @@
                     v-model="tab"
                     dense
                     class="text-grey"
-                    active-color="primary"
-                    indicator-color="primary"
+                    active-color="teal"
+                    indicator-color="teal"
                     align="justify"
                     narrow-indicator
                     >
