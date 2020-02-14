@@ -13,7 +13,7 @@
              <div class="row">
 
                         <!-- Start of Upload Image -->
-                   <div class="col-sm-4">
+                   <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                      <div class="q-pa-md">
                           <div style=" text-align: center;">
                             <img :src="imageUrlPro" width='150' height='150' style="border-radius: 50%;">
@@ -33,7 +33,7 @@
                   <div class="col-sm-8">
                     <div class="q-pa-md"></div>
                   </div>
-                   <!-- <div class="col-sm-4">
+                   <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                      <div class="q-pa-md">
                           <div style=" text-align: center;">
                             <img :src="imageUrlLic" width='150' height='150' style="border-radius: 50%;">
@@ -50,11 +50,11 @@
                      </div>
                    </div> -->
                         <!-- End of Upload Image -->
-                        <!-- <div class="col-sm-6">
+                        <!-- <div class="col-sm-12">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
                         </div> -->
               <!-- Start of Firstname -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal" v-model="MemberData.FirstName" label="First name" >
                             <template v-slot:before>
@@ -65,7 +65,7 @@
                         </div>
                         <!-- End of Firstname -->
                <!-- Start of Lastname -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.LastName" label="Last name" 
                             >
@@ -77,7 +77,7 @@
                         </div>
                         <!-- End of Lastname -->
                <!-- Start of Designation -->
-               <div class="col-sm-4">
+               <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                  <div class="q-pa-md">
                   <q-select color="teal-4" v-model="MemberData.Designation" :options="options" label="Designation">
                   <template class="q-pa-md" v-slot:before>
@@ -99,7 +99,7 @@
                    <!-- End of Designation -->
                    
                         <!-- Start of Member ID -->
-                        <!-- <div class="col-sm-4">
+                        <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input v-model="MemberData.MemberId" label="Member ID" mask="####-##########">
                               <template v-slot:before>
@@ -110,7 +110,7 @@
                         </div> -->
                         <!-- End of Member ID -->
                         <!-- Start of Date -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                              <!-- di ko gets -->
                             <q-input color="teal-4" label="Year/Month/Date" v-model="MemberData.BirthDate" mask="date" hint="Birthday" :rules="['date']">
@@ -130,7 +130,7 @@
                         </div>
                         <!-- End of Date -->
                         <!-- Start of Status -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-select
                                 color="teal-4"
@@ -146,7 +146,7 @@
                             </div>
                           <!-- End of Status -->
                           <!-- Start of Occupation -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.Occupation" label="Occupation" >
                                 <template v-slot:before>
@@ -157,7 +157,7 @@
                           </div>
                         <!-- End of Occupation -->
                         <!-- Start of Employer or Office -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.EmployerCompany" label="Employer or Office" >
                                 <template v-slot:before>
@@ -168,7 +168,7 @@
                           </div>
                         <!-- Start of Employer or Office -->
                         <!-- Start of Other sources of Income -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.Salary" label="Other sources of Income" >
                                 <template v-slot:before>
@@ -179,7 +179,7 @@
                           </div>
                         <!-- Start of Other sources of Income -->
                         <!-- Start of Nearest Relative -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.RelativeName" label="Nearest Relative" >
                                 <template v-slot:before>
@@ -190,7 +190,7 @@
                           </div>
                         <!-- Start of Nearest Relative -->
                           <!-- Start of Number of dependents -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.NoDependents" label="Number of dependents" >
                                 <template v-slot:before>
@@ -201,7 +201,7 @@
                           </div>
                         <!-- Start of Number of dependents -->
                         <!-- Start of Relationships -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.Relationship" label="Relationships" >
                                 <template v-slot:before>
@@ -212,7 +212,7 @@
                           </div>
                         <!-- Start of Relationships -->
                         <!-- Start of Birth place -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" label="Birth place" v-model="MemberData.BirthPlace">
                               <template v-slot:before>
@@ -223,7 +223,7 @@
                         </div>
                         <!-- End of Birth place -->
                         <!-- Start of Address -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class=" q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.CurrentAddress" label="Address" autogrow 
                             >
@@ -235,7 +235,7 @@
                         </div>
                         <!-- End of Address -->
                         <!-- Start of Phone -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.Phone" label="Phone" mask="(##) - (####) - (#####)" >
                               <template v-slot:before>
@@ -245,7 +245,7 @@
                           </div>
                         </div>
                         <!-- End of Phone -->
-                          <div class="col-sm-4">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                               <div class="q-pa-md">
                                 <q-file color="teal-4" v-model="MemberData.LicensePic" label="License Picture">
                                   <template v-slot:prepend>
@@ -255,7 +255,7 @@
                               </div>
                         </div>
                         <!-- End of License Image -->
-                        <div class="col-sm-4" v-if="MemberData.Designation=='Driver'">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation=='Driver'">
                           <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.Operator" label="Operator">
@@ -266,7 +266,7 @@
                           </div>
                         </div>  
                         
-                         <div class="col-sm-4">
+                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.PlateNo" label="License Plate">
@@ -279,7 +279,7 @@
                       
 
                         <!-- Start of Email -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" label="Email" v-model="MemberData.Email" type="email">
                               <template v-slot:before>
@@ -290,7 +290,7 @@
                         </div>
                         <!-- End of Email -->
                         <!-- Start of Password -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input
                                color="teal-4"
@@ -315,7 +315,7 @@
                         </div>
                         <!-- End of Password -->
                         <!-- Start of Confirm Password -->
-                        <!-- <div class="col-sm-4">
+                        <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input
                               label="Confirm Password"
@@ -341,7 +341,7 @@
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 
                         <template v-show="template-1" class="template-1">
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.LicenseNo" label="License number" mask="####-##########">
                               <template v-slot:before>
@@ -352,7 +352,7 @@
                         </div>
                         <!-- End of License number -->
                         <!-- Start of Expiration date of Drivers License -->
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                               <q-input
                                 color="teal-4"
@@ -382,7 +382,7 @@
                         </template>
                         <!-- End of Expiration date of Drivers License -->
 
-                        <div v-for="(line, index) in lines" v-bind:key="index" class="col-sm-4">
+                        <div v-for="(line, index) in lines" v-bind:key="index" class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md" v-if="MemberData.Designation == 'Operator'">
                                     <q-input
                                         color="teal-4"
@@ -405,7 +405,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-mb-lg q-pb-md">
                             <div class="q-pa-md">
                             </div>
                         </div>

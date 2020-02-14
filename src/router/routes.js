@@ -31,6 +31,18 @@ const routes = [
     ]
   },
   {
+    path: '/dashboard',
+    redirect: '/collector/dashboard',
+    //: {requiresMember: true},
+    component: () => import('layouts/CollectorLayout.vue'),
+    children: [
+      { 
+        path: '/collector/dashboard', 
+        component: () => import('pages/CollectorPages/DashboardCollector.vue') 
+      },
+    ]
+  },
+  {
     path: '/login',
     component: () => import('pages/PublicPages/Login.vue') 
   },

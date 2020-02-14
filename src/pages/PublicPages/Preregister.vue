@@ -19,11 +19,12 @@
 
       <q-stepper
       v-model="step"
-      color="primary"
+      color="teal"
       animated
       vertical
     >
       <q-step
+        color="teal"
         :name="1"
         title="Apply As?"
         icon="settings"
@@ -36,12 +37,13 @@
         </div>
         
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="Continue"></q-btn>
+          <q-btn @click="step = 2" color="teal" label="Continue"></q-btn>
         </q-stepper-navigation>
       </q-step>
 
       <q-step
         :name="2"
+        color="teal"
         title="Answer the Application Form"
         icon="settings"
         :done="step > 2"
@@ -201,10 +203,10 @@
                         <q-btn label="Submit" 
                         type="submit" 
                         class="full-width	justify-center items-center q-mb-md" 
-                        color="primary"/>
+                        color="teal"/>
        
                         <q-btn label="Reset" 
-                        type="reset" color="primary" 
+                        type="reset" color="teal" 
                         flat class="full-width justify-center items-center q-ml-sm" />                    
                     </div>
                 </q-form>
@@ -215,14 +217,15 @@
     </div> 
 
         <q-stepper-navigation>
-          <q-btn @click="step = 3" color="primary" label="Continue" ref="stepbtn"></q-btn>
-          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm"></q-btn>
+          <q-btn @click="step = 3" color="teal" label="Continue" ref="stepbtn"></q-btn>
+          <q-btn flat @click="step = 1" color="teal" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
 
 
       <q-step
         :name="3"
+        color="teal"
         title="Wait for a Confirmation Email"
         icon="add_comment"
       >
@@ -230,8 +233,8 @@
         Upon approval an email will be sent to you. 
         In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
-          <q-btn color="primary" label="Finish"></q-btn>
-          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
+          <q-btn color="teal" label="Finish"></q-btn>
+          <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
     </q-stepper> 
@@ -268,9 +271,8 @@ export default {
         LicenseImage: null
       },
       accept: false,
-      dbtn1: 'primary',
-      dbtn2: 'primary',
-      dbtn3: 'primary',
+      dbtn1: 'teal-4',
+      dbtn2: 'teal-4',
       datetodaydata: '',
       imageUrl: null
       
@@ -284,11 +286,11 @@ export default {
     },
     dbtncolor(){
       if(this.PreRegData.Designation == 'Driver'){
-        this.dbtn1 = 'secondary'
-        this.dbtn2 = 'primary'
+        this.dbtn1 = 'teal'
+        this.dbtn2 = 'teal-4'
       }else if (this.PreRegData.Designation == 'Operator'){
-        this.dbtn1 = 'primary'
-        this.dbtn2 = 'secondary'
+        this.dbtn1 = 'teal-4'
+        this.dbtn2 = 'teal'
       }
     },
     onFilePicked(event){

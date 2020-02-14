@@ -11,7 +11,7 @@
         </div>
        <div class="q-pa-md">
            
-         <div class="q-gutter-y-md" style="max-width: 1000px">
+         <div class="q-gutter-y-md" style="max-width: 2000px">
              
                 <q-card>
                     <q-tabs

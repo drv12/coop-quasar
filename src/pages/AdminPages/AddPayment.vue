@@ -8,16 +8,15 @@
           <q-card-section horizontal >
                  <div class="row">
                     <!-- Start of Transaction ID -->
-                    <div class="col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="transactionid" label="Transaction ID" mask="2020-######" />
                         </div>
                      </div>
                      <!-- End of Transaction ID -->
                     <!-- Start of Members ID -->
-                    <div class="col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
-                            <div >
                                 <q-select
                                     color="teal-4"
                                     v-model="membersid"
@@ -28,26 +27,25 @@
                                     <q-icon name="perm_identity" />
                                     </template>
                                 </q-select>
-                            </div>
                         </div>
                      </div>
                      <!-- End of Members ID -->
                      <!-- Start of Members Name -->
-                    <div class="col-sm-6">
-                        <div class="q-pa-xs q-mb-md">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="membersname" label="Members name" />
                         </div>
                      </div>
                      <!-- End of Members Name -->
                       <!-- Start of OR number -->
-                    <div class="col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="recieptnumber" label="Official Reciept Number" mask="###########" />
                         </div>
                      </div>
                      <!-- End of OR number -->
                     <!-- Start of Management Fee -->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-uppercase text-teal-4">Fees</span>
                         <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="managementfee" label="Management Fee" mask="######" />
@@ -55,7 +53,7 @@
                     </div>
                     <!-- End of Management Fee -->
                     <!-- Start of Share of Stocks -->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-white">ABC</span>
                     <div class="q-pa-xs">
                       <q-input color="teal-4" v-model="shareofstocks" label="Share of Stocks" mask="######" />
@@ -63,7 +61,7 @@
                   </div>
                     <!-- End of Share of Stocks -->
                      <!-- Start of Forfeited Share -->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-white">ABC</span>
                     <div class="q-pa-xs">
                       <q-input color="teal-4" v-model="forfeitedshare" label="Forfeited Share" mask="######" />
@@ -71,7 +69,7 @@
                   </div>
                     <!-- End of Share of Stocks -->
                      <!-- Start of Savings Deposit -->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-white">ABC</span>
                     <div class="q-pa-xs">
                       <q-input color="teal-4" v-model="savingsdeposit" label="Savings Deposit" mask="######" />
@@ -80,21 +78,21 @@
                     <!-- End of Savings Deposit -->
                     <!-- Start of Accounts Recievable -->
                     
-                    <div class="col-sm-3 q-mt-sm">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                         <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="accountsrecievable" label="Accounts Recievable" mask="######" />
                         </div>
                     </div>
                     <!-- End of Accounts Recievable -->
                      <!-- Start of Advances -->
-                    <div class="col-sm-3 q-mt-sm">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                         <div class="q-pa-xs">
                             <q-input color="teal-4" v-model="advances" label="Advances" mask="######" />
                         </div>
                     </div>
                     <!-- End of Advances -->
                     <!-- Start of Date -->
-                        <div class="col-sm-3 q-mt-sm">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                             <div class=" q-pa-xs">
                             <q-input color="teal-4" label="Year/Month/Date" v-model="paymentdate" mask="date" hint="Date" :rules="['date']">
                                 <template class="q-pa-none q-md-none" v-slot:before>
@@ -113,14 +111,14 @@
                         </div>
                     <!-- End of Date -->
                     <!-- Start of Total Amount -->
-                        <div class="col-sm-3 q-mt-sm">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                               <div class="q-pa-xs">
                                 <q-input color="teal-4" v-model="totalamount" label="Total Amount"/>
                               </div>
                         </div>
                     <!-- End of Total Amount -->
                      <!-- Start of Description-->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-uppercase text-teal-4">Others</span>
                              <q-input color="teal-4" v-model="description" label="Description" autogrow/>
@@ -128,7 +126,7 @@
                     </div>
                     <!-- End of Description -->
                      <!-- Start of Amount-->
-                    <div class="col-sm-3">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-white">Others</span>
                             <q-input color="teal-4" v-model="descriptionamount" label="Amount" mask="₱ ###########" />
@@ -136,16 +134,16 @@
                      </div>
                      <!-- End of Amount -->
                      <!-- Start of Blank Space -->
-                      <div class="col-sm-6">
-                        <div class="q-pa-xs"></div>
+                      <div class="q-mb-lg q-pb-lg">
+                        <div class="q-pa-md"></div>
                       </div>
                       <!-- End of Blank Space -->
                      <!-- Start of Add Payment button -->
                     
                      <!-- End of Add Payment button -->
                 
-                  <div class="">
-                        <div class="q-mt-xl q-ml-xl q-pl-xl on-right">
+                  <div class="absolute-bottom-right">
+                        <div class="q-mt-lg">
                             <q-btn class="text-pink-4" icon-right="check" label="Add Payment" color="white" />
                         </div>
                  </div>
