@@ -239,7 +239,7 @@
 </template> 
 
 <script>
-import { mapActions } from 'vuex'
+import { firebaseDb, firebaseSto } from 'boot/firebase';
 
 export default {
   data () {
@@ -261,26 +261,51 @@ export default {
         RelativeName: 'a',
         Relationship: 'a',
         NoDependents: '1',
-        LicenseNo:'',
-        LicenseExp:'',
-        Designation: 'a',
+        LicenseNo:'asas',
+        LicenseExp:'2020-02-12',
+        Designation: '',
         MembershipFee: 'To be Paid',
-        LicenseImage: null
       },
       accept: false,
       dbtn1: 'primary',
       dbtn2: 'primary',
       dbtn3: 'primary',
       datetodaydata: '',
-      imageUrl: null
-      
+      imageUrl: null,
+      LicenseImage: null,
     }
   },
-
+  firestore () {
+    return {
+        // Collection
+        PreReg: firebaseDb.collection('PreRegPersonalData')
+    }
+  },
   methods: {
-    ...mapActions('store', ['preRegData']),
-    regPre(){
-      this.preRegData(this.PreRegData);
+    regPre: function () {
+        let id
+        let childurl
+        this.$firestore.PreReg.add(this.PreRegData).then((doc) => {
+            id = doc.id
+            return id
+        })
+        .then(id => {
+            const filename = this.LicenseImage.name
+            const ext = filename.slice(filename.lastIndexOf('.'))
+            childurl = id + '.'+ ext
+            return firebaseSto.ref('PreReg/' + childurl).put(this.LicenseImage)
+            .then(snapshot => {
+                return snapshot.ref.getDownloadURL();
+            }).
+            then(downloadURL => {
+                console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
+                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrl0: downloadURL});
+            })
+            .catch(error => {
+                // Use to signal error if something goes wrong.
+                console.log(`Failed to upload file and get link - ${error}`);
+             })
+        })
     },
     dbtncolor(){
       if(this.PreRegData.Designation == 'Driver'){
@@ -302,7 +327,7 @@ export default {
         this.imageUrl = fileReader.result
       })
       fileReader.readAsDataURL(files[0])
-      this.PreRegData.LicenseImage = files[0]
+      this.LicenseImage = files[0]
     },
     onSubmit () {
      this.regPre()

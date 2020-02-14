@@ -2,8 +2,8 @@
     <div class="q-pa-md">
         <q-card class="my-card" flat bordered>
         <q-card-actions align="right">
-          <q-btn @click="inception = true" flat v-if="PenReg.MembershipFee">
-            Membership Fee: {{ PenReg.MembershipFee }}
+          <q-btn @click="inception = true" flat v-if="MemberDatas.MembershipFee">
+            Membership Fee: {{ MemberDatas.MembershipFee }}
             </q-btn>
 
             <div>
@@ -70,7 +70,7 @@
             <img
             style="height:200px; width:200px; border-radius: 50%;"
             class="rounded-borders"
-            :src="PenReg.imageUrl0"
+            :src="MemberDatas.imageUrl0"
           />
           <q-btn @click="onFileClick1">Change Profile Picture</q-btn>
           <input type="file" accept="image/*" ref="fileInput1" @change="onFilePickedPro" v-show="false">
@@ -79,7 +79,7 @@
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
             <div class="q-pa-md">
               <q-input 
-              v-model="PenReg.FirstName" 
+              v-model="MemberDatas.FirstName" 
               label="First Name" 
               readonly
               >
@@ -90,7 +90,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.LastName" label="Last Name" readonly>
+              <q-input v-model="MemberDatas.LastName" label="Last Name" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup"/>
                 </template>
@@ -98,7 +98,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="PenReg.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
+              <q-select v-model="MemberDatas.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -106,7 +106,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="PenReg.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
+              <q-select v-model="MemberDatas.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -116,7 +116,7 @@
 
         <q-card-section class="col-md-4 q-pt-md">
             <div class="q-pa-md">
-              <q-input v-model="PenReg.BirthDate" label="BirthDate" stack-label type="date" readonly>
+              <q-input v-model="MemberDatas.BirthDate" label="BirthDate" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -124,7 +124,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.BirthPlace" label="BirthPlace" readonly>
+              <q-input v-model="MemberDatas.BirthPlace" label="BirthPlace" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -132,7 +132,7 @@
             </div>
 
           <div class="q-pa-md">
-              <q-input v-model="PenReg.Occupation" label="Occupation" readonly>
+              <q-input v-model="MemberDatas.Occupation" label="Occupation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -140,7 +140,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.EmployerCompany" label="Employer or Office" readonly>
+              <q-input v-model="MemberDatas.EmployerCompany" label="Employer or Office" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -148,7 +148,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.OtherIncome" label="Other Sources of Income" readonly>
+              <q-input v-model="MemberDatas.OtherIncome" label="Other Sources of Income" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -156,7 +156,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.RelativeName" label="Nearest Relative" readonly>
+              <q-input v-model="MemberDatas.RelativeName" label="Nearest Relative" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -164,7 +164,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.Relationship" label="Relationship" readonly>
+              <q-input v-model="MemberDatas.Relationship" label="Relationship" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -172,7 +172,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.NoDependents" label="Number of Dependents" readonly>
+              <q-input v-model="MemberDatas.NoDependents" label="Number of Dependents" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -186,7 +186,7 @@
           <div class="col-sm-4">
               <q-img
                 class="rounded-borders"
-                :src="PenReg.imageUrl1"
+                :src="MemberDatas.imageUrl1"
             />
 
           <q-btn @click="onFileClick2">Change License Picture</q-btn>
@@ -196,7 +196,7 @@
 
           <div class="col-sm-4">
               <div class="q-pa-md">
-              <q-input v-model="PenReg.LicenseNo" label="License No." readonly>
+              <q-input v-model="MemberDatas.LicenseNo" label="License No." readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -206,7 +206,7 @@
 
         <div class="col-sm-4 col-sm-12 col-xs-12">
               <div class="q-pa-md">
-              <q-input v-model="PenReg.LicenseExp" label="License Expiration" stack-label type="date" readonly>
+              <q-input v-model="MemberDatas.LicenseExp" label="License Expiration" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -215,7 +215,7 @@
         </div>
 
         <div class="q-pa-md">
-              <q-input v-model="PenReg.Address" label="Adress" readonly>
+              <q-input v-model="MemberDatas.Address" label="Adress" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -223,7 +223,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.Phone" label="Phone" readonly>
+              <q-input v-model="MemberDatas.Phone" label="Phone" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -231,7 +231,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="PenReg.Email" label="Email" readonly>
+              <q-input v-model="MemberDatas.Email" label="Email" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -276,18 +276,18 @@
 
                 <div id="personaldata">
                 <strong>PERSONAL DATA</strong>
-                  <br> <span style="float:left"> Name: {{ PenReg.FirstName }}  {{ PenReg.LastName }} </span> 
-                      <span style="float:right">Civil Status:  {{ PenReg.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                      <br><span style="float:left"> BirthPlace: {{ PenReg.BirthPlace }} </span> 
-                    <span style="float:right"> Date of birth:  {{ PenReg.BirthDate }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                    <br><span style="float:left"> Present Address: {{ PenReg.Address }} </span> 
-                  <br><span style="float:left"> Occupation: {{ PenReg.Occupation }} </span> 
-                <br><span style="float:left"> Employer or office: {{ PenReg.EmployerCompany }} </span>
-                <span style="float:right"> Salary:  {{ PenReg.Salary }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                <br><span style="float:left"> Other sources of income: {{ PenReg.OtherIncome }} </span> 
-                <br><span style="float:left"> Nearest relative: {{ PenReg.RelativeName }} </span>
-                <span style="float:right"> Relationship: {{ PenReg.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                <br><span style="float:left"> Number of Dependents: {{ PenReg.NoDependents }} </span>
+                  <br> <span style="float:left"> Name: {{ MemberDatas.FirstName }}  {{ MemberDatas.LastName }} </span> 
+                      <span style="float:right">Civil Status:  {{ MemberDatas.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                      <br><span style="float:left"> BirthPlace: {{ MemberDatas.BirthPlace }} </span> 
+                    <span style="float:right"> Date of birth:  {{ MemberDatas.BirthDate }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                    <br><span style="float:left"> Present Address: {{ MemberDatas.Address }} </span> 
+                  <br><span style="float:left"> Occupation: {{ MemberDatas.Occupation }} </span> 
+                <br><span style="float:left"> Employer or office: {{ MemberDatas.EmployerCompany }} </span>
+                <span style="float:right"> Salary:  {{ MemberDatas.Salary }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                <br><span style="float:left"> Other sources of income: {{ MemberDatas.OtherIncome }} </span> 
+                <br><span style="float:left"> Nearest relative: {{ MemberDatas.RelativeName }} </span>
+                <span style="float:right"> Relationship: {{ MemberDatas.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                <br><span style="float:left"> Number of Dependents: {{ MemberDatas.NoDependents }} </span>
 
                 <p>&nbsp;</p>
                 <h6 style="text-align: center;">EARN AND SAVE THE COOPERATIVE WAY</h6>
@@ -298,7 +298,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 // import Vue from 'vue';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
@@ -336,21 +336,28 @@ export default {
               Designation: '',
               imageFile: []
             },
-            // imageUrlPro: this.PenReg.imageUrl0,
-            // imageUrlLic: this.PenReg.imageUrl1
+            // imageUrlPro: this.MemberDatas.imageUrl0,
+            // imageUrlLic: this.MemberDatas.imageUrl1
         }
     },
     methods: {
+      props: ['penRegId'],
+      firestore () {
+        return {
+            // Doc
+            MemberDatas: firebaseDb.collection('MemberData').doc(this.penRegId)
+        }
+      },
       imglog(){
         console.log(this.MemberData.imageFile)
       },
-      ...mapActions('store', ['AddPayment']),
-      PayFee(){
-        this.AddPayment({
-          Payment: this.Payment,
-          Date: this.datetodaydata
-        })
-      },
+      // ...mapActions('store', ['AddPayment']),
+      // PayFee(){
+      //   this.AddPayment({
+      //     Payment: this.Payment,
+      //     Date: this.datetodaydata
+      //   })
+      // },
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;
         // Get all stylesheets HTML
@@ -398,7 +405,7 @@ export default {
         }
         const fileReader = new FileReader()
         fileReader.addEventListener('load', () => {
-        this.PenReg.imageUrl0 = fileReader.result
+        this.MemberDatas.imageUrl0 = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
         this.MemberData.imageFile.push(files[0])
@@ -411,7 +418,7 @@ export default {
         }
         const fileReader = new FileReader()
         fileReader.addEventListener('load', () => {
-        this.PenReg.imageUrl1 = fileReader.result
+        this.MemberDatas.imageUrl1 = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
         this.MemberData.imageFile.push(files[0])
@@ -436,15 +443,6 @@ export default {
       if (!this.blockRemoval) this.lines.splice(lineId, 1)
     }
  },
- props: ['penRegId'],
- computed: {
-    // qrvalue: function() {
-    //   return this.MemberData.MemberId;
-    // },
-    PenReg () {
-        return this.$store.state.store.MemberData[this.penRegId]
-    }
-  },
   mounted () {
     // this.addLine()
     this.datetoday()
