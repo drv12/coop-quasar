@@ -1,10 +1,7 @@
 <template>
   <div>
-<<<<<<< HEAD
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Members <q-icon name="mdi-arrow-right-box" /> All Members</h6>
-=======
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members<q-icon name="mdi-arrow-right-box" /> All Members</h6>
->>>>>>> 6221aeff7471ed58840d6f8370e08ece31b2ed2a
+
     <q-separator />
     <div class="q-pa-md col-xs-12 col-sm-12 col-md-12">
       <q-markup-table :separator="vertical" flat bordered>
@@ -20,7 +17,6 @@
           </tr>
         </thead>
       </template>
-<<<<<<< HEAD
       <q-td slot="body-cell-status" slot-scope="props" :props="props">
          <q-btn v-if="active" @click="active = !active" size="xs" color="green" icon="mdi-check-circle" label="Active" />
          <q-btn  v-else @click="active = !active" class="q-ml-xs" size="xs" color="red" icon="mdi-archive" label="Inactive" />
@@ -30,7 +26,7 @@
          <q-btn @click="deleteMember = true" class="q-ml-xs" size="xs" color="negative" icon="mdi-delete" />
       </q-td>
     
-    </q-table> -->
+      </q-markup-table>
      <!-- <div class="q-pa-sm q-gutter-sm"> -->
       
         <q-table title="ALL MEMBERS" :data="data" :columns="columns" row-key="name">
@@ -142,7 +138,6 @@
     </q-table>
     <q-btn @click="log">try</q-btn>
           </div>
-=======
       <template>
         <tbody>
           <tr v-for="(data, id) in MemberData" :key="id">
@@ -155,10 +150,7 @@
           </tr>
         </tbody>
       </template>
-    </q-markup-table>
->>>>>>> 6221aeff7471ed58840d6f8370e08ece31b2ed2a
     </div>
-  </div>
 </template>
 
 <script>

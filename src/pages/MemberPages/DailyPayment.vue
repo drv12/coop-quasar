@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Collectors All Payment</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment History</h6>
      <q-separator />
      <div class="q-pa-md">
         <!-- <q-toolbar class="bg-white text-blue">
