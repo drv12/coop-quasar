@@ -31,8 +31,11 @@ export default function ({store}) {
       let dsg = store.getters['store/Designation']
   
       if(route.meta.requiresAdmin){
+        console.log('isadmin: ',dsg)
         if(dsg == 'Admin'){
-          next()
+          next(
+            // { path: '/admin/dashboard'}
+          )
         } else {
           next (
             // { path: '/'}

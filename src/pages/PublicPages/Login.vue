@@ -37,10 +37,17 @@
                             unelevated
                             color="primary"
                             size="lg"
-                            class="full-width"
+                            class="full-width on-left"
                             label="Login"
                             @click.prevent='signin'
+                        >
+                        <q-spacer/>
+                        <q-spinner-dots
+                            class="on-right"
+                            color="white"
+                            v-if="Loading"
                         />
+                        </q-btn>
                     </q-card-actions>
                     </q-card>
                 </div>
@@ -51,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: "Login",
@@ -69,6 +76,9 @@ export default {
             signin(){
                 this.loginUser(this.formData)
             },
+        },
+        computed: {
+            ...mapGetters('store', ['Loading'])
         }
 };
 </script>

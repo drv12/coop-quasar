@@ -132,7 +132,15 @@
       </q-drawer>
 
       <q-page-container>
-        <router-view/>
+            <div v-if="Loading">
+              <q-spinner-oval
+                color="primary"
+                size="200px"
+                :thickness="5"
+                class="fixed-center"
+              />
+            </div>
+        <router-view v-if="!Loading"/>
       </q-page-container>
 
       <q-footer elevated>
@@ -144,7 +152,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 const menuList = [
   { route:'/home' ,icon: 'home', label: 'Home', separator: true },
@@ -162,10 +170,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('store', ['userDetails'])
+    ...mapState('store', ['userDetails']),
+    ...mapGetters('store', ['Loading'])
   },
   methods: {
-    ...mapActions('store', ['logoutUser'])
+    ...mapActions('store', ['logoutUser']),
   }
 }
 </script>

@@ -2,17 +2,25 @@
   <div>
     <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members<q-icon name="mdi-arrow-right-box" /> All Members</h6>
     <q-separator />
-    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12">
-      <q-markup-table :separator="vertical" flat bordered>
+      <div v-if="loading">
+        <q-spinner-oval
+        color="primary"
+        size="200px"
+        :thickness="5"
+        class="fixed-center"
+        />
+      </div>
+    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12" v-if="!loading">
+      <q-markup-table separator="horizontal" flat bordered>
       <template>
-        <thead>
+        <thead color="secondary">
           <tr>
             <th class="text-left">MemberID</th>
-            <th class="text-right">Last Name</th>
-            <th class="text-right">First Name</th>
-            <th class="text-right">Phone</th>
-            <th class="text-right">Email</th>
-            <th class="text-right">View Profile</th>
+            <th class="text-left">Last Name</th>
+            <th class="text-left">First Name</th>
+            <th class="text-left">Phone</th>
+            <th class="text-left">Email</th>
+            <th class="text-left">View Profile</th>
           </tr>
         </thead>
       </template>
@@ -20,11 +28,11 @@
         <tbody>
           <tr v-for="(data, id) in MemberData" :key="id">
             <td class="text-left">{{id}}</td>
-            <td class="text-right">{{data.LastName}}</td>
-            <td class="text-right">{{data.FirstName}}</td>
-            <td class="text-right">{{data.Phone}}</td>
-            <td class="text-right">{{data.Email}}</td>
-            <td class="text-right"><q-btn icon="mdi-face" @click="loadProfile(id)"/></td>
+            <td class="text-left">{{data.LastName}}</td>
+            <td class="text-left">{{data.FirstName}}</td>
+            <td class="text-left">{{data.Phone}}</td>
+            <td class="text-left">{{data.Email}}</td>
+            <td class="text-left"><q-btn icon="mdi-face" @click="loadProfile(id)"/></td>
           </tr>
         </tbody>
       </template>
@@ -39,6 +47,7 @@ import { firebaseDb } from 'boot/firebase';
 export default {
   data() {
     return {
+      loading: true,
       active: true,
       inactive: true,
       show_dialog: false,
@@ -65,22 +74,29 @@ export default {
   firestore () {
     return {
       MemberData: {
-        // collection reference.
-            ref: firebaseDb.collection('MemberData'),
-            // Bind the collection as an object if you would like to.
-            objects: true,
-            resolve: (data) => {
-                // collection is resolved
-            },
-            reject: (err) => {
-                // collection is rejected
-            }
+        // // collection reference.
+        //     ref: firebaseDb.collection('MemberData'),
+        //     // Bind the collection as an object if you would like to.
+        //     objects: true,
+        //     resolve: (data) => {
+        //         // collection is resolved
+        //     },
+        //     reject: (err) => {
+        //         // collection is rejected
+        //     }
         }
       }
   },
   computed: {
     // ...mapGetters('store', ['MemberData'])
   },
+  mounted () {
+      // Binding Collections
+      this.$bindCollectionAsObject("MemberData", firebaseDb.collection("MemberData"))
+      .then((MemberData) => {
+        this.loading = false
+      })
+    },
   methods: {
     loadProfile(id) {
             this.$router.push('/admin/profile/' + id)
