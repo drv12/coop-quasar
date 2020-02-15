@@ -102,7 +102,7 @@
                           </strong>
                           <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                          <img :src="PenReg.imageUrl0" width='300' height='150'>
+                          <img :src="PenReg.imageUrlLic" width='300' height='150'>
 
                         <q-input standard v-model="PenReg.LicenseNo" label="License Number"
                         readonly
@@ -121,7 +121,7 @@
                 class="col q-ma-md" 
                 color="primary" 
                 label="Approve"
-                @click="regMember(); loadPreReg(penRegId)"
+                @click="regMember(); loadPreReg(mid)"
                 />
                 <q-btn class="col q-ma-md" 
                 @click="rejectMember"
@@ -139,60 +139,66 @@
 </template> 
 
 <script>
-import { firebaseDb } from 'boot/firebase';
+import { firebaseDb, firefirestore } from 'boot/firebase';
 // import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
        newMessage: '',
-       PenReg: []
+       PenReg: [],
+       mid: ''
     }
   },
   props: ['penRegId'],
   firestore () {
     return {
         // Doc
-        PenReg: firebaseDb.collection('PreRegPersonalData').doc(this.penRegId)
+        PenReg: firebaseDb.collection('PreRegPersonalData').doc(this.penRegId),
+        MemberData: firebaseDb.collection('MemberData'),
+        MemberID: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
     }
   },
   methods: {
-    //add data dito
-    log(){
-    console.log(this.PenReg)
+    regMember(){
+      this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
+      this.$firestore.MemberData.doc(this.mid).set(this.PenReg)
+
+      const increment = firefirestore.FieldValue.increment(1);
+      this.$firestore.MemberID.update({ MemberID: increment });
     },
     rejectMember(){
 
     },
     loadPreReg(id) {
             this.$router.push('/admin/profile/' + id)
-    },
-    printDiv(divName){
-			const prtHtml = document.getElementById(divName).innerHTML;
+    }
+    // printDiv(divName){
+		// 	const prtHtml = document.getElementById(divName).innerHTML;
 
-      // Get all stylesheets HTML
-      let stylesHtml = '';
-      for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
-        stylesHtml += node.outerHTML;
-      }
-      // Open the print window
-      const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+    //   // Get all stylesheets HTML
+    //   let stylesHtml = '';
+    //   for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
+    //     stylesHtml += node.outerHTML;
+    //   }
+    //   // Open the print window
+    //   const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 
-      WinPrint.document.write(`<!DOCTYPE html>
-      <html>
-        <head>
-          ${stylesHtml}
-        </head>
-        <body>
-          ${prtHtml}
-        </body>
-      </html>`);
+    //   WinPrint.document.write(`<!DOCTYPE html>
+    //   <html>
+    //     <head>
+    //       ${stylesHtml}
+    //     </head>
+    //     <body>
+    //       ${prtHtml}
+    //     </body>
+    //   </html>`);
 
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
-      WinPrint.close();
-		}
+    //   WinPrint.document.close();
+    //   WinPrint.focus();
+    //   WinPrint.print();
+    //   WinPrint.close();
+		// }
   }
 }
 </script>

@@ -14,12 +14,13 @@ Vue.use(VueFirestore)
 
 import { mapActions } from 'vuex'
 
+
 export default {
   methods: {
     ...mapActions('store',['handleAuthStateChanged'])
   },
   mounted(){
     this.handleAuthStateChanged();
-  }
+  },
 }
 </script>

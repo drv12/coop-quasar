@@ -2,8 +2,8 @@
     <div class="q-pa-md">
         <q-card class="my-card" flat bordered>
         <q-card-actions align="right">
-          <q-btn @click="inception = true" flat v-if="MemberDatas.MembershipFee">
-            Membership Fee: {{ MemberDatas.MembershipFee }}
+          <q-btn @click="inception = true" flat v-if="MemberData.MembershipFee">
+            Membership Fee: {{ MemberData.MembershipFee }}
             </q-btn>
 
             <div>
@@ -52,15 +52,11 @@
             </div>
 
             <q-btn flat round icon="event"/>
-            <q-btn @click="printDiv('page')" flat>
-            Print Contract
-            </q-btn>
-            <q-btn flat color="primary">
-            Print ID
-            </q-btn>
-            <q-btn flat color="primary">
-            Resign
-            </q-btn>
+            <q-btn @click="printDiv('page')" flat label="Print Contract"/>
+            <q-btn @click="readonly = !readonly; updateMemberData()" color="primary" flat label="Update"/>
+            <q-btn color="primary" flat label="Print ID"/>
+            <q-btn color="primary" flat label="Resign"/>
+            
         </q-card-actions>
 
         <q-separator />
@@ -70,8 +66,15 @@
             <img
             style="height:200px; width:200px; border-radius: 50%;"
             class="rounded-borders"
-            :src="MemberDatas.imageUrl0"
-          />
+            :src="MemberData.imageUrlPro"
+            v-if="!loading"
+            />
+            <q-spinner
+            color="primary"
+            width='150' 
+            height='150'
+            v-if="loading"
+            />
           <q-btn @click="onFileClick1">Change Profile Picture</q-btn>
           <input type="file" accept="image/*" ref="fileInput1" @change="onFilePickedPro" v-show="false">
 
@@ -79,9 +82,8 @@
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
             <div class="q-pa-md">
               <q-input 
-              v-model="MemberDatas.FirstName" 
+              v-model="MemberData.FirstName" 
               label="First Name" 
-              readonly
               >
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
@@ -90,7 +92,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.LastName" label="Last Name" readonly>
+              <q-input v-model="MemberData.LastName" label="Last Name" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup"/>
                 </template>
@@ -98,7 +100,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="MemberDatas.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
+              <q-select v-model="MemberData.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -106,7 +108,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="MemberDatas.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
+              <q-select v-model="MemberData.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -116,7 +118,7 @@
 
         <q-card-section class="col-md-4 q-pt-md">
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.BirthDate" label="BirthDate" stack-label type="date" readonly>
+              <q-input v-model="MemberData.BirthDate" label="BirthDate" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -124,7 +126,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.BirthPlace" label="BirthPlace" readonly>
+              <q-input v-model="MemberData.BirthPlace" label="BirthPlace" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -132,7 +134,7 @@
             </div>
 
           <div class="q-pa-md">
-              <q-input v-model="MemberDatas.Occupation" label="Occupation" readonly>
+              <q-input v-model="MemberData.Occupation" label="Occupation" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -140,7 +142,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.EmployerCompany" label="Employer or Office" readonly>
+              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -148,7 +150,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.OtherIncome" label="Other Sources of Income" readonly>
+              <q-input v-model="MemberData.OtherIncome" label="Other Sources of Income" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -156,7 +158,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.RelativeName" label="Nearest Relative" readonly>
+              <q-input v-model="MemberData.RelativeName" label="Nearest Relative" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -164,7 +166,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.Relationship" label="Relationship" readonly>
+              <q-input v-model="MemberData.Relationship" label="Relationship" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -172,7 +174,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.NoDependents" label="Number of Dependents" readonly>
+              <q-input v-model="MemberData.NoDependents" label="Number of Dependents" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -184,9 +186,16 @@
         <q-card-section class="col-md-4 col-sm-12 col-xs-12 q-pt-md">
 
           <div class="col-sm-4">
+            <q-spinner
+            color="primary"
+            width='150' 
+            height='150'
+            v-if="loading1"
+            />
               <q-img
                 class="rounded-borders"
-                :src="MemberDatas.imageUrl1"
+                :src="MemberData.imageUrlLic"
+                v-if="!loading1"
             />
 
           <q-btn @click="onFileClick2">Change License Picture</q-btn>
@@ -196,7 +205,7 @@
 
           <div class="col-sm-4">
               <div class="q-pa-md">
-              <q-input v-model="MemberDatas.LicenseNo" label="License No." readonly>
+              <q-input v-model="MemberData.LicenseNo" label="License No." readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -206,7 +215,7 @@
 
         <div class="col-sm-4 col-sm-12 col-xs-12">
               <div class="q-pa-md">
-              <q-input v-model="MemberDatas.LicenseExp" label="License Expiration" stack-label type="date" readonly>
+              <q-input v-model="MemberData.LicenseExp" label="License Expiration" stack-label type="date" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -215,7 +224,7 @@
         </div>
 
         <div class="q-pa-md">
-              <q-input v-model="MemberDatas.Address" label="Adress" readonly>
+              <q-input v-model="MemberData.Address" label="Adress" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -223,7 +232,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.Phone" label="Phone" readonly>
+              <q-input v-model="MemberData.Phone" label="Phone" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -231,12 +240,13 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberDatas.Email" label="Email" readonly>
+              <q-input v-model="MemberData.Email" label="Email" readonly>
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
               </q-input>
             </div>
+            <q-btn @click="log" lable="sssss" />
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -276,18 +286,18 @@
 
                 <div id="personaldata">
                 <strong>PERSONAL DATA</strong>
-                  <br> <span style="float:left"> Name: {{ MemberDatas.FirstName }}  {{ MemberDatas.LastName }} </span> 
-                      <span style="float:right">Civil Status:  {{ MemberDatas.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                      <br><span style="float:left"> BirthPlace: {{ MemberDatas.BirthPlace }} </span> 
-                    <span style="float:right"> Date of birth:  {{ MemberDatas.BirthDate }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                    <br><span style="float:left"> Present Address: {{ MemberDatas.Address }} </span> 
-                  <br><span style="float:left"> Occupation: {{ MemberDatas.Occupation }} </span> 
-                <br><span style="float:left"> Employer or office: {{ MemberDatas.EmployerCompany }} </span>
-                <span style="float:right"> Salary:  {{ MemberDatas.Salary }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                <br><span style="float:left"> Other sources of income: {{ MemberDatas.OtherIncome }} </span> 
-                <br><span style="float:left"> Nearest relative: {{ MemberDatas.RelativeName }} </span>
-                <span style="float:right"> Relationship: {{ MemberDatas.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
-                <br><span style="float:left"> Number of Dependents: {{ MemberDatas.NoDependents }} </span>
+                  <br> <span style="float:left"> Name: {{ MemberData.FirstName }}  {{ MemberData.LastName }} </span> 
+                      <span style="float:right">Civil Status:  {{ MemberData.CivilStatus }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                      <br><span style="float:left"> BirthPlace: {{ MemberData.BirthPlace }} </span> 
+                    <span style="float:right"> Date of birth:  {{ MemberData.BirthDate }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                    <br><span style="float:left"> Present Address: {{ MemberData.Address }} </span> 
+                  <br><span style="float:left"> Occupation: {{ MemberData.Occupation }} </span> 
+                <br><span style="float:left"> Employer or office: {{ MemberData.EmployerCompany }} </span>
+                <span style="float:right"> Salary:  {{ MemberData.Salary }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                <br><span style="float:left"> Other sources of income: {{ MemberData.OtherIncome }} </span> 
+                <br><span style="float:left"> Nearest relative: {{ MemberData.RelativeName }} </span>
+                <span style="float:right"> Relationship: {{ MemberData.Relationship }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
+                <br><span style="float:left"> Number of Dependents: {{ MemberData.NoDependents }} </span>
 
                 <p>&nbsp;</p>
                 <h6 style="text-align: center;">EARN AND SAVE THE COOPERATIVE WAY</h6>
@@ -298,6 +308,8 @@
 </template>
 
 <script>
+import { firebaseDb, firebaseSto } from 'boot/firebase';
+
 // import { mapActions } from 'vuex'
 // import Vue from 'vue';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
@@ -307,6 +319,9 @@
 export default {
     data(){
         return{
+            readonly: 'true',
+            loading: false,
+            loading1: false,
             datetodaydata: '',
             inception: false,
             Payment: {
@@ -315,41 +330,50 @@ export default {
               OrNo: '',
               Amount: ''
             },
-            MemberData: {
-              FirstName: '',
-              LastName: '',
-              CivilStatus: '',
-              BirthPlace: '',
-              BirthDate: '',
-              Address:'',
-              Phone:'',
-              Email:'',
-              Occupation: '',
-              EmployerCompany: '',
-              Salary: '',
-              OtherIncome: '',
-              RelativeName: '',
-              Relationship: '',
-              NoDependents: '',
-              LicenseNo:'',
-              LicenseExp:'',
-              Designation: '',
-              imageFile: []
-            },
-            // imageUrlPro: this.MemberDatas.imageUrl0,
-            // imageUrlLic: this.MemberDatas.imageUrl1
+            // MemberData: {
+            //   FirstName: '',
+            //   LastName: '',
+            //   CivilStatus: '',
+            //   BirthPlace: '',
+            //   BirthDate: '',
+            //   Address:'',
+            //   Phone:'',
+            //   Email:'',
+            //   Occupation: '',
+            //   EmployerCompany: '',
+            //   Salary: '',
+            //   OtherIncome: '',
+            //   RelativeName: '',
+            //   Relationship: '',
+            //   NoDependents: '',
+            //   LicenseNo:'',
+            //   LicenseExp:'',
+            //   Designation: '',
+            //   imageFile: []
+            // },
+            MemberData: [],
+            MemberDataUPD: []
+            // imageUrlPro: this.MemberData.imageUrl0,
+            // imageUrlLic: this.MemberData.imageUrl1
         }
     },
-    methods: {
-      props: ['penRegId'],
+    props: ['penRegId'],
       firestore () {
         return {
             // Doc
-            MemberDatas: firebaseDb.collection('MemberData').doc(this.penRegId)
+            MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
+            MemberDataUPD: firebaseDb.collection('MemberData')
+
         }
       },
+    methods: {
       imglog(){
         console.log(this.MemberData.imageFile)
+      },
+      updateMemberData () {
+          // this.$firestore.MemberDataUPD.doc(memberdata[this.penRegId]).update(this.MemberData)
+          this.$firestore.MemberData.set(this.MemberData);
+
       },
       // ...mapActions('store', ['AddPayment']),
       // PayFee(){
@@ -396,33 +420,44 @@ export default {
       },  
       onFileClick2(){
         this.$refs.fileInput2.click()
+      },
+      onFilePickedPro(e){
+        this.loading = true
+        let file = e.target.files[0]
+        var storageRef = firebaseSto.ref('mempic/'+ file.name)
+        let uploadTask = storageRef.put(file)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        },(error) => {
+
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.MemberData.imageUrlPro = downloadURL
+            console.log('ProfilePic:', downloadURL)
+          }).then(() => {
+            this.loading = false
+          })
+        })
+        this.updateMemberData()
+      },
+      onFilePickedLic(e){
+        this.loading1 = true
+        let file = e.target.files[0]
+        var storageRef = firebaseSto.ref('mempic/'+ file.name)
+        let uploadTask = storageRef.put(file)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        },(error) => {
+
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.MemberData.imageUrlLic = downloadURL
+            console.log('ProfileLic:', downloadURL)
+          }).then(() => {
+            this.loading1 = false
+          })
+        })
       }, 
-      onFilePickedPro(event){
-        const files = event.target.files
-        let filename = files[0].name
-        if (filename.lastIndexOf('.') <= 0){
-          return alter('Please add a valid file!')
-        }
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-        this.MemberDatas.imageUrl0 = fileReader.result
-        })
-        fileReader.readAsDataURL(files[0])
-        this.MemberData.imageFile.push(files[0])
-      },
-      onFilePickedLic(event){
-        const files = event.target.files
-        let filename = files[0].name
-        if (filename.lastIndexOf('.') <= 0){
-          return alter('Please add a valid file!')
-        }
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-        this.MemberDatas.imageUrl1 = fileReader.result
-        })
-        fileReader.readAsDataURL(files[0])
-        this.MemberData.imageFile.push(files[0])
-      },
       log(){
         console.log(this.operatorprofile);
       },

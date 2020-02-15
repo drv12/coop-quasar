@@ -6,22 +6,32 @@
            :class="'lt-md'"
           />
           <q-toolbar-title>New GSIS Cooperative</q-toolbar-title>
-            <div
-             v-for="(menuItem, index) in menuList" :key="index"
-            >
-            <q-btn flat dark 
-            :icon="menuItem.icon" 
-            :label="menuItem.label" 
-            :to="menuItem.route"
-            :class="'gt-sm'"
-            />
+            <div>
             </div>
             <q-btn flat dark 
-            icon="lock" 
-            label="Log In" 
-            to="/login"
+            icon="home" 
+            label="Home" 
+            to="/home"
+            :class="'gt-sm'"
+            />
+            <q-btn flat dark 
+            icon="mdi-face" 
+            label="Be a Member" 
+            to="/preregister"
             :class="'gt-sm'"
             v-if="!userDetails.userId"
+            />
+            <q-btn flat dark 
+            icon="account_balance" 
+            label="Services" 
+            to="/services"
+            :class="'gt-sm'"
+            />
+            <q-btn flat dark 
+            icon="info" 
+            label="About Us" 
+            to="/about"
+            :class="'gt-sm'"
             />
             <q-btn flat dark 
             icon="lock" 
@@ -36,6 +46,13 @@
             to="/member/dashboard"
             :class="'gt-sm'"
             v-if="userDetails.Designation == 'Driver'"
+            />
+            <q-btn flat dark 
+            icon="lock" 
+            label="Log In" 
+            :class="'gt-sm'"
+            to="/login"
+            v-if="!userDetails.userId"
             />
             <q-btn flat dark 
             icon="lock" 
@@ -58,20 +75,58 @@
       >
         <q-scroll-area fit style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list>
-            <div v-for="(menuItem, index) in menuList" :key="index">
-               <q-item clickable
+
+            <q-item clickable
                v-ripple 
-               :to="menuItem.route"
+               to="/"
                >
                   <q-item-section avatar>
-                    <q-icon :name="menuItem.icon" />
+                    <q-icon name="home"/>
                   </q-item-section>
                   <q-item-section>
-                    {{ menuItem.label }}
+                    Home
                   </q-item-section>
                </q-item>
-            <q-separator v-if="menuItem.separator" />
-            </div>
+
+              <q-separator/>
+
+               <q-item clickable
+               v-ripple 
+               to="/preregister"
+               v-if="!userDetails.userId"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="face"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Be a Member
+                  </q-item-section>
+               </q-item>
+
+               <q-item clickable
+               v-ripple 
+               to="/services"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="account_balance"/>
+                  </q-item-section>
+                  <q-item-section>
+                    Services
+                  </q-item-section>
+               </q-item>
+
+               <q-item clickable
+               v-ripple 
+               to="/about"
+               >
+                  <q-item-section avatar>
+                    <q-icon name="info"/>
+                  </q-item-section>
+                  <q-item-section>
+                    About Us
+                  </q-item-section>
+               </q-item>
+
             <q-item clickable
                v-ripple 
                to="/login"
@@ -110,7 +165,6 @@
                   </q-item-section>
                </q-item>
 
-
                <q-item clickable
                v-ripple 
                @click="logoutUser"
@@ -123,14 +177,10 @@
                     Log Out
                   </q-item-section>
                </q-item>
-           
+
           </q-list>
         </q-scroll-area>
-
-        
-          
       </q-drawer>
-
       <q-page-container>
             <div v-if="Loading">
               <q-spinner-oval
@@ -154,19 +204,11 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 
-const menuList = [
-  { route:'/home' ,icon: 'home', label: 'Home', separator: true },
-  { route:'/preregister' ,icon: 'mdi-face', label: 'Be a Member', separator: false },
-  { route:'/services' ,icon: 'account_balance', label: 'Services', separator: false },
-  { route:'/about' ,icon: 'info', label: 'About Us', separator: false }
-]
-
 export default {
   name: 'MyLayout',
   data () {
     return {
       drawer: false,
-      menuList
     }
   },
   computed: {

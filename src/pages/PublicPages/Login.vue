@@ -37,11 +37,10 @@
                             unelevated
                             color="primary"
                             size="lg"
-                            class="full-width on-left"
+                            class="full-width on-right"
                             label="Login"
                             @click.prevent='signin'
                         >
-                        <q-spacer/>
                         <q-spinner-dots
                             class="on-right"
                             color="white"
@@ -67,12 +66,11 @@ export default {
             formData: {
                 email: '',
                 password: ''
-            }
+                }
             };
         },
         methods: {
             ...mapActions('store',['loginUser']),
-
             signin(){
                 this.loginUser(this.formData)
             },

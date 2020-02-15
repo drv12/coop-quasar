@@ -4,14 +4,16 @@
     <div class = "col-xs-12 col-sm-6 col-md-6 q-pa-md">
             <q-card class="q-pa-md doc-container" style="opacity: 0.7;">
               <q-card-section>
-                  <div class="text-h6">New GSIS Transport Cooperative</div>
+                  <div class="text-h5">Be a Part of New GSIS Transport Cooperative</div>
+                  <div class="text-h6">Earn and Save the Cooperative Way</div>
               </q-card-section>
             
               <q-card-section class="q-pt-none text-center text-justify">
-                <div class="text-subtitle2">We are New GSIS Transport Cooperative. 
-                    We accept any applicant irregardless if they are transport operator or drivers of routes under the management of the transport cooperaive. 
-                    Interested Apllicants can start by undergoing our online Pre-registration. Information provided will be evaluated by the cooperative.
-                    However, applicants are advised to personally visit our office to properly apply for membership.
+                <div class="text-subtitle2">
+                    Interested Applicants can start by undergoing our online Pre-registration. 
+                    The information you provided will be subjected into an evaluation process by the cooperative.
+                    <br> 
+                    You can also personally visit our office to directly apply for a membership.
               </div>
               </q-card-section>
             </q-card>
@@ -230,7 +232,7 @@
         Upon approval an email will be sent to you. 
         In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
-          <q-btn color="primary" label="Finish"></q-btn>
+          <q-btn color="primary" label="Finish" to="/"></q-btn>
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
         </q-stepper-navigation>
       </q-step>
@@ -299,7 +301,7 @@ export default {
             }).
             then(downloadURL => {
                 console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrl0: downloadURL});
+                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrlLic: downloadURL});
             })
             .catch(error => {
                 // Use to signal error if something goes wrong.
@@ -336,8 +338,8 @@ export default {
           textColor: 'white',
           icon: 'cloud_done',
           message: 'Submitted',
-        });
-        // setTimeout(this.$refs.stepbtn.click(), 3000)
+        })
+          this.$refs.stepbtn.click()
     },
     onReset () {
       this.FirstName = null

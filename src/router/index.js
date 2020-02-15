@@ -29,41 +29,51 @@ export default function ({store}) {
   Router.beforeEach((to,from, next) => {
     to.matched.some( route =>{
       let dsg = store.getters['store/Designation']
-  
-      if(route.meta.requiresAdmin){
-        console.log('isadmin: ',dsg)
-        if(dsg == 'Admin'){
-          next(
-            // { path: '/admin/dashboard'}
-          )
-        } else {
-          next (
-            // { path: '/'}
-          )
-        }
-      }
-  
-      if(route.meta.requiresCollector){
-        console.log('Collector')
-        if(dsg == 'Collector'){
-          next()
-        } else {
-          next (
-            // { path: '/'}
-          )
-        }
-      }
 
-      if(route.meta.requiresMember){
-        if(dsg == 'Driver'){
-          next()
+      if(route.meta.requiresAuth){
+        if(dsg != ''){
+          next(
+            { path: '/'}
+          )
         } else {
-          console.log('Member')
           next (
-            // { path: '/'}
-            )
+            { path: '/'}
+          )
         }
       }
+  
+  //     if(route.meta.requiresAdmin){
+  //       console.log('isadmin: ',dsg)
+  //       if(dsg == 'Admin'){
+  //         next()
+  //       } else {
+  //         next (
+  //           // { path: '/'}
+  //         )
+  //       }
+  //     }
+  
+  //     if(route.meta.requiresCollector){
+  //       console.log('Collector')
+  //       if(dsg == 'Collector'){
+  //         next()
+  //       } else {
+  //         next (
+  //           // { path: '/'}
+  //         )
+  //       }
+  //     }
+
+  //     if(route.meta.requiresMember){
+  //       if(dsg == 'Driver' || dsg == 'Operator'){
+  //         next()
+  //       } else {
+  //         console.log('Member')
+  //         next (
+  //           // { path: '/'}
+  //           )
+  //       }
+  //     }
 
       next()
     })

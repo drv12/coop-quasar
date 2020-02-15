@@ -15,7 +15,18 @@
                    <div class="col-sm-4">
                      <div class="q-pa-md">
                           <div style=" text-align: center;">
-                            <img :src="imageUrlPro" width='150' height='150' style="border-radius: 50%;">
+                            <q-spinner
+                              color="primary"
+                              width='150' 
+                              height='150'
+                              v-if="loading"
+                            />
+                            <img 
+                            v-if="!loading"
+                            :src="MemberData.imageUrlPro" 
+                            width='150' 
+                            height='150' 
+                            style="border-radius: 50%;">
                           </div>
                        <q-input 
                        type="file"
@@ -32,7 +43,18 @@
                    <div class="col-sm-4">
                      <div class="q-pa-md">
                           <div style=" text-align: center;">
-                            <img :src="imageUrlLic" width='150' height='150' style="border-radius: 50%;">
+                            <q-spinner
+                              color="primary"
+                              width='150' 
+                              height='150'
+                              v-if="loading1"
+                            />
+                            <img 
+                            v-if="!loading1"
+                            :src="MemberData.imageUrlLic" 
+                            width='150' 
+                            height='150' 
+                            style="border-radius: 50%;">
                           </div>
                        <q-input 
                        type="file"
@@ -418,7 +440,7 @@
 </template>
     
 <script>
-import { firebaseDb } from 'boot/firebase';
+import { firebaseDb, firebaseSto } from 'boot/firebase';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 // Vue.component(VueQrcode.name, VueQrcode);
@@ -447,7 +469,8 @@ export default {
               LicenseNo:'',
               LicenseExp:'',
               Designation: '',
-              imageFile: []
+              imageUrlPro: null,
+              imageUrlLic: null
             },
             // UnitData: {
             //   PlateNo: '',
@@ -460,8 +483,9 @@ export default {
             unit:'',
             units:[],
             civilstatusoptions: ['Single', 'Married', 'Widow'],
-            imageUrlPro: null,
-            imageUrlLic: null
+            mid: '',
+            loading: false,
+            loading1: false
               }
     },
     watch: {
@@ -471,38 +495,54 @@ export default {
   },
   firestore: function () {
     return {
-        AddMemberData: firebaseDb.collection('MemberData')
+        AddMemberData: firebaseDb.collection('MemberData'),
+        MemberID: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
     }
   },
     methods: {
     regMember: function () {
-        this.$firestore.AddMemberData.add(this.MemberData)
+        // this.$firestore.AddMemberData.add(this.MemberData)
+        this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
+        this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
+
+        const increment = firefirestore.FieldValue.increment(1);
+        this.$firestore.MemberID.update({ MemberID: increment });
     },
-      onFilePickedPro(event){
-        const files = event.target.files
-        let filename = files[0].name
-        if (filename.lastIndexOf('.') <= 0){
-          return alter('Please add a valid file!')
-        }
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-        this.imageUrlPro = fileReader.result
+      onFilePickedPro(e){
+        this.loading = true
+        let file = e.target.files[0]
+        var storageRef = firebaseSto.ref('mempic/'+ file.name)
+        let uploadTask = storageRef.put(file)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        },(error) => {
+
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.MemberData.imageUrlPro = downloadURL
+            console.log('ProfilePic:', downloadURL)
+          }).then(() => {
+            this.loading = false
+          })
         })
-        fileReader.readAsDataURL(files[0])
-        this.MemberData.imageFile.push(files[0])
       },
-      onFilePickedLic(event){
-        const files = event.target.files
-        let filename = files[0].name
-        if (filename.lastIndexOf('.') <= 0){
-          return alter('Please add a valid file!')
-        }
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-        this.imageUrlLic = fileReader.result
+      onFilePickedLic(e){
+        this.loading1 = true
+        let file = e.target.files[0]
+        var storageRef = firebaseSto.ref('mempic/'+ file.name)
+        let uploadTask = storageRef.put(file)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        },(error) => {
+
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.MemberData.imageUrlLic = downloadURL
+            console.log('ProfileLic:', downloadURL)
+          }).then(() => {
+            this.loading1 = false
+          })
         })
-        fileReader.readAsDataURL(files[0])
-        this.MemberData.imageFile.push(files[0])
       },
       log(){
         console.log(this.operatorprofile);

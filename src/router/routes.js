@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/dashboard',
     redirect: '/member/dashboard',
-    meta: {requiresMember: true},
+    // meta: {requiresMember: true},
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
@@ -31,13 +31,14 @@ const routes = [
     ]
   },
   {
-    path: '/login',
+    path: '/login',    
+    meta: {requiresAuth: true},
     component: () => import('pages/PublicPages/Login.vue') 
   },
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
-    meta: {requiresAdmin: true},
+    // meta: {requiresAdmin: true},
     redirect: '/admin/dashboard',
     children: [
       {
