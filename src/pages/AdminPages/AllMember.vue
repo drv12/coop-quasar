@@ -169,7 +169,7 @@
               <!-- <q-btn color="blue" size="xs" icon="mdi-account-edit" @click="editItem(props.row)" />
               <span class="q-px-xs"/>
               <q-btn color="red" size="xs" classs="q-ml-md"  icon="mdi-delete"  @click="deleteItem(props.row)"/> -->
-              <q-btn color="red" size="xs" classs="q-ml-md"  icon="mdi-delete" to=""  @click="loadProfile(props.row.id)"/>
+              <q-btn color="primary" size="xs" classs="q-ml-md"  icon="mdi-account-edit" to=""  @click="loadProfile(props.row.id)"/>
             </q-td>
           </q-tr>
         </template>

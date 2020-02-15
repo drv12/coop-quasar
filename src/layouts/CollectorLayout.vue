@@ -35,7 +35,7 @@
       <!-- Start of Sidebar Menu inside the Drawer -->
        <q-list separator bordered>
          <q-item
-         to=""
+         to="/collector/dashboard"
          exact
          >
           <q-item-section avatar>
@@ -53,7 +53,7 @@
                  <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to=""
+                    to="/collector/addpayment"
                     exact
                     >
                   <q-item-section avatar>
@@ -64,7 +64,7 @@
                 <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to=""
+                    to="/collector/allpayments"
                     exact
                     >
                   <q-item-section avatar>
@@ -74,35 +74,17 @@
                 </q-item>
            </q-expansion-item>
             <!-- End of Payment Member -->
-            <q-expansion-item
-              expanded-separator
-              icon="mdi-credit-card" 
-              label="Savings Account" 
-              :content-inset-level="0.5"
-            >
               <q-item
-                    expand-separator 
-                   :content-inset-level="0.5"
+
                     to=""
                     exact
                     >
                   <q-item-section avatar>
-                    <q-icon name="mdi-bank" />
+                    <q-icon name="fas fa-info-circle" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Deposit/Withdraw</q-item-section>
+                    <q-item-section class="text-uppercase">Info</q-item-section>
                 </q-item>
-                 <q-item
-                    expand-separator 
-                   :content-inset-level="0.5"
-                    to=""
-                    exact
-                    >
-                  <q-item-section avatar>
-                    <q-icon name="mdi-receipt" />
-                  </q-item-section>
-                    <q-item-section class="text-uppercase">All Transaction</q-item-section>
-                </q-item>
-            </q-expansion-item>
+
        </q-list>
       <!-- End of Sidebar Menu inside the Drawer -->
       </q-scroll-area>
