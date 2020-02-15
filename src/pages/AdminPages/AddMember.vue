@@ -426,8 +426,7 @@
 </template>
     
 <script>
-import Vue from 'vue';
-import { mapActions } from 'vuex'
+import { firebaseDb } from 'boot/firebase';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 // Vue.component(VueQrcode.name, VueQrcode);
@@ -478,10 +477,14 @@ export default {
       this.blockRemoval = this.lines.length <= 1
     }
   },
+  firestore: function () {
+    return {
+        AddMemberData: firebaseDb.collection('MemberData')
+    }
+  },
     methods: {
-      ...mapActions('store', ['regAddMember']),
-    regMember(){
-      this.regAddMember(this.MemberData);
+    regMember: function () {
+        this.$firestore.AddMemberData.add(this.MemberData)
     },
       onFilePickedPro(event){
         const files = event.target.files
@@ -536,9 +539,6 @@ export default {
     }   
  },
  computed: {
-    // qrvalue: function() {
-    //   return this.MemberData.MemberId;
-    // },
   },
   mounted () {
     this.addLine()

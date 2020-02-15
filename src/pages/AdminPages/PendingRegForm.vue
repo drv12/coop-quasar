@@ -102,7 +102,7 @@
                           </strong>
                           <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                          <img :src="PenReg.imageUrl" width='300' height='150'>
+                          <img :src="PenReg.imageUrl0" width='300' height='150'>
 
                         <q-input standard v-model="PenReg.LicenseNo" label="License Number"
                         readonly
@@ -134,36 +134,35 @@
         </div>
       </div>    
     </div> 
+    <q-btn label="asddasd" @click="log" />
 </div>
 </template> 
 
 <script>
-import { mapActions } from 'vuex'
+import { firebaseDb } from 'boot/firebase';
+// import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-       newMessage: ''
+       newMessage: '',
+       PenReg: []
     }
   },
   props: ['penRegId'],
-  computed: {
-      PenReg() {
-            return this.$store.state.store.PendingRegs[this.penRegId]
-        }
+  firestore () {
+    return {
+        // Doc
+        PenReg: firebaseDb.collection('PreRegPersonalData').doc(this.penRegId)
+    }
   },
   methods: {
-    ...mapActions('store', ['regPreMember', 'rejectPreReg']),
-    regMember(){
-      this.regPreMember({
-        PenReg: this.PenReg,
-        id: this.penRegId
-      });
+    //add data dito
+    log(){
+    console.log(this.PenReg)
     },
     rejectMember(){
-      this.rejectPreReg({
-        id: this.penRegId
-      });
+
     },
     loadPreReg(id) {
             this.$router.push('/admin/profile/' + id)

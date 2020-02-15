@@ -1,60 +1,26 @@
 <template>
   <div>
+<<<<<<< HEAD
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Members <q-icon name="mdi-arrow-right-box" /> All Members</h6>
+=======
+    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Members<q-icon name="mdi-arrow-right-box" /> All Members</h6>
+>>>>>>> 6221aeff7471ed58840d6f8370e08ece31b2ed2a
     <q-separator />
-    <div class="q-pa-md">
-      
-
-      <!-- <q-toolbar class="bg-white text-blue"> -->
-       <!-- Start of Manage Unit -->
-            <!-- <q-btn
-            class="text-blue"
-            color="white"
-            icon-right="people"
-            label="Manage Unit"
-            s
-            @click="medium = true"
-            /> -->
-        <!-- End of Manage Unit -->
-        
-        <!-- End of Add Driver Form -->
-        <q-space />
-        <!-- <q-input bottom-slots v-model="text" label="Search" :dense="dense">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input> -->
-        <!-- Start of Edit Form -->
-        <!-- <q-dialog v-model="editMember">
-          <q-card style="width: 700px; max-width: 80vw;">
-              <q-card-section>
-                <div class="text-h6 text-blue text-uppercase text-center">Edit Profile</div>
-              </q-card-section>
-               
-          </q-card>
-         </q-dialog> -->
-        <!-- Start of Edit Form -->
-      <!-- </q-toolbar> -->
-    
-       <!-- <q-table
-          title="Members"
-          :data="data"
-          :columns="columns"
-          :filter="filter"
-          :actions="actions"
-    >
-
-      <template v-slot:top>
-        <h5 class="text-uppercase text-blue" color="primary">All Members</h5>
-        <q-space />
-
-         <q-input class="q-ma-none q-pa-none" v-model="search" type="search" hint="Search">
-            <template v-slot:append>
-                <q-icon name="search" />
-                 
-            </template>
-         </q-input>
+    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12">
+      <q-markup-table :separator="vertical" flat bordered>
+      <template>
+        <thead>
+          <tr>
+            <th class="text-left">MemberID</th>
+            <th class="text-right">Last Name</th>
+            <th class="text-right">First Name</th>
+            <th class="text-right">Phone</th>
+            <th class="text-right">Email</th>
+            <th class="text-right">View Profile</th>
+          </tr>
+        </thead>
       </template>
+<<<<<<< HEAD
       <q-td slot="body-cell-status" slot-scope="props" :props="props">
          <q-btn v-if="active" @click="active = !active" size="xs" color="green" icon="mdi-check-circle" label="Active" />
          <q-btn  v-else @click="active = !active" class="q-ml-xs" size="xs" color="red" icon="mdi-archive" label="Inactive" />
@@ -176,11 +142,27 @@
     </q-table>
     <q-btn @click="log">try</q-btn>
           </div>
+=======
+      <template>
+        <tbody>
+          <tr v-for="(data, id) in MemberData" :key="id">
+            <td class="text-left">{{id}}</td>
+            <td class="text-right">{{data.LastName}}</td>
+            <td class="text-right">{{data.FirstName}}</td>
+            <td class="text-right">{{data.Phone}}</td>
+            <td class="text-right">{{data.Email}}</td>
+            <td class="text-right"><q-btn icon="mdi-face" @click="loadProfile(id)"/></td>
+          </tr>
+        </tbody>
+      </template>
+    </q-markup-table>
+>>>>>>> 6221aeff7471ed58840d6f8370e08ece31b2ed2a
     </div>
-  <!-- </div> -->
+  </div>
 </template>
+
 <script>
-import { mapGetters } from 'vuex'
+import { firebaseDb } from 'boot/firebase';
 
 export default {
   data() {
@@ -205,31 +187,34 @@ export default {
         licenseplate: '',
         phonenumber: ''
       },
-      columns: [
-        { name: "desc", required: true, label: "Members ID", align: "left", field: row => row.name, format: val => `${val}`, sortable: true},
-        { name: "lastname", align: "center", label: "Last name", field: "lastname", sortable: true},
-        { name: "firstname", align: 'center', label: "First name", field: "firstname", sortable: true},
-        { name: "designation", label: "Designation", align: 'center', field: "designation", sortable: true },
-        { name: "licenseplate", label: "License plate", align: 'center', field: "licenseplate" },
-        { name: "phonenumber", align: 'center', label: "Phone number", field: "phonenumber"},
-        { name: "status", label: "Status", align: 'center', field: "status" },
-        { name: "actions", align: 'center', label: "Actions", field: "actions"}
-      ]
-    };
+      MemberData: {}
+    }
+  },
+  firestore () {
+    return {
+      MemberData: {
+        // collection reference.
+            ref: firebaseDb.collection('MemberData'),
+            // Bind the collection as an object if you would like to.
+            objects: true,
+            resolve: (data) => {
+                // collection is resolved
+            },
+            reject: (err) => {
+                // collection is rejected
+            }
+        }
+      }
   },
   computed: {
-    ...mapGetters('store', ['MemberData']),
-    data(){
-      return Object.values(this.MemberData)
-    }
-
+    // ...mapGetters('store', ['MemberData'])
   },
   methods: {
     loadProfile(id) {
             this.$router.push('/admin/profile/' + id)
         },
     log(){
-      console.log(this.id)
+      console.log(this.MemberData)
     },
     editItem (item) {
         this.editedIndex = this.columns.indexOf(item)
