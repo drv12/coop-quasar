@@ -14,7 +14,7 @@
                   </q-card-section>
                   <!-- <q-card-section class="q-pt-none">
                     <div class="q-pa-md">
-                      <q-input v-model="Payment.MemberID" label="Member ID" readonly>
+                      <q-input v-model="Payment.MemberID" label="Member ID" :readonly="upd">
                         <template v-slot:before>
                         <q-icon name="mdi-human-handsup" />
                         </template>
@@ -54,7 +54,11 @@
             Print Contract
             </q-btn>
             <q-btn flat color="teal-4">
-            Print ID
+            Print ID        
+
+            </q-btn>
+            <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
+            Update
             </q-btn>
             <q-btn flat color="teal-4">
             Resign
@@ -77,7 +81,7 @@
             height='150'
             v-if="loading"
             />
-          <q-btn @click="onFileClick1">Change Profile Picture</q-btn>
+          <q-btn @click="onFileClick1" v-if="!upd">Change Profile Picture</q-btn>
           <input type="file" accept="image/*" ref="fileInput1" @change="onFilePickedPro" v-show="false">
 
 
@@ -94,7 +98,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.LastName" label="Last Name" readonly>
+              <q-input v-model="MemberData.LastName" label="Last Name" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup"/>
                 </template>
@@ -102,7 +106,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="MemberData.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" readonly>
+              <q-select v-model="MemberData.Designation" :options="['Driver', 'Operator', 'Other']" label="Designation" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -110,7 +114,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-select v-model="MemberData.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" readonly>
+              <q-select v-model="MemberData.CivilStatus" label="Civil Status" :options="['Single', 'Married', 'Widow']" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -120,7 +124,7 @@
 
         <q-card-section class="col-md-4 col-sm-12 col-xs-12 q-pt-md">
             <div class="q-pa-md">
-              <q-input v-model="MemberData.BirthDate" label="BirthDate" stack-label type="date" readonly>
+              <q-input v-model="MemberData.BirthDate" label="BirthDate" stack-label type="date" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -128,7 +132,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.BirthPlace" label="BirthPlace" readonly>
+              <q-input v-model="MemberData.BirthPlace" label="BirthPlace" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -136,7 +140,7 @@
             </div>
 
           <div class="q-pa-md">
-              <q-input v-model="MemberData.Occupation" label="Occupation" readonly>
+              <q-input v-model="MemberData.Occupation" label="Occupation" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -144,7 +148,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" readonly>
+              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -152,7 +156,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.OtherIncome" label="Other Sources of Income" readonly>
+              <q-input v-model="MemberData.OtherIncome" label="Other Sources of Income" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -160,7 +164,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.RelativeName" label="Nearest Relative" readonly>
+              <q-input v-model="MemberData.RelativeName" label="Nearest Relative" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -168,7 +172,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.Relationship" label="Relationship" readonly>
+              <q-input v-model="MemberData.Relationship" label="Relationship" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -176,7 +180,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.NoDependents" label="Number of Dependents" readonly>
+              <q-input v-model="MemberData.NoDependents" label="Number of Dependents" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -200,14 +204,14 @@
                 v-if="!loading1"
             />
 
-          <q-btn @click="onFileClick2">Change License Picture</q-btn>
+          <q-btn @click="onFileClick2"  v-if="!upd">Change License Picture</q-btn>
           <input type="file" accept="image/*" ref="fileInput2" @change="onFilePickedLic" v-show="false">
 
           </div>
 
           <div class="col-sm-4">
               <div class="q-pa-md">
-              <q-input v-model="MemberData.LicenseNo" label="License No." readonly>
+              <q-input v-model="MemberData.LicenseNo" label="License No." :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -217,7 +221,7 @@
 
         <div class="col-sm-4 col-sm-12 col-xs-12">
               <div class="q-pa-md">
-              <q-input v-model="MemberData.LicenseExp" label="License Expiration" stack-label type="date" readonly>
+              <q-input v-model="MemberData.LicenseExp" label="License Expiration" stack-label type="date" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -226,7 +230,7 @@
         </div>
 
         <div class="q-pa-md">
-              <q-input v-model="MemberData.Address" label="Adress" readonly>
+              <q-input v-model="MemberData.Address" label="Adress" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -234,7 +238,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.Phone" label="Phone" readonly>
+              <q-input v-model="MemberData.Phone" label="Phone" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -242,7 +246,7 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.Email" label="Email" readonly>
+              <q-input v-model="MemberData.Email" label="Email" :readonly="upd">
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -318,7 +322,7 @@ import { firebaseDb, firebaseSto } from 'boot/firebase';
 export default {
     data(){
         return{
-            readonly: 'true',
+            upd: true,
             loading: false,
             loading1: false,
             datetodaydata: '',
@@ -358,12 +362,12 @@ export default {
         return {
             // Doc
             MemberData: firebaseDb.collection('MemberData').doc(this.penRegId)
-
         }
       },
     methods: {
       updateMemberData () {
           this.$firestore.MemberData.set(this.MemberData);
+          console.log('Data: ', this.MemberData)
       },
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;
@@ -421,7 +425,6 @@ export default {
             this.loading = false
           })
         })
-        this.updateMemberData()
       },
       onFilePickedLic(e){
         this.loading1 = true

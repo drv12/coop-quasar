@@ -162,13 +162,16 @@ export default {
   methods: {
     regMember(){
       this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
+      this.PenReg.timestamp = firefirestore.FieldValue.serverTimestamp()
       this.$firestore.MemberData.doc(this.mid).set(this.PenReg)
 
-      const increment = firefirestore.FieldValue.increment(1);
-      this.$firestore.MemberID.update({ MemberID: increment });
+      const increment = firefirestore.FieldValue.increment(1)
+      this.$firestore.MemberID.update({ MemberID: increment })
+
+      this.$firestore.PenReg.delete()
     },
     rejectMember(){
-
+      this.$firestore.PenReg.delete()
     },
     loadPreReg(id) {
             this.$router.push('/admin/profile/' + id)

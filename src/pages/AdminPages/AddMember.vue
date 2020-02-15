@@ -478,7 +478,8 @@ export default {
               LicenseExp:'',
               Designation: '',
               imageUrlPro: null,
-              imageUrlLic: null
+              imageUrlLic: null,
+              timestamp: ''
             },
             // UnitData: {
             //   PlateNo: '',
@@ -511,6 +512,7 @@ export default {
     regMember: function () {
         // this.$firestore.AddMemberData.add(this.MemberData)
         this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
+        this.MemberData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
 
         const increment = firefirestore.FieldValue.increment(1);

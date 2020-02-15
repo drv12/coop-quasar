@@ -235,18 +235,9 @@
         Upon approval an email will be sent to you. 
         In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <q-btn color="primary" label="Finish" to="/"></q-btn>
-          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
-=======
+
           <q-btn color="teal" label="Finish"></q-btn>
           <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>
->>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
-=======
-          <q-btn color="teal" label="Finish"></q-btn>
-          <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>
->>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
         </q-stepper-navigation>
       </q-step>
     </q-stepper> 
@@ -254,7 +245,7 @@
 </template> 
 
 <script>
-import { firebaseDb, firebaseSto } from 'boot/firebase';
+import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 
 export default {
   data () {
@@ -280,6 +271,7 @@ export default {
         LicenseExp:'2020-02-12',
         Designation: '',
         MembershipFee: 'To be Paid',
+        timestamp: ''
       },
       accept: false,
       dbtn1: 'teal-4',
@@ -299,6 +291,7 @@ export default {
     regPre: function () {
         let id
         let childurl
+        this.PreRegData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.PreReg.add(this.PreRegData).then((doc) => {
             id = doc.id
             return id
@@ -313,7 +306,10 @@ export default {
             }).
             then(downloadURL => {
                 console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-                return firebaseDb.collection("PreRegPersonalData").doc(id).update({imageUrlLic: downloadURL});
+                return firebaseDb.collection("PreRegPersonalData").doc(id).update({
+                  imageUrlLic: downloadURL, 
+                  imageUrlPro: 'https://cdn2.iconfinder.com/data/icons/4web-3/139/header-account-image-line-512.png'
+                  });
             })
             .catch(error => {
                 // Use to signal error if something goes wrong.
@@ -323,11 +319,11 @@ export default {
     },
     dbtncolor(){
       if(this.PreRegData.Designation == 'Driver'){
-        this.dbtn1 = 'teal'
-        this.dbtn2 = 'teal-4'
+        this.dbtn1 = 'teal-9'
+        this.dbtn2 = 'grey'
       }else if (this.PreRegData.Designation == 'Operator'){
-        this.dbtn1 = 'teal-4'
-        this.dbtn2 = 'teal'
+        this.dbtn1 = 'grey'
+        this.dbtn2 = 'teal-9'
       }
     },
     onFilePicked(event){
