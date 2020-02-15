@@ -12,7 +12,6 @@
                   <q-card-section>
                     <div class="text-h6">Membership Fee Payment</div>
                   </q-card-section>
-
                   <!-- <q-card-section class="q-pt-none">
                     <div class="q-pa-md">
                       <q-input v-model="Payment.MemberID" label="Member ID" readonly>
@@ -22,7 +21,6 @@
                       </q-input>
                     </div>
                   </q-card-section> -->
-
                   <q-card-section class="q-pt-none">
                     <div class="q-pa-md">
                       <q-input v-model="Payment.OrNo" label="OR No">
@@ -309,9 +307,6 @@
 
 <script>
 import { firebaseDb, firebaseSto } from 'boot/firebase';
-
-// import { mapActions } from 'vuex'
-// import Vue from 'vue';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 // Vue.component(VueQrcode.name, VueQrcode);
@@ -351,37 +346,21 @@ export default {
             //   Designation: '',
             //   imageFile: []
             // },
-            MemberData: [],
-            MemberDataUPD: []
-            // imageUrlPro: this.MemberData.imageUrl0,
-            // imageUrlLic: this.MemberData.imageUrl1
+            MemberData: []
         }
     },
     props: ['penRegId'],
       firestore () {
         return {
             // Doc
-            MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
-            MemberDataUPD: firebaseDb.collection('MemberData')
+            MemberData: firebaseDb.collection('MemberData').doc(this.penRegId)
 
         }
       },
     methods: {
-      imglog(){
-        console.log(this.MemberData.imageFile)
-      },
       updateMemberData () {
-          // this.$firestore.MemberDataUPD.doc(memberdata[this.penRegId]).update(this.MemberData)
           this.$firestore.MemberData.set(this.MemberData);
-
       },
-      // ...mapActions('store', ['AddPayment']),
-      // PayFee(){
-      //   this.AddPayment({
-      //     Payment: this.Payment,
-      //     Date: this.datetodaydata
-      //   })
-      // },
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;
         // Get all stylesheets HTML
