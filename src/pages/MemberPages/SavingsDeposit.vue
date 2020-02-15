@@ -9,15 +9,14 @@
             :data="data"
             :columns="columns"
             row-key="name"
-            :visible-columns="visibleColumns"
+          
           >
 
             
             <template v-slot:top>
                 <q-input  
                   class="q-mt-xs"
-                  color="blue-8" 
-                  :v-model="inputValue" 
+                  color="teal-4"
                   label="Enter start & end dates" 
                   mask="####-##-## - ####-##-##"
                   hint="Year/Month/Day">
@@ -54,6 +53,8 @@
 export default {
     data(){
         return{
+             daterange: new Date(),
+             scrollerPopupStyle240: '',
              columns: [
         {
           name: 'desc',
@@ -77,13 +78,16 @@ export default {
           membersid: '2020-000001',
           membersname: 'Lebron James',
           transactiontype: 'Desposit',
-          date: Date.now(),
+          date: Date().toLocaleString().slice(3,15),
           amount:'26,000,000',
           total: '26,000,000'
         },
         ]
 
         }
+    },
+    method: {
+        
     }
 }
 </script>
