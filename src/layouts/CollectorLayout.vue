@@ -35,7 +35,7 @@
       <!-- Start of Sidebar Menu inside the Drawer -->
        <q-list separator bordered>
          <q-item
-         to="/admin/dashboard"
+         to="/collector/dashboard"
          exact
          >
           <q-item-section avatar>
@@ -43,46 +43,6 @@
           </q-item-section>
           <q-item-section class="text-uppercase">Dashboard</q-item-section>
        </q-item>
-          <!-- Start of Sidemenu Member -->
-          <q-expansion-item
-            expand-separator
-            icon="people"
-            label="MEMBERS"
-            
-            :content-inset-level=".6"
-            >
-                 <q-item
-                    expand-separator 
-                    to="/admin/addmember"
-                    exact
-                    >
-                    <q-item-section avatar>
-                      <q-icon name="add_circle" />
-                    </q-item-section>
-                      <q-item-section class="text-uppercase">Add Member</q-item-section>
-                  </q-item>
-                    <q-item
-                    expand-separator 
-                    to="/admin/allmember"
-                    exact
-                    >
-                    <q-item-section avatar>
-                      <q-icon name="list_alt" />
-                    </q-item-section>
-                      <q-item-section class="text-uppercase">All Members</q-item-section>
-                  </q-item>
-                   <q-item
-                    expand-separator 
-                    to="/admin/pendingreg"
-                    exact
-                    >
-                    <q-item-section avatar>
-                      <q-icon name="mdi-timer" />
-                    </q-item-section>
-                      <q-item-section class="text-uppercase">Pending Registration</q-item-section>
-                  </q-item>
-           </q-expansion-item>
-          <!-- End of Sidemenu Member -->
          <!-- Start of Payment Member -->
           <q-expansion-item
             expand-separator
@@ -93,7 +53,7 @@
                  <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/admin/addpayment"
+                    to="/collector/addpayment"
                     exact
                     >
                   <q-item-section avatar>
@@ -104,7 +64,7 @@
                 <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/admin/allpayment"
+                    to="/collector/allpayments"
                     exact
                     >
                   <q-item-section avatar>
@@ -114,55 +74,17 @@
                 </q-item>
            </q-expansion-item>
             <!-- End of Payment Member -->
-            <!-- Start of Tracking -->
-            <q-expansion-item
-              expand-separator
-              icon="mdi-routes"
-              label="Monitoring"
-              :content-inset-level="0.5"
-            >
-               <q-item
-                    expand-separator 
-                   :content-inset-level="0.5"
-                    to="/admin/jeepneys"
-                    exact
-                    >
-                  <q-item-section avatar>
-                    <q-icon name="mdi-jeepney" />
-                  </q-item-section>
-                    <q-item-section class="text-uppercase">All Vehicles</q-item-section>
-                </q-item>
-            </q-expansion-item>
-            <!-- End of Tracking -->
-            <q-expansion-item
-              expanded-separator
-              icon="mdi-credit-card" 
-              label="Savings Account" 
-              :content-inset-level="0.5"
-            >
               <q-item
-                    expand-separator 
-                   :content-inset-level="0.5"
-                    to="/admin/depositwithdraw"
+
+                    to=""
                     exact
                     >
                   <q-item-section avatar>
-                    <q-icon name="mdi-bank" />
+                    <q-icon name="fas fa-info-circle" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Deposit/Withdraw</q-item-section>
+                    <q-item-section class="text-uppercase">Info</q-item-section>
                 </q-item>
-                 <q-item
-                    expand-separator 
-                   :content-inset-level="0.5"
-                    to="/admin/alltransaction"
-                    exact
-                    >
-                  <q-item-section avatar>
-                    <q-icon name="mdi-receipt" />
-                  </q-item-section>
-                    <q-item-section class="text-uppercase">All Transaction</q-item-section>
-                </q-item>
-            </q-expansion-item>
+
        </q-list>
       <!-- End of Sidebar Menu inside the Drawer -->
       </q-scroll-area>
@@ -211,7 +133,7 @@ export default {
       //    ],
       //    }
       //   ],
-      left: false
+      left: true
     };
   }
 };

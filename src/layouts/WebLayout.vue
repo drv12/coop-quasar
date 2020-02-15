@@ -1,6 +1,6 @@
 <template>
-    <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders primary">
-      <q-header elevated>
+    <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders ">
+      <q-header elevated class="bg-teal">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
            :class="'lt-md'"
@@ -193,7 +193,7 @@
         <router-view v-if="!Loading"/>
       </q-page-container>
 
-      <q-footer elevated>
+      <q-footer elevated class="bg-teal">
         <q-toolbar>
           <q-toolbar-title>Footer</q-toolbar-title>
         </q-toolbar>

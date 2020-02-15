@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Savings Account <q-icon name="mdi-arrow-right-box" /> All Transaction</h6>
+      <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Savings/Deposit History</h6>
        <q-separator />
        <div class="q-pa-md">
              <q-table 
@@ -9,15 +9,14 @@
             :data="data"
             :columns="columns"
             row-key="name"
-            :visible-columns="visibleColumns"
+          
           >
 
             
             <template v-slot:top>
                 <q-input  
                   class="q-mt-xs"
-                  color="blue-8" 
-                  :v-model="inputValue" 
+                  color="teal-4"
                   label="Enter start & end dates" 
                   mask="####-##-## - ####-##-##"
                   hint="Year/Month/Day">
@@ -54,6 +53,8 @@
 export default {
     data(){
         return{
+             daterange: new Date(),
+             scrollerPopupStyle240: '',
              columns: [
         {
           name: 'desc',
@@ -67,7 +68,8 @@ export default {
         { name: 'membersid', align: 'center', label: 'Members ID', field: 'membersid', sortable: true },
         { name: 'membersname',  align: 'center', label: 'Members name', field: 'membersname', sortable: true },
         { name: 'transactiontype',align: 'center', label: 'Transaction type', field: 'transactiontype', sortable: true },
-        { name: 'amount', align: 'center',label: 'Amount', field: 'amount', sortable: true },
+        { name: 'date',align: 'center', label: 'Date', field: 'date', sortable: true },
+        { name: 'amount', align: 'center',label: 'Amount', field: 'amount', sortable: true },   
         { name: 'total',align: 'center', label: 'Total', field: 'total', sortable: true },
       ],
       data: [
@@ -76,12 +78,16 @@ export default {
           membersid: '2020-000001',
           membersname: 'Lebron James',
           transactiontype: 'Desposit',
+          date: Date().toLocaleString().slice(3,15),
           amount:'26,000,000',
           total: '26,000,000'
         },
         ]
 
         }
+    },
+    method: {
+        
     }
 }
 </script>

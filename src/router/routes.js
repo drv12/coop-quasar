@@ -21,13 +21,35 @@ const routes = [
         component: () => import('pages/MemberPages/Dashboard.vue') 
       },
       { 
-        path: '/member/profile', 
-        component: () => import('pages/MemberPages/Profile.vue')
+        path: '/member/dailypayment', 
+        component: () => import('pages/MemberPages/DailyPayment.vue')
       },
       { 
-        path: '/member/transactions', 
-        component: () => import('pages/MemberPages/Transactions.vue')
-    }    
+        path: '/member/savingsdeposit', 
+        component: () => import('pages/MemberPages/SavingsDeposit.vue')
+      },
+
+    ]
+  },
+  {
+    path: '/dashboard',
+    redirect: '/collector/dashboard',
+    //: {requires: true},
+    component: () => import('layouts/CollectorLayout.vue'),
+    children: [
+      { 
+        path: '/collector/dashboard', 
+        component: () => import('pages/CollectorPages/DashboardCollector.vue') 
+      },
+      { 
+        path: '/collector/addpayment', 
+        component: () => import('pages/CollectorPages/AddPaymentCollector.vue') 
+      },
+      { 
+        path: '/collector/allpayments', 
+        component: () => import('pages/CollectorPages/AllPaymentsCollector.vue') 
+      },
+
     ]
   },
   {

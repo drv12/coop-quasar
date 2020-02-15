@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment <q-icon name="mdi-arrow-right-box" /> All Payment</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment History</h6>
      <q-separator />
      <div class="q-pa-md">
         <!-- <q-toolbar class="bg-white text-blue">
@@ -19,9 +19,11 @@
 
             
             <template v-slot:top>
+             
+
+               <div class="q-mx-md">
                 <q-input  
-                  class="q-mt-xs"
-                  color="blue-8" 
+                  color="teal-4" 
                   :v-model="inputValue" 
                   label="Enter start & end dates" 
                   mask="####-##-## - ####-##-##"
@@ -41,31 +43,47 @@
               </q-icon>
             </template>
            </q-input>
-
+      </div>
               <q-space />
 
-              <q-select
-                  v-model="visibleFilters"
-                  multiple
-                  dense
-                  options-dense
-                  :display-value="$q.lang.table.columns"
-                  emit-value
-                  map-options
-                  :options="columns"
-                  option-value="name"
-                  label="Filter the table"
-                  options-cover
-                  style="min-width: 150px"
-              >
-              </q-select>
-              <q-input class="q-mt-xs q-ml-md" bottom-slots label="Search" >
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-            </template>
+                    <div class="q-mt-md q-mx-md">
+                    <q-select
+                        color="teal-4"
+                        v-model="visibleFilters"
+                        multiple
+                        dense
+                        options-dense
+                        :display-value="$q.lang.table.columns"
+                        emit-value
+                        map-options
+                        :options="columns"
+                        option-value="name"
+                        label="Filter the table"
+                        options-cover
+                        style="min-width: 150px"
+                    >
+                    </q-select>            
+          </div>
+              <!-- <div class="col-lg-3">
+                <div class="q-pa-md"></div>
+              </div> -->
+                  <div class="q-mx-md">
+                  <q-input color="teal-4" v-model="text" type="text" label="Search">
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  </div>
+                    <!-- <q-input color="teal-4" label="Search" >
+                        <template v-slot:append>
+                          <q-icon name="search" />
+                        </template> 
+                      </q-input> -->
 
+              <!-- End of Row -->
+           
+            </template>
+            
           </q-table>
      </div>
   </div>

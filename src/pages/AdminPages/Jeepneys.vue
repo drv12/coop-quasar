@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue">Monitoring <q-icon name="mdi-arrow-right-box" /> All Vehicles</h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Monitoring <q-icon name="mdi-arrow-right-box" /> All Vehicles</h6>
      <q-separator />
      <div class="q-pa-md">
           <q-table
