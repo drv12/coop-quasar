@@ -50,11 +50,6 @@
             </div>
 
             <q-btn flat round icon="event"/>
-            <q-btn @click="printDiv('page')" flat label="Print Contract"/>
-            <q-btn @click="readonly = !readonly; updateMemberData()" color="primary" flat label="Update"/>
-            <q-btn color="primary" flat label="Print ID"/>
-            <q-btn color="primary" flat label="Resign"/>
-            
             <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>

@@ -236,8 +236,13 @@
         In it, we will provide further instructions to complete your application.
         <q-stepper-navigation>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <q-btn color="primary" label="Finish" to="/"></q-btn>
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm"></q-btn>
+=======
+          <q-btn color="teal" label="Finish"></q-btn>
+          <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>
+>>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
 =======
           <q-btn color="teal" label="Finish"></q-btn>
           <q-btn flat @click="step = 2" color="teal" label="Back" class="q-ml-sm"></q-btn>

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <q-layout>
         <q-page-container>
             <q-page
@@ -55,68 +54,6 @@
             </q-page>
         </q-page-container>
     </q-layout>
-=======
-  <q-layout>
-    <q-page-container>
-      <q-page
-        class="background-color window-height window-width row justify-center items-center"
-      >
-        <div class="column">
-          <div class="row">
-          </div>
-          <div class="row">
-            <q-card square bordered class="first-card q-pa-lg shadow-1 loginform-background">
-              
-              <q-card-section>
-                 <q-img
-                    class="q-pt-none q-mb-xl"
-                    src="/statics/icons/New-GSIS-Cooperative.png"
-                    style="max-width: 400px; height: 200px;"
-                    contain
-                  >
-                 </q-img>
-                <q-form class="q-gutter-md">
-                  <q-input
-                    color="positive"
-                    square
-                    filled
-                    clearable
-                    v-model="formData.email"
-                    type="email"
-                    label="Email"
-                  />
-                  <q-input
-                    color="positive"
-                    square
-                    filled
-                    clearable
-                    v-model="formData.password"
-                    type="password"
-                    label="Password"
-                  />
-                </q-form>
-              </q-card-section>
-              <q-card-actions class="q-px-md">
-                <q-btn
-                  unelevated
-                  color="positive"
-                  size="lg"
-                  class="full-width loginbtn"
-                  to="/"
-                  label="Login"
-                  @click="signin"
-               />
-              </q-card-actions>
-                <!-- <h6 class="colortext text-white text-uppercase q-pa-none absolute-bottom">
-                        &copy; 2020
-                      </h6> -->
-            </q-card>
-          </div>
-        </div>
-      </q-page>
-    </q-page-container>
-  </q-layout>
->>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
 </template>
 
 

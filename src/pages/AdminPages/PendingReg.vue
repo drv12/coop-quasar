@@ -1,5 +1,6 @@
 <template>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <div>
     <h6 class="q-ma-none q-pl-md q-pt-md text-blue"> Members <q-icon name="mdi-arrow-right-box" /> Pending Applications </h6>
     <q-separator />
@@ -44,6 +45,11 @@
  <div>
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4"> Pre-Registration <q-icon name="mdi-arrow-right-box" /> Pending </h6>
     <q-separator />
+=======
+ <div>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4"> Pre-Registration <q-icon name="mdi-arrow-right-box" /> Pending </h6>
+    <q-separator />
+>>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
      <div class="q-pa-md">
 
             <div class="row">
@@ -86,6 +92,9 @@
      </div>
  </div>
 
+<<<<<<< HEAD
+>>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
+=======
 >>>>>>> 1ac715aa9e19795498447ff85f912dbebf550ba2
 </template>
 
