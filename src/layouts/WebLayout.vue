@@ -188,7 +188,7 @@
       <q-page-container>
             <div v-if="Loading">
               <q-spinner-oval
-                color="primary"
+                color="teal"
                 size="200px"
                 :thickness="5"
                 class="fixed-center"
