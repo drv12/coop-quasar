@@ -44,33 +44,6 @@
                   <div class="col-sm-8">
                     <div class="q-pa-md"></div>
                   </div>
-                   <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                     <div class="q-pa-md">
-                          <div style=" text-align: center;">
-                            <q-spinner
-                              color="primary"
-                              width='150' 
-                              height='150'
-                              v-if="loading1"
-                            />
-                            <img 
-                            v-if="!loading1"
-                            :src="MemberData.imageUrlLic" 
-                            width='150' 
-                            height='150' 
-                            style="border-radius: 50%;">
-                          </div>
-                       <q-input 
-                       type="file"
-                       hint="Profile Picture"
-                       accept="image/*"
-                       @change="onFilePickedLic">
-                        <template v-slot:prepend>
-                          <q-icon name="attach_file" />
-                        </template>
-                      </q-input>
-                     </div>
-                   </div> -->
                         <!-- End of Upload Image -->
                         <!-- <div class="col-sm-12">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
@@ -211,6 +184,17 @@
                             </div>
                           </div>
                         <!-- Start of Nearest Relative -->
+                        <!-- Start of Relationships -->
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            <div class="q-pa-md">
+                              <q-input color="teal-4" v-model="MemberData.Relationship" label="Relationship" >
+                                <template v-slot:before>
+                                  <q-icon name="mdi-briefcase" />
+                                </template>
+                              </q-input>
+                            </div>
+                          </div>
+                        <!-- Start of Relationships -->
                           <!-- Start of Number of dependents -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
@@ -222,17 +206,7 @@
                             </div>
                           </div>
                         <!-- Start of Number of dependents -->
-                        <!-- Start of Relationships -->
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Relationship" label="Relationships" >
-                                <template v-slot:before>
-                                  <q-icon name="mdi-briefcase" />
-                                </template>
-                              </q-input>
-                            </div>
-                          </div>
-                        <!-- Start of Relationships -->
+                        
                         <!-- Start of Birth place -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
@@ -267,38 +241,6 @@
                           </div>
                         </div>
                         <!-- End of Phone -->
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                              <div class="q-pa-md">
-                                <q-file color="teal-4" v-model="MemberData.LicensePic" label="License Picture">
-                                  <template v-slot:prepend>
-                                    <q-icon name="attach_file" />
-                                  </template>
-                                </q-file>
-                              </div>
-                        </div>
-                        <!-- End of License Image -->
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation=='Driver'">
-                          <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
-                          <div class="q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.Operator" label="Operator">
-                              <template v-slot:before>
-                                <q-icon name="mdi-comment-account-outline" />
-                              </template>
-                            </q-input>
-                          </div>
-                        </div>  
-                        
-                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                          <!-- <span class="text-uppercase text-blue">Unit Details</span> -->
-                          <div class="q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.PlateNo" label="License Plate">
-                              <template v-slot:before>
-                                <q-icon name="mdi-comment-account-outline" />
-                              </template>
-                            </q-input>
-                          </div>
-                        </div>  
-                      
 
                         <!-- Start of Email -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
@@ -311,61 +253,51 @@
                           </div>
                         </div>
                         <!-- End of Email -->
-                        <!-- Start of Password -->
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                          <div class="q-pa-md">
-                            <q-input
-                               color="teal-4"
-                              label="Password"
-                              v-model="MemberData.Password"
-                              :type="MemberData.Password ? 'password' : 'text'"
-                            >
-                              <template v-slot:before>
-                                <q-icon
-                                  name="lock"
-                                />
-                              </template>
-                              <template v-slot:append>
-                                <q-icon
-                                  :name="MemberData.Password ? 'visibility_off' : 'visibility'"
-                                  class="cursor-pointer"
-                                  @click="MemberData.Password = !MemberData.Password"
-                                />
-                              </template>
-                            </q-input>
-                          </div>
+                          <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                              <div class="q-pa-md">
+                                <q-file color="teal-4" v-model="MemberData.LicensePic" label="License Picture">
+                                  <template v-slot:prepend>
+                                    <q-icon name="attach_file" />
+                                  </template>
+                                </q-file>
+                              </div>
+                        </div> -->
+                    <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="text-h6 text-center">License Details</div>
+                          <q-separator color="secondary" inset />
                         </div>
-                        <!-- End of Password -->
-                        <!-- Start of Confirm Password -->
-                        <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input
-                              label="Confirm Password"
-                              v-model="driverscpassword"
-                              :type="driverscisPwd ? 'password' : 'text'"
+                          <div style=" text-align: center;">
+                            <q-spinner
+                              color="primary"
+                              width='160' 
+                              height='90'
+                              v-if="loading1"
+                            />
+                            <img 
+                            v-if="!loading1"
+                            :src="MemberData.imageUrlLic"
+                            width='368' 
                             >
-                              <template v-slot:before>
-                                <q-icon
-                                  name="lock"
-                                />
-                              </template>
-                              <template v-slot:append>
-                                <q-icon
-                                  :name="driverscisPwd ? 'visibility_off' : 'visibility'"
-                                  class="cursor-pointer"
-                                  @click="driverscisPwd = !driverscisPwd"
-                                />
-                              </template>
-                            </q-input>
                           </div>
-                        </div>  -->
-                        <!-- End of Confirm Password -->
+                       <q-input 
+                       type="file"
+                       hint="License Picture"
+                       accept="image/*"
+                       @change="onFilePickedLic">
+                        <template v-slot:prepend>
+                          <q-icon name="attach_file" />
+                        </template>
+                      </q-input>
+                     </div>
+                   </div>
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 
-                        <template v-show="template-1" class="template-1">
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.LicenseNo" label="License number" mask="####-##########">
+                            <q-input color="teal-4" v-model="MemberData.LicenseNo" label="License number">
                               <template v-slot:before>
                                 <q-icon name="mdi-account-card-details" />
                               </template>
@@ -401,29 +333,50 @@
                               </q-input>
                           </div>
                         </div> 
-                        </template>
+                    </div>
                         <!-- End of Expiration date of Drivers License -->
+                      <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="text-h6 text-center">Unit Details</div>
+                          <q-separator color="secondary" inset />
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'"> 
+                          <div class="q-pa-md">
+                            <q-input color="teal-4" label="Plate No." :loading="verifyunit">
+                              <template v-slot:before>
+                                <q-icon name="mdi-jeepney" />
+                              </template>
+                            </q-input>
+                          </div>
+                        </div>
 
-                        <div v-for="(line, index) in lines" v-bind:key="index" class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
+                          <div class="q-pa-md">
+                            <q-input color="teal-4" label="Operator" readonly>
+                              <template v-slot:before>
+                                <q-icon name="mdi-account" />
+                              </template>
+                            </q-input>
+                          </div>
+                        </div>
+
+                        <div>
+                          <q-btn label="Verify Unit" color="primary" v-if="MemberData.Designation == 'Driver'"/>
+                        </div>
+                      </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md" v-if="MemberData.Designation == 'Operator'">
-                                    <q-input
-                                        color="teal-4"
-                                        v-model="line.number"
-                                        float-label="Phone Number"
-                                        numeric-keyboard-toggle
-                                        placeholder="Jeep & License plate"
-                                        type="text"
-                                      >
-                                      <template v-slot:before>
-                                        <q-icon name="mdi-jeepney" />
-                                      </template>
-                                        <template v-slot:append>
-                                        <!-- <div class="block"> -->
-                                          <q-btn size="12px" @click="removeLine(index)" icon="delete" round />
-                                          <q-btn size="12px" v-if="index + 1 === lines.length" @click="addLine" icon="add" round />
-                                        <!-- </div> -->
-                                        </template>
-                                    </q-input>
+
+                              <ul class="list-group">
+                                <li class="list-group-item" v-for= "(unit, id) in RegUnits" :key="id">
+                                  {{unit.PlateNo}} <button @click="remove(unit)" class="badge">x</button>
+                                </li>
+                              </ul>
+
+                              <input class="form-control" type="text" v-model="RegUnit.PlateNo" v-on:keyup.enter="add()">
+                                <br>
+                              <button class="btn btn-primary" @click="add()">Add new</button>
                             </div>
                         </div>
 
@@ -448,7 +401,7 @@
 </template>
     
 <script>
-import { firebaseDb, firebaseSto } from 'boot/firebase';
+import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 // Vue.component(VueQrcode.name, VueQrcode);
@@ -478,7 +431,7 @@ export default {
               LicenseExp:'',
               Designation: '',
               imageUrlPro: null,
-              imageUrlLic: null,
+              imageUrlLic: 'https://www.pinoydriver.com/resources/wp-content/uploads/2019/06/foreign-drivers-license-ph.png',
               timestamp: ''
             },
             // UnitData: {
@@ -488,29 +441,59 @@ export default {
             // },
             lines: [],
             blockRemoval: true,
-            options: ['Driver', 'Operator'],
+            options: ['Operator', 'Driver'],
             unit:'',
             units:[],
             civilstatusoptions: ['Single', 'Married', 'Widow'],
             mid: '',
             loading: false,
-            loading1: false
-              }
+            loading1: false,
+            verifyunit: false,
+            RegUnit: {
+                PlateNo: '',
+                Operator: ''
+              },
+            RegUnits: []
+            }
     },
-    watch: {
-    lines () {
-      this.blockRemoval = this.lines.length <= 1
-    }
-  },
   firestore: function () {
     return {
         AddMemberData: firebaseDb.collection('MemberData'),
+        RegUnits: firebaseDb.collection('RegUnits'),
+        Units: firebaseDb.collection('Units'),
         MemberID: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
     }
   },
     methods: {
+    add() {
+      this.RegUnit.Operator = 'NGTSC'+ (this.MemberID.MemberID + 1)
+      console.log(this.RegUnits)
+      this.$firestore.RegUnits.add(this.RegUnit)
+      .then(()=>{
+        this.RegUnits.PlateNo = ""
+      })
+    },
+    remove(e) {
+      this.$firestore.RegUnits.doc(e['.key']).delete()
+    },
+    addtounits(){
+      //lipat sa Units colletion kapag register na
+      var add = this.$firestore.Units
+      this.RegUnits.forEach(function(e) {
+            add.add(e)
+        })
+    },
+    deleteunits() {
+      //delete ng temp units collection
+      var del = this.$firestore.RegUnits
+      this.RegUnits.forEach(function(e) {
+            del.doc(e['.key']).delete()
+        })
+    },
     regMember: function () {
         // this.$firestore.AddMemberData.add(this.MemberData)
+        // this.$firestore.Units.add(this.RegUnits)
+
         this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
         this.MemberData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
@@ -554,36 +537,36 @@ export default {
           })
         })
       },
-      log(){
-        console.log(this.operatorprofile);
-      },
-      addrow(){
-       this.units.push(units[0]); // what to push unto the rows array?
-      },
-      removeRow(index){
-        this.units.splice(index,1); // why is this removing only the last row?
-      },
+      // log(){
+      //   console.log(this.operatorprofile);
+      // },
+      // addrow(){
+      //  this.units.push(units[0]); // what to push unto the rows array?
+      // },
+      // removeRow(index){
+      //   this.units.splice(index,1); // why is this removing only the last row?
+      // },
       Clear(){
         this.file = '',
         this.date = '',
         this.Lastname = '',
         this.phone = ''
       },
-        addLine () {
-      let checkEmptyLines = this.lines.filter(line => line.number === null)
-      if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
-      this.lines.push({
-        number: null,
-      })
-    },
-     removeLine (lineId) {
-      if (!this.blockRemoval) this.lines.splice(lineId, 1)
-    }   
+    //     addLine () {
+    //   let checkEmptyLines = this.lines.filter(line => line.number === null)
+    //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
+    //   this.lines.push({
+    //     number: null,
+    //   })
+    // },
+    //  removeLine (lineId) {
+    //   if (!this.blockRemoval) this.lines.splice(lineId, 1)
+    // }   
  },
  computed: {
   },
   mounted () {
-    this.addLine()
+    // this.addLine()
   }
 }
 </script>
