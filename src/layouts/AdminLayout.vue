@@ -163,6 +163,24 @@
                     <q-item-section class="text-uppercase">All Transaction</q-item-section>
                 </q-item>
             </q-expansion-item>
+             <q-expansion-item
+              expanded-separator
+              icon="fas fa-user-circle" 
+              label="Manage" 
+              :content-inset-level="0.5"
+            >
+              <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/admin/addstaff"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-account" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Add Staff</q-item-section>
+                </q-item>
+            </q-expansion-item>
        </q-list>
       <!-- End of Sidebar Menu inside the Drawer -->
       </q-scroll-area>
@@ -211,7 +229,7 @@ export default {
       //    ],
       //    }
       //   ],
-      left: false
+      left: true
     };
   }
 };
