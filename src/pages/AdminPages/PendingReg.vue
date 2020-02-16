@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-blue"> Members <q-icon name="mdi-arrow-right-box" /> Pending Applications </h6>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal"> Members <q-icon name="mdi-arrow-right-box" /> Pending Applications </h6>
     <q-separator />
     <div v-if="loading">
       <q-spinner-oval
-        color="primary"
+        color="teal"
         size="200px"
         :thickness="5"
         class="fixed-center"
@@ -13,7 +13,7 @@
     <div v-if="!loading" class="col-xs-10 col-sm-10 col-md-8 q-pa-md">
       <q-markup-table separator="horizontal" flat bordered>
       <template>
-        <thead class="bg-secondary">
+        <thead class="bg-teal">
           <tr class="text-h4 q-ml-md text-white">
             <th class="text-left">Last Name</th>
             <th class="text-left">First Name</th>
