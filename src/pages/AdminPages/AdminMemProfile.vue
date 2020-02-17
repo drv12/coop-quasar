@@ -3,7 +3,7 @@
         <q-card class="my-card" flat bordered>
         <!-- start toolbar -->
         <q-card-actions align="right">
-          <q-btn @click="inception = true; GenOrNo();" flat v-if="MemberData.MembershipFee">
+          <q-btn @click="inception = true; OrTid();" flat v-if="MemberData.MembershipFee">
             Membership Fee: {{ MemberData.MembershipFee }}
             </q-btn>
 
@@ -27,14 +27,22 @@
 
                   <q-card-section class="q-pt-none">
                     <div class="q-pa-md">
-                      <q-input v-model="Payment.Amount" label="Amount">
+                      <q-input v-model="Payment.MembershipFee" label="Amount">
                         <template v-slot:before>
                         <q-icon name="mdi-human-handsup" />
                         </template>
                       </q-input>
                     </div>
                   </q-card-section>
-
+                  <q-card-section class="q-pt-none">
+                    <div class="q-pa-md">
+                      <q-input v-model="Payment.Total" label="Amount">
+                        <template v-slot:before>
+                        <q-icon name="mdi-human-handsup" />
+                        </template>
+                      </q-input>
+                    </div>
+                  </q-card-section>
                   <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Pay Fee" @click="PayFee" />
                     <q-btn flat label="Close" v-close-popup />
@@ -51,7 +59,7 @@
             <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
             Print ID        
             </q-btn>
-            <q-btn flat color="teal-4" @click="bar = !bar">
+            <q-btn flat color="teal-4" @click="bar = !bar" v-if="MemberData.Designation == 'Operator'">
             Drivers       
             </q-btn>
             <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
@@ -383,7 +391,7 @@
             <br>
             {{ penRegId }}
             <div class="qr-code">
-                <qrcode :value="qrvalue"></qrcode>
+                <qrcode :value="qrvalue" tag="img"></qrcode>
             </div>
             <h3>www.newgsistsc.com</h3>
             <hr>
@@ -474,6 +482,7 @@ Vue.component(VueQrcode.name, VueQrcode);
 export default {
     data(){
         return{
+            inception: false,
             qrvalue: '',
             bar: false,
             qrdialog: false,
@@ -483,12 +492,13 @@ export default {
             datetodaydata: '',
             inception: false,
             Payment: {
-              Fee: 'Membership Fee',
               MemberID: this.penRegId,
               OrNo: '',
-              Amount: '500'
+              TransactionID: '',
+              MembershipFee: 500,
+              Total: 500,
+              timestamp: ''
             },
-            MemberData: [],
             Unit: {
               Operator: '',
               PlateNo: ''
@@ -503,7 +513,7 @@ export default {
             MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
             Members: firebaseDb.collection('MemberData'),
             Transactions: firebaseDb.collection('Transactions'),
-            OrNoData: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N")
+            Counter: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
         }
       },
     methods: {
@@ -519,66 +529,72 @@ export default {
           Driver: firefirestore.FieldValue.arrayUnion(newdriver)
         })
       },
-      // GetOperatorUnits(){
-      // var OpUnits = []
-      // this.MemberData.Unit.forEach(function(munit) {
-      //   console.log('MemberDataUnit: ', munit)
+      wala(){
+          // GetOperatorUnits(){
+          // var OpUnits = []
+          // this.MemberData.Unit.forEach(function(munit) {
+          //   console.log('MemberDataUnit: ', munit)
 
-      //   OpUnits.push(this.Units.doc(munit))
-      // })
-      //   console.log('Operator: ', unitopt)
-      //   this.Unit.Operator = unitopt
-      // },
-    //   GetUnitOperator(){
-    //   var unitpltno = this.MemberData.Unit[0]
-    //   this.Unit.PlateNo = unitpltno
-    //   var unitdet
-    //   var verified = false
-    //   this.Units.forEach(function(e) {
-    //         if(e['.key'] == unitpltno){
+          //   OpUnits.push(this.Units.doc(munit))
+          // })
+          //   console.log('Operator: ', unitopt)
+          //   this.Unit.Operator = unitopt
+          // },
+        //   GetUnitOperator(){
+        //   var unitpltno = this.MemberData.Unit[0]
+        //   this.Unit.PlateNo = unitpltno
+        //   var unitdet
+        //   var verified = false
+        //   this.Units.forEach(function(e) {
+        //         if(e['.key'] == unitpltno){
 
-    //           return unitdet = {
-    //             Operator: e.Operator.FirstName +' '+ e.Operator.LastName,
-    //             MemberId: e.MemberID
-    //           }
-    //         }
-    //     })
-    //     this.Unit.Operator = unitdet.Operator
-    //   },
-    //   updateUnit(){
-    //   //update unit sa driver registration
-    //       var newdriver = {
-    //       MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
-    //       FirstName:  this.MemberData.FirstName,
-    //       LastName: this.MemberData.LastName
-    //     }
-      
-    //     this.$firestore.Units.doc(this.Unit.PlateNo).update({
-    //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
-    //   })
-    // },
+        //           return unitdet = {
+        //             Operator: e.Operator.FirstName +' '+ e.Operator.LastName,
+        //             MemberId: e.MemberID
+        //           }
+        //         }
+        //     })
+        //     this.Unit.Operator = unitdet.Operator
+        //   },
+        //   updateUnit(){
+        //   //update unit sa driver registration
+        //       var newdriver = {
+        //       MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
+        //       FirstName:  this.MemberData.FirstName,
+        //       LastName: this.MemberData.LastName
+        //     }
+          
+        //     this.$firestore.Units.doc(this.Unit.PlateNo).update({
+        //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+        //   })
+        // },
+      },
       GenQr(){
       
       if(this.MemberData.Designation == 'Driver'){
           this.qrvalue = 
-            this.MemberData.MemberID + '\n' +
-            this.MemberData.MemberID
+            'Driver: ' + this.MemberData['.key'] +' '+ 'Operator: ' + this.MemberData.Operator.MemberID
           
       }else{
-        this.qrvalue = this.MemberData.MemberID
+        this.qrvalue = 'Operator: ' + this.MemberData['.key']
       }
     
       },
       updateMemberData () {
           this.$firestore.MemberData.set(this.MemberData);
-          console.log('Data: ', this.MemberData)
       },
       //new code
-      GenOrNo(){
-        this.Payment.OrNo = this.OrNoData.OrNo + 1
+      OrTid(){
+        this.Payment.TransactionID = (this.Counter.TransactionID + 1)
+        this.Payment.OrNo = (this.Counter.OrNo + 1)
       },
       PayFee(){
-        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').set(this.Payment)
+        this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
+        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').add(this.Payment)
+
+        this.$firestore.MemberData.update({
+                MembershipFee: firefirestore.FieldValue.delete()
+        })
       },
        //new code
       printDiv(divName){
@@ -655,26 +671,7 @@ export default {
             this.loading1 = false
           })
         })
-      }, 
-      log(){
-        console.log(this.operatorprofile);
-      },
-      addrow(){
-       this.units.push(units[0]); // what to push unto the rows array?
-      },
-      removeRow(index){
-        this.units.splice(index,1); // why is this removing only the last row?
-      },
-      addLine () {
-        let checkEmptyLines = this.lines.filter(line => line.number === null)
-        if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
-        this.lines.push({
-            number: null,
-      })
-    },
-     removeLine (lineId) {
-      if (!this.blockRemoval) this.lines.splice(lineId, 1)
-    }
+      }
  },
   mounted () {
     // this.addLine()
@@ -684,7 +681,6 @@ export default {
     Drivers(){
       return this.MemberData.Driver
     }
-    
   }
 }
 </script>

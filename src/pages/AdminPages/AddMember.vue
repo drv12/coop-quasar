@@ -493,6 +493,7 @@ export default {
               NoDependents: '',
               LicenseNo:'',
               LicenseExp:'1997/11/11',
+              MembershipFee: 'To be Paid',
               Designation: '',
               imageUrlPro: 'https://image.shutterstock.com/image-vector/social-member-vector-icon-person-260nw-1139787308.jpg',
               imageUrlLic: 'https://www.pinoydriver.com/resources/wp-content/uploads/2019/06/foreign-drivers-license-ph.png',

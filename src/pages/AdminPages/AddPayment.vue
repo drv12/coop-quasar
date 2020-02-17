@@ -6,7 +6,17 @@
            <q-card class="q-pa-lg">
                <div class="text-uppercase text-teal-4">Daily Payments</div>
           <q-card-section horizontal >
+
+              
+
                  <div class="row">
+                     <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                        <div class="q-pa-xs" v-if="scanner" style="height: 150px; width:150px;">
+                            <qrcode-stream @decode="onDecode"></qrcode-stream>
+                        </div>
+                        <q-btn @click="scanner=!scanner" >QR Scanner</q-btn>
+                     </div>
+
                     <!-- Start of Transaction ID -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
@@ -19,7 +29,7 @@
                         <div class="q-pa-xs">
                                 <q-select
                                     color="teal-4"
-                                    v-model="membersid"
+                                    v-model="qr"
                                     :options="membersname"
                                     label="Member's ID"
                                 >
@@ -155,9 +165,18 @@
 </template>
 
 <script>
+import Vue from "vue";
+import VueQrcodeReader from "vue-qrcode-reader";
+
+Vue.use(VueQrcodeReader);
+
+
 export default {
     data(){
         return{
+            scanner: false,
+            qr: '',
+            qr2: '',
             transactionid: '',
             membersid: '',
             membersname: [],
@@ -172,9 +191,36 @@ export default {
             totalamount: '',
             description: '',
             descriptionamount: '',
-
         }
+    },
+    methods: {
+        PayFee(){
+        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').set(this.Payment)
+        },
+        onDecode (decodedString) {
+            if(decodedString.substring(0,1) == 'D'){
+                this.qr = decodedString.substring(9,21)
+                this.qr2= decodedString.substring(32, 44)
+                this.scanner = false
+            }else{
+                this.qr = decodedString.substring(11,23)
+                this.scanner = false
+            }
+        },
+        datetoday(){
+        var myDate = new Date();
+        var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+        var date = ('0' + myDate.getDate()).slice(-2);
+        var year = myDate.getFullYear();
+        var formattedDate = year + '-' + month + '-' + date;
+        this.datetodaydata = formattedDate;
+        }   
+        
+    },
+    mounted () {
+        this.datetoday()
     }
+    
 }
 </script>
 
