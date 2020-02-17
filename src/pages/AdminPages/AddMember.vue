@@ -311,7 +311,7 @@
                               <q-input
                                 color="teal-4"
                                 label="Year/Month/Date"
-                                v-model="MemberData.Expiration"
+                                v-model="MemberData.LicenseExp"
                                 mask="date"
                                 :rules="['date']"
                                 hint="Expiration Date"
@@ -324,7 +324,7 @@
                                       transition-hide="scale"
                                     >
                                       <q-date
-                                        v-model="MemberData.Expiration"
+                                        v-model="MemberData.LicenseExp"
                                         @input="() => $refs.qDateProxy.hide()"
                                       />
                                     </q-popup-proxy>
@@ -335,14 +335,31 @@
                         </div> 
                     </div>
                         <!-- End of Expiration date of Drivers License -->
-                      <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="text-h6 text-center">Unit Details</div>
-                          <q-separator color="secondary" inset />
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'"> 
+
+                        <q-dialog v-model="bar2" persistent transition-show="flip-down" transition-hide="flip-up">
+                          <q-card>
+                            <q-bar>
+
+                              <q-space />
+
+                              <q-btn dense flat icon="close" v-close-popup>
+                                <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+                              </q-btn>
+                            </q-bar>
+
+                            <q-card-section>
+                              <div class="text-h6">Driver: Unit Details</div>
+                            </q-card-section>
+
+                            <q-card-section class="q-pt-none">
+                              <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
                           <div class="q-pa-md">
-                            <q-input color="teal-4" label="Plate No." :loading="verifyunit">
+                            <q-input color="teal-4" 
+                            v-model="Unit.PlateNo" 
+                            label="Plate No." 
+                            :loading="verifyunit"
+                            >
                               <template v-slot:before>
                                 <q-icon name="mdi-jeepney" />
                               </template>
@@ -350,9 +367,9 @@
                           </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" label="Operator" readonly>
+                            <q-input color="teal-4" v-model="Unit.Operator" label="Operator" readonly>
                               <template v-slot:before>
                                 <q-icon name="mdi-account" />
                               </template>
@@ -361,25 +378,55 @@
                         </div>
 
                         <div>
-                          <q-btn label="Verify Unit" color="primary" v-if="MemberData.Designation == 'Driver'"/>
+                          <q-btn label="Verify Unit" @click="verifyifunit()" color="primary" v-if="MemberData.Designation == 'Driver'"/>
+                          <button class="btn btn-primary" @click="bar2=!bar2">Save</button>
+                          <!-- <q-btn label="Update Unit" @click="updateUnit()" color="primary" v-if="MemberData.Designation == 'Driver'"/> -->
                         </div>
                       </div>
+                            </q-card-section>
+                          </q-card>
+                        </q-dialog>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <q-dialog v-model="bar1" persistent transition-show="flip-down" transition-hide="flip-up">
+                          <q-card> 
+                            <q-bar>
+
+                              <q-space />
+
+                              <q-btn dense flat icon="close" v-close-popup @click="deleteunits()">
+                                <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+                              </q-btn>
+                            </q-bar>
+
+                            <q-card-section>
+                              <div class="text-h6">Operator: Unit Details</div>
+                            </q-card-section>
+
+                            <q-card-section class="q-pt-none">
+                              <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md" v-if="MemberData.Designation == 'Operator'">
 
                               <ul class="list-group">
                                 <li class="list-group-item" v-for= "(unit, id) in RegUnits" :key="id">
-                                  {{unit.PlateNo}} <button @click="remove(unit)" class="badge">x</button>
+                                  {{unit['.key']}} <button @click="remove(unit)" class="badge">x</button>
                                 </li>
                               </ul>
 
                               <input class="form-control" type="text" v-model="RegUnit.PlateNo" v-on:keyup.enter="add()">
                                 <br>
                               <button class="btn btn-primary" @click="add()">Add new</button>
+                              <button class="btn btn-primary" @click="bar1=!bar1">Save</button>
                             </div>
                         </div>
+                            </q-card-section>
+                          </q-card>
+                        </q-dialog>                        
 
+                        
+                        <q-btn label="Unit Details" @click="bar1=!bar1" v-if="MemberData.Designation == 'Operator'"></q-btn>
+                        <q-btn label="Unit Details" @click="bar2=!bar2" v-if="MemberData.Designation == 'Driver'"></q-btn>
+
+                      
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-mb-lg q-pb-md">
                             <div class="q-pa-md">
                             </div>
@@ -387,7 +434,7 @@
                         <!-- End of Row -->
                          <div class="absolute-bottom-right">
                             <q-btn class="q-mr-md text-white" icon="cancel" type="reset" label="Reset" color="red-6" />
-                            <q-btn @click="page = 2" class="text-white" icon="check" label="Register" color="teal-6" />
+                            <q-btn @click="regMember()" class="text-white" icon="check" label="Register" color="teal-6" />
                          </div>
                       </div>
                     </q-card-section>
@@ -401,7 +448,7 @@
 </template>
     
 <script>
-import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
+import { firebaseDb, firebaseSto, firefirestore, Auth2 } from 'boot/firebase';
 // import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 // Vue.component(VueQrcode.name, VueQrcode);
@@ -409,6 +456,8 @@ import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 export default {
     data(){
         return{
+            bar1: false,
+            bar2: false,
             choices: false,
             page: 1,
             MemberData: {
@@ -416,7 +465,7 @@ export default {
               LastName: '',
               CivilStatus: '',
               BirthPlace: '',
-              BirthDate: '',
+              BirthDate: '1997/11/11',
               Address:'',
               Phone:'',
               Email:'',
@@ -428,24 +477,15 @@ export default {
               Relationship: '',
               NoDependents: '',
               LicenseNo:'',
-              LicenseExp:'',
+              LicenseExp:'1997/11/11',
               Designation: '',
-              imageUrlPro: null,
+              imageUrlPro: 'https://image.shutterstock.com/image-vector/social-member-vector-icon-person-260nw-1139787308.jpg',
               imageUrlLic: 'https://www.pinoydriver.com/resources/wp-content/uploads/2019/06/foreign-drivers-license-ph.png',
-              timestamp: ''
+              timestamp: '',
+              Unit: []
             },
-            // UnitData: {
-            //   PlateNo: '',
-            //   Operator: '',
-            //   Driver: []
-            // },
-            lines: [],
-            blockRemoval: true,
             options: ['Operator', 'Driver'],
-            unit:'',
-            units:[],
             civilstatusoptions: ['Single', 'Married', 'Widow'],
-            mid: '',
             loading: false,
             loading1: false,
             verifyunit: false,
@@ -453,7 +493,16 @@ export default {
                 PlateNo: '',
                 Operator: ''
               },
-            RegUnits: []
+            RegUnits: [],
+            Unit: {
+              PlateNo: '',
+              Operator: '',
+              Driver: {
+                MemberID: '',
+                FirstName: '',
+                LastName: ''
+              }
+              }
             }
     },
   firestore: function () {
@@ -461,27 +510,30 @@ export default {
         AddMemberData: firebaseDb.collection('MemberData'),
         RegUnits: firebaseDb.collection('RegUnits'),
         Units: firebaseDb.collection('Units'),
+        Users: firebaseDb.collection('Users'),
         MemberID: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
     }
   },
     methods: {
     add() {
-      this.RegUnit.Operator = 'NGTSC'+ (this.MemberID.MemberID + 1)
-      console.log(this.RegUnits)
-      this.$firestore.RegUnits.add(this.RegUnit)
+      //add unit operator
+      var id = 'NGTSC'+ (this.MemberID.MemberID + 1)
+      var fname = this.MemberData.FirstName
+      var lname = this.MemberData.LastName
+      this.$firestore.RegUnits.doc(this.RegUnit.PlateNo).set({
+        Operator: {
+          MemberID: id,
+          FirstName: fname,
+          LastName: lname
+        }
+      })
       .then(()=>{
         this.RegUnits.PlateNo = ""
       })
     },
     remove(e) {
+      //remove unit operator
       this.$firestore.RegUnits.doc(e['.key']).delete()
-    },
-    addtounits(){
-      //lipat sa Units colletion kapag register na
-      var add = this.$firestore.Units
-      this.RegUnits.forEach(function(e) {
-            add.add(e)
-        })
     },
     deleteunits() {
       //delete ng temp units collection
@@ -490,16 +542,102 @@ export default {
             del.doc(e['.key']).delete()
         })
     },
-    regMember: function () {
-        // this.$firestore.AddMemberData.add(this.MemberData)
-        // this.$firestore.Units.add(this.RegUnits)
+    addtounits(){
+      //lipat sa Units colletion kapag register na
+      var add = this.$firestore.Units
+      this.RegUnits.forEach(function(e) {
+            add.doc(e['.key']).set(e)
+        })
+    },
+    verifyifunit(){
+      //verify unit driver
+      var unitpltno = this.Unit.PlateNo
+      var unitopt
+      var verified = false
+      this.Units.forEach(function(e) {
+            if(e['.key'] == unitpltno){
+              return unitopt = e.Operator.FirstName +' '+ e.Operator.LastName
+            }
+        })
+        console.log('Operator: ', unitopt)
+        this.Unit.Operator = unitopt
+    },
+    updateUnit(){
+      //update unit sa driver registration
+      var newdriver = {
+          MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
+          FirstName:  this.MemberData.FirstName,
+          LastName: this.MemberData.LastName
+        }
+      
+      this.$firestore.Units.doc(this.Unit.PlateNo).update({
+        Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+      })
+    },
+    adduser(email, password){
+      Auth2.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        let userId = Auth2.currentUser.uid
+        console.log("User " + userId + " created successfully!");
+        Auth2.signOut();
 
+        //ayaw gumana
+        this.$firestore.Users.doc(userId).set({
+          Designation: this.MemberData.Designation,
+          Email: email,
+          FirstName: this.MemberData.FirstName,
+          LastName: this.MemberData.LastName,
+          MemberID: email.substring(0,12)
+        })
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      })
+    },
+    regMember: function () {
+      //register member
+      var plateno = []
+      if(this.MemberData.Designation == "Driver"){
+         plateno.push(this.Unit.PlateNo)
+      }else if (this.MemberData.Designation == "Operator"){
+        this.RegUnits.forEach(function(e) {
+         plateno.push(e['.key'])
+        })
+      }
+
+        this.MemberData.Unit = plateno
         this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
         this.MemberData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
+        .then(() => {
+            var id = this.mid+'@coop.com'
+            console.log('Member Registered')
+            this.adduser(id, 'p@ssw0rd')
+        })
+        .then(() => {
+            const increment = firefirestore.FieldValue.increment(1)
+            this.$firestore.MemberID.update({ MemberID: increment })
+            .then(() => {
+              console.log('MemberID Incremented')
+            })
+        })
+        .then(() => {
 
-        const increment = firefirestore.FieldValue.increment(1);
-        this.$firestore.MemberID.update({ MemberID: increment });
+          if(this.MemberData.Designation == 'Operator'){
+            this.addtounits()
+            this.deleteunits()
+
+            console.log('Unit/s Added to Collection')
+            console.log('Temp Unit/s Deleted')
+          }
+          else
+          {
+            this.updateUnit()
+            console.log('New Driver Added to Units')
+          }
+        })  
     },
       onFilePickedPro(e){
         this.loading = true
@@ -537,33 +675,16 @@ export default {
           })
         })
       },
-      // log(){
-      //   console.log(this.operatorprofile);
-      // },
-      // addrow(){
-      //  this.units.push(units[0]); // what to push unto the rows array?
-      // },
-      // removeRow(index){
-      //   this.units.splice(index,1); // why is this removing only the last row?
-      // },
       Clear(){
+        this.deleteunits()
         this.file = '',
         this.date = '',
         this.Lastname = '',
         this.phone = ''
-      },
-    //     addLine () {
-    //   let checkEmptyLines = this.lines.filter(line => line.number === null)
-    //   if (checkEmptyLines.length >= 1 && this.lines.length > 0) return
-    //   this.lines.push({
-    //     number: null,
-    //   })
-    // },
-    //  removeLine (lineId) {
-    //   if (!this.blockRemoval) this.lines.splice(lineId, 1)
-    // }   
+      } 
  },
  computed: {
+   
   },
   mounted () {
     // this.addLine()

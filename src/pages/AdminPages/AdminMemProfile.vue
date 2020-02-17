@@ -1,26 +1,20 @@
 <template>
     <div class="q-pa-md">
         <q-card class="my-card" flat bordered>
+        <!-- start toolbar -->
         <q-card-actions align="right">
-          <q-btn @click="inception = true" flat v-if="MemberData.MembershipFee">
+          <q-btn @click="inception = true; GenOrNo();" flat v-if="MemberData.MembershipFee">
             Membership Fee: {{ MemberData.MembershipFee }}
             </q-btn>
 
+            <!-- start membership payment -->
             <div>
               <q-dialog v-model="inception">
                 <q-card>
                   <q-card-section>
                     <div class="text-h6">Membership Fee Payment</div>
                   </q-card-section>
-                  <!-- <q-card-section class="q-pt-none">
-                    <div class="q-pa-md">
-                      <q-input v-model="Payment.MemberID" label="Member ID" :readonly="upd">
-                        <template v-slot:before>
-                        <q-icon name="mdi-human-handsup" />
-                        </template>
-                      </q-input>
-                    </div>
-                  </q-card-section> -->
+
                   <q-card-section class="q-pt-none">
                     <div class="q-pa-md">
                       <q-input v-model="Payment.OrNo" label="OR No">
@@ -48,14 +42,25 @@
                 </q-card>
               </q-dialog>
             </div>
+            <!-- end membership payment -->
 
+            <!-- start unit details -->
+            <div>
+              <q-dialog v-model="inception">
+                <q-card>
+                  
+                </q-card>
+              </q-dialog>
+            </div>
+            <!-- end unit details -->
+
+            
             <q-btn flat round icon="event"/>
             <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>
-            <q-btn flat color="teal-4">
+            <q-btn flat color="teal-4" @click="qrdialog = !qrdialog">
             Print ID        
-
             </q-btn>
             <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
             Update
@@ -64,6 +69,7 @@
             Resign
             </q-btn>
         </q-card-actions>
+        <!-- end toolbar -->
 
         <q-separator />
 
@@ -257,6 +263,50 @@
       </q-card-section>
     </q-card>
 
+  <q-dialog v-model="qrdialog">
+    <q-card class="my-card" flat bordered>
+      <q-card-section horizontal id="idpage">
+      <div class="id-card-tag"></div>
+        <div class="id-card-tag-strip"></div>
+        <div class="id-card-hook"></div>
+        <div class="id-card-holder">
+          <div class="id-card">
+            <div class="header">
+                  <strong>New GSIS Transport Service Cooperative</strong>
+            </div>
+            <div class="photo">
+                  <img
+                  style="height:80px; width:80px; border-radius: 50%;"
+                  class="rounded-borders"
+                  :src="MemberData.imageUrlPro"
+                  />
+            </div>
+            <strong>{{MemberData.FirstName +' '+ MemberData.LastName }}</strong>
+            <br>
+            {{ penRegId }}
+            <div class="qr-code">
+                <qrcode :value="qrvalue"></qrcode>
+            </div>
+            <h3>www.newgsistsc.com</h3>
+            <hr>
+            <p><strong>"PENGG"</strong>HOUSE,4th Floor, TC 11/729(4), Division Office Road <p>
+            <p>Near PMG Junction, Thiruvananthapuram Kerala, India <strong>695033</strong></p>
+            <p>Ph: 9446062493 | E-ail: info@onetikk.info</p>
+        </div>
+	    </div>
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions>
+        <q-btn color="secondary" class="full-width" @click="printDiv('idpage')">
+          Print
+        </q-btn>
+      </q-card-actions>
+
+    </q-card>
+  </q-dialog>
+
         <div>
             <q-form
               class="q-gutter-md"
@@ -314,14 +364,18 @@
 </template>
 
 <script>
-import { firebaseDb, firebaseSto } from 'boot/firebase';
-// import VueQrcode from '@chenfengyuan/vue-qrcode'
+import Vue from 'vue'
 
-// Vue.component(VueQrcode.name, VueQrcode);
+import { firebaseDb, firebaseSto } from 'boot/firebase';
+import VueQrcode from '@chenfengyuan/vue-qrcode'
+
+Vue.component(VueQrcode.name, VueQrcode);
 
 export default {
     data(){
         return{
+            qrvalue: '',
+            qrdialog: false,
             upd: true,
             loading: false,
             loading1: false,
@@ -331,29 +385,8 @@ export default {
               Fee: 'Membership Fee',
               MemberID: this.penRegId,
               OrNo: '',
-              Amount: ''
+              Amount: '500'
             },
-            // MemberData: {
-            //   FirstName: '',
-            //   LastName: '',
-            //   CivilStatus: '',
-            //   BirthPlace: '',
-            //   BirthDate: '',
-            //   Address:'',
-            //   Phone:'',
-            //   Email:'',
-            //   Occupation: '',
-            //   EmployerCompany: '',
-            //   Salary: '',
-            //   OtherIncome: '',
-            //   RelativeName: '',
-            //   Relationship: '',
-            //   NoDependents: '',
-            //   LicenseNo:'',
-            //   LicenseExp:'',
-            //   Designation: '',
-            //   imageFile: []
-            // },
             MemberData: []
         }
     },
@@ -361,7 +394,10 @@ export default {
       firestore () {
         return {
             // Doc
-            MemberData: firebaseDb.collection('MemberData').doc(this.penRegId)
+            MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
+            Transactions: firebaseDb.collection('Transactions'),
+            UnitDetails: firebaseDb.collection('Units').where("Driver", "array-contains", this.penRegId),
+            OrNoData: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N")
         }
       },
     methods: {
@@ -369,6 +405,14 @@ export default {
           this.$firestore.MemberData.set(this.MemberData);
           console.log('Data: ', this.MemberData)
       },
+      //new code
+      GenOrNo(){
+        this.Payment.OrNo = this.OrNoData.OrNo + 1
+      },
+      PayFee(){
+        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').set(this.Payment)
+      },
+       //new code
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;
         // Get all stylesheets HTML
@@ -420,12 +464,12 @@ export default {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             this.MemberData.imageUrlPro = downloadURL
-            console.log('ProfilePic:', downloadURL)
+            console.log('ProfilePro:', downloadURL)
           }).then(() => {
             this.loading = false
           })
         })
-      },
+      }, 
       onFilePickedLic(e){
         this.loading1 = true
         let file = e.target.files[0]
@@ -467,11 +511,86 @@ export default {
   mounted () {
     // this.addLine()
     this.datetoday()
+  },
+  computed: {
+    qrvalue(){
+      return {
+        DriverID: this.penRegId,
+        OperatorID: this.UnitDetails
+      }
+    }
   }
 }
 </script>
 
 <style>
+
+		.id-card-holder {
+			width: 300px;
+		    padding: 4px;
+		    margin: 0 auto;
+		    background-color:teal;
+		    border-radius: 5px;
+		    position: relative;
+		}
+		.id-card-holder:after {
+		    content: '';
+		    width: 7px;
+		    display: block;
+		    background-color:teal;
+		    height: 100px;
+		    position: absolute;
+		    top: 105px;
+		    border-radius: 0 5px 5px 0;
+		}
+		.id-card-holder:before {
+		    content: '';
+		    width: 7px;
+		    display: block;
+		    background-color:teal;
+		    height: 100px;
+		    position: absolute;
+		    top: 105px;
+		    left: 290px;
+		    border-radius: 5px 0 0 5px;
+		}
+		.id-card {
+			
+			background-color: #fff;
+			padding: 10px;
+			border-radius: 10px;
+			text-align: center;
+			box-shadow: 0 0 1.5px 0px #b9b9b9;
+		}
+		.id-card img {
+			margin: 0 auto;
+		}
+		.header img {
+			width: 100px;
+    		margin-top: 15px;
+		}
+		.photo img {
+			width: 80px;
+    		margin-top: 15px;
+		}
+		h2 {
+			font-size: 15px;
+			margin: 5px 0;
+		}
+		h3 {
+			font-size: 12px;
+			margin: 2.5px 0;
+			font-weight: 300;
+		}
+		.qr-code img {
+			width: 180px;
+		}
+		p {
+			font-size: 5px;
+			margin: 2px;
+		}
+
+
   .h6 {
     text-align: center;
     text-decoration: overline underline;
