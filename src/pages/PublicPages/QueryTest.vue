@@ -1,14 +1,14 @@
 <template>
     <div>
         <qrcode value="https://fengyuanchen.github.io/vue-qrcode" tag="img"></qrcode>
-        <strong>{{ Units }}</strong>
+        <!-- <strong>{{ Units }}</strong>
         <br>
         <strong>{{ UnitDetails }}</strong>
         <br>
-        <strong>{{ MemberData.Firstname +' '+ MemberData.Lastname}}</strong>
+        <strong>{{ MemberData.Firstname +' '+ MemberData.Lastname}}</strong> -->
         
 
-        <!-- <strong>{{ MemberData }}</strong> -->
+        <strong>{{ DriverDetails }}</strong>
 
         <q-btn @click="log">LOG</q-btn>
         <q-btn @click="updateUnit">update</q-btn>
@@ -36,28 +36,51 @@ export default {
             // Transactions: firebaseDb.collection('Transactions'),
             Units: firebaseDb.collection('Units'),
             UnitDetails: firebaseDb.collection('Units').where('Operator.MemberID', '==' , 'NGTSC2021'),
-            MemberData: firebaseDb.collection('MemberData').where()
+            DriverDetails: firebaseDb.collection('MemberData'),
+            MemberData: firebaseDb.collection('MemberData').doc('NGTSC2020001'),
             // OrNoData: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N")
         }
       },
     methods: {
         log(){
-            console.log('start')
-            this.$firestore.UnitDetails.get()
+          var OpUnits = []
+          var unit = this.$firestore.DriverDetails
+          this.MemberData.Unit.forEach(function(munit) {
+            console.log(munit)
+            unit.where('Unit', 'array-contains' , munit).where('Designation', '==', 'Driver').get()
                 .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
+                  querySnapshot.forEach(function(doc) {
                         // doc.data() is never undefined for query doc snapshots
                         let data = doc.data()
-                        console.log(doc.id, " => ", doc.data());
-                        console.log(data.Driver);
-                        data.Driver.forEach(function(e) {
-                            console.log(e)
+                        console.log(munit)
+                        OpUnits.push(data.FirstName +' '+ data.LastName)
+                        // console.log(doc.id, " => ", doc.data());
+                        // console.log(data.FirstName + data.LastName);
                         })
-                    });
                 })
-                .catch(function(error) {
-                    console.log("Error getting documents: ", error);
-                });
+                .then(() => {
+                  console.log('UnitData', OpUnits)
+                })
+          })
+
+          
+
+            // console.log('start')
+            // this.$firestore.UnitDetails.get()
+            //     .then(function(querySnapshot) {
+            //         querySnapshot.forEach(function(doc) {
+            //             // doc.data() is never undefined for query doc snapshots
+            //             let data = doc.data()
+            //             console.log(doc.id, " => ", doc.data());
+            //             console.log(data.Driver);
+            //             data.Driver.forEach(function(e) {
+            //                 console.log(e)
+            //             })
+            //         });
+            //     })
+            //     .catch(function(error) {
+            //         console.log("Error getting documents: ", error);
+            //     });
         },
         updateUnit(){
       //update unit sa driver registration

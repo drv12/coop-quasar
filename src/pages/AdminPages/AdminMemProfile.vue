@@ -43,25 +43,17 @@
               </q-dialog>
             </div>
             <!-- end membership payment -->
-
-            <!-- start unit details -->
-            <div>
-              <q-dialog v-model="inception">
-                <q-card>
-                  
-                </q-card>
-              </q-dialog>
-            </div>
-            <!-- end unit details -->
-
             
             <q-btn flat round icon="event"/>
             <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>
-            <q-btn flat color="teal-4" @click="qrdialog = !qrdialog">
+            <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
             Print ID        
             </q-btn>
+            <!-- <q-btn flat color="teal-4" @click="bar = !bar; GetUnitOperator()">
+            Unit Details        
+            </q-btn> -->
             <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
             Update
             </q-btn>
@@ -92,6 +84,7 @@
 
 
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
+            <div class="text-h6 q-mt-sm q-ma-md">Operator: {{ MemberData.Operator }}</div>
             <div class="q-pa-md">
               <q-input 
               v-model="MemberData.FirstName" 
@@ -258,10 +251,69 @@
                 </template>
               </q-input>
             </div>
-            <q-btn @click="log" lable="sssss" />
         </q-card-section>
       </q-card-section>
     </q-card>
+
+<!-- <q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
+  <q-card>
+    <q-bar>
+      <q-space />
+      <q-btn dense flat icon="close" v-close-popup>
+      <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+      </q-btn>
+    </q-bar>
+    <div>
+      <q-card-section>
+        <div class="text-h6">Unit Details</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
+          v-if="MemberData.Designation == 'Driver'">
+
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
+              <div class="q-pa-md">
+                <q-input color="teal-4" 
+                v-model="this.Unit.PlateNo"
+                ref="Plate"
+                label="Plate No." 
+                :readonly="Unit.PlateNo != ''"
+                >
+                  <template v-slot:before>
+                  <q-icon name="mdi-jeepney" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+              <div class="q-pa-md">
+                <q-input color="teal-4" v-model="Unit.Operator" label="Operator" readonly>
+                  <template v-slot:before>
+                    <q-icon name="mdi-account" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div v-if="Unit.PlateNo == ''">
+                <q-btn label="Verify Unit" @click="verifyifunit()" color="primary"/>
+                <button class="btn btn-primary" @click="bar2=!bar2">Save</button>
+            </div>
+
+
+        </div>
+
+        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
+          v-if="MemberData.Designation == 'Operator'">
+        </div>
+
+
+      </q-card-section>
+    </div>
+  </q-card>
+</q-dialog>     -->
 
   <q-dialog v-model="qrdialog">
     <q-card class="my-card" flat bordered>
@@ -360,6 +412,8 @@
               </div>
             </q-form>
         </div>
+
+
     </div>
 </template>
 
@@ -375,6 +429,7 @@ export default {
     data(){
         return{
             qrvalue: '',
+            bar: false,
             qrdialog: false,
             upd: true,
             loading: false,
@@ -387,7 +442,11 @@ export default {
               OrNo: '',
               Amount: '500'
             },
-            MemberData: []
+            MemberData: [],
+            Unit: {
+              Operator: '',
+              PlateNo: ''
+            }
         }
     },
     props: ['penRegId'],
@@ -395,12 +454,51 @@ export default {
         return {
             // Doc
             MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
+            Members: firebaseDb.collection('MemberData'),
             Transactions: firebaseDb.collection('Transactions'),
-            UnitDetails: firebaseDb.collection('Units').where("Driver", "array-contains", this.penRegId),
+            // Units: firebaseDb.collection('Units'),
             OrNoData: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N")
         }
       },
     methods: {
+      // GetOperatorUnits(){
+      // var OpUnits = []
+      // this.MemberData.Unit.forEach(function(munit) {
+      //   console.log('MemberDataUnit: ', munit)
+
+      //   OpUnits.push(this.Units.doc(munit))
+      // })
+      //   console.log('Operator: ', unitopt)
+      //   this.Unit.Operator = unitopt
+      // },
+    //   GetUnitOperator(){
+    //   var unitpltno = this.MemberData.Unit[0]
+    //   this.Unit.PlateNo = unitpltno
+    //   var unitdet
+    //   var verified = false
+    //   this.Units.forEach(function(e) {
+    //         if(e['.key'] == unitpltno){
+
+    //           return unitdet = {
+    //             Operator: e.Operator.FirstName +' '+ e.Operator.LastName,
+    //             MemberId: e.MemberID
+    //           }
+    //         }
+    //     })
+    //     this.Unit.Operator = unitdet.Operator
+    //   },
+    //   updateUnit(){
+    //   //update unit sa driver registration
+    //       var newdriver = {
+    //       MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
+    //       FirstName:  this.MemberData.FirstName,
+    //       LastName: this.MemberData.LastName
+    //     }
+      
+    //     this.$firestore.Units.doc(this.Unit.PlateNo).update({
+    //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+    //   })
+    // },
       updateMemberData () {
           this.$firestore.MemberData.set(this.MemberData);
           console.log('Data: ', this.MemberData)
@@ -513,12 +611,12 @@ export default {
     this.datetoday()
   },
   computed: {
-    qrvalue(){
-      return {
-        DriverID: this.penRegId,
-        OperatorID: this.UnitDetails
-      }
-    }
+    // qrvalue(){
+    //   return {
+    //     DriverID: this.penRegId,
+    //     OperatorID: this.UnitDetails
+    //   }
+    // }
   }
 }
 </script>

@@ -41,71 +41,7 @@
                       </q-input>
                      </div>
                    </div>
-                      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <!-- <div class="text-h6 text-center">License Details</div> -->
-                          <!-- <q-separator color="secondary" inset /> -->
-                    
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="q-pa-sm">
-                          <div style=" text-align: center;">
-                            <q-spinner
-                              color="teal"
-                              width='160' 
-                              height='90'
-                              v-if="loading1"
-                            />
-                            <img 
-                            v-if="!loading1"
-                            :src="MemberData.imageUrlLic"
-                            width='368' 
-                            >
-                          </div>
-                       <q-input 
-                       type="file"
-                       hint="License Picture"
-                       accept="image/*"
-                       @change="onFilePickedLic">
-                        <template v-slot:prepend>
-                          <q-icon name="attach_file" />
-                        </template>
-                      </q-input>
-                     </div>
-                   </div>
-                   </div>
-                   
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <!-- <div class="text-h6 text-center">Unit Details</div>
-                          <q-separator color="secondary" /> -->
-                     
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="q-pa-sm">
-                          <div style=" text-align: center;">
-                              <q-spinner
-                                color="teal"
-                                width='160' 
-                                height='90'
-                                v-if="loading1"
-                              />
-                                  <img 
-                                  v-if="!loading1"
-                                  :src="MemberData.imageUrlLic"
-                                  width='368' 
-                                  >
-                          </div>
-                                <q-input 
-                                type="file"
-                                hint="Unit Details"
-                                accept="image/*"
-                                @change="onFilePickedLic">
-                                  <template v-slot:prepend>
-                                    <q-icon name="attach_file" />
-                                  </template>
-                                </q-input>
-                     </div>
-                   </div>
-                        </div>
-                        <!-- End of Upload Image -->
-                        <!-- <div class="col-sm-12">
+                          <!-- <div class="col-sm-12">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
                         </div> -->
               <!-- Start of Firstname -->
@@ -134,7 +70,8 @@
                <!-- Start of Designation -->
                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                  <div class="q-pa-md">
-                  <q-select color="teal-4" v-model="MemberData.Designation" :options="options" label="Designation">
+                  <q-select color="teal-4" v-model="MemberData.Designation" :options="options" label="Designation"
+                  @popup-hide="DesignationChange">
                   <template class="q-pa-md" v-slot:before>
                       <q-icon name="account_box" />
                     </template>
@@ -200,10 +137,14 @@
                             </div>
                             </div>
                           <!-- End of Status -->
-                          <!-- Start of Occupation -->
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <!-- Start of Occupation -->
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Operator'">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Occupation" label="Occupation" >
+                              <q-input color="teal-4" 
+                              label="Occupation" 
+                              v-model="MemberData.Occupation"
+                              id="myInput"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -212,13 +153,37 @@
                           </div>
                         <!-- End of Occupation -->
                         <!-- Start of Employer or Office -->
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
+                            <div class="q-pa-md">
+                              <q-input color="teal-4" v-model="MemberData.Occupation" label="Occupation" >
+                                <template v-slot:before>
+                                  <q-icon name="mdi-briefcase" />
+                                </template>
+                              </q-input>
+                            </div>
+                          </div>
+                        <!-- Start of Employer or Office -->
+                        <!-- Start of Employer or Office -->
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Operator'">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="MemberData.EmployerCompany" label="Employer or Office" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
                               </q-input>
+                            </div>
+                          </div>
+                        <!-- Start of Employer or Office -->
+                        <!-- Start of Employer or Office -->
+                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
+                            <div class="q-pa-md">
+                              <q-input color="teal-4" v-model="MemberData.Operator" label="Operator" >
+                                <template v-slot:before>
+                                  <q-icon name="mdi-briefcase" />
+                                </template>
+                                <q-btn @click="verifyoperator" flat>Validate</q-btn>
+                              </q-input>
+                               
                             </div>
                           </div>
                         <!-- Start of Employer or Office -->
@@ -313,15 +278,34 @@
                           </div>
                         </div>
                         <!-- End of Email -->
-                          <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                              <div class="q-pa-md">
-                                <q-file color="teal-4" v-model="MemberData.LicensePic" label="License Picture">
+                          <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="q-pa-sm">
+                          <div style=" text-align: center;">
+                              <q-spinner
+                                color="teal"
+                                width='160' 
+                                height='90'
+                                v-if="loading1"
+                              />
+                                  <img 
+                                  v-if="!loading1"
+                                  :src="MemberData.imageUrlLic"
+                                  width='368' 
+                                  >
+                          </div>
+                                <q-input 
+                                type="file"
+                                hint="Unit Details"
+                                accept="image/*"
+                                @change="onFilePickedLic">
                                   <template v-slot:prepend>
                                     <q-icon name="attach_file" />
                                   </template>
-                                </q-file>
-                              </div>
-                        </div> -->
+                                </q-input>
+                            </div>
+                          </div>
+                        </div>
                   
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 
@@ -366,7 +350,7 @@
                        
                         <!-- End of Expiration date of Drivers License -->
 
-                        <q-dialog v-model="bar2" persistent transition-show="flip-down" transition-hide="flip-up">
+                        <!-- <q-dialog v-model="bar2" persistent transition-show="flip-down" transition-hide="flip-up">
                           <q-card>
                             <q-bar>
 
@@ -410,7 +394,6 @@
                         <div>
                           <q-btn label="Verify Unit" @click="verifyifunit()" color="primary" v-if="MemberData.Designation == 'Driver'"/>
                           <button class="btn btn-primary" @click="bar2=!bar2">Save</button>
-                          <!-- <q-btn label="Update Unit" @click="updateUnit()" color="primary" v-if="MemberData.Designation == 'Driver'"/> -->
                         </div>
                       </div>
                             </q-card-section>
@@ -450,11 +433,11 @@
                         </div>
                             </q-card-section>
                           </q-card>
-                        </q-dialog>                        
+                        </q-dialog>                         -->
 
                         
-                        <q-btn label="Unit Details" @click="bar1=!bar1" v-if="MemberData.Designation == 'Operator'"></q-btn>
-                        <q-btn label="Unit Details" @click="bar2=!bar2" v-if="MemberData.Designation == 'Driver'"></q-btn>
+                        <!-- <q-btn label="Unit Details" @click="bar1=!bar1" v-if="MemberData.Designation == 'Operator'"></q-btn>
+                        <q-btn label="Unit Details" @click="bar2=!bar2" v-if="MemberData.Designation == 'Driver'"></q-btn> -->
 
                       
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-mb-lg q-pb-md">
@@ -500,6 +483,7 @@ export default {
               Phone:'',
               Email:'',
               Occupation: '',
+              Operator: '',
               EmployerCompany: '',
               Salary: '',
               OtherIncome: '',
@@ -532,12 +516,14 @@ export default {
                 FirstName: '',
                 LastName: ''
               }
-              }
+              },
+              verify: false
             }
     },
   firestore: function () {
     return {
         AddMemberData: firebaseDb.collection('MemberData'),
+        Operators: firebaseDb.collection('MemberData').where('Designation', '==', 'Operator'),
         RegUnits: firebaseDb.collection('RegUnits'),
         Units: firebaseDb.collection('Units'),
         Users: firebaseDb.collection('Users'),
@@ -545,64 +531,100 @@ export default {
     }
   },
     methods: {
-    add() {
-      //add unit operator
-      var id = 'NGTSC'+ (this.MemberID.MemberID + 1)
-      var fname = this.MemberData.FirstName
-      var lname = this.MemberData.LastName
-      this.$firestore.RegUnits.doc(this.RegUnit.PlateNo).set({
-        Operator: {
-          MemberID: id,
-          FirstName: fname,
-          LastName: lname
-        }
-      })
-      .then(()=>{
-        this.RegUnits.PlateNo = ""
-      })
-    },
-    remove(e) {
-      //remove unit operator
-      this.$firestore.RegUnits.doc(e['.key']).delete()
-    },
-    deleteunits() {
-      //delete ng temp units collection
-      var del = this.$firestore.RegUnits
-      this.RegUnits.forEach(function(e) {
-            del.doc(e['.key']).delete()
-        })
-    },
-    addtounits(){
-      //lipat sa Units colletion kapag register na
-      var add = this.$firestore.Units
-      this.RegUnits.forEach(function(e) {
-            add.doc(e['.key']).set(e)
-        })
-    },
-    verifyifunit(){
-      //verify unit driver
-      var unitpltno = this.Unit.PlateNo
-      var unitopt
-      var verified = false
-      this.Units.forEach(function(e) {
-            if(e['.key'] == unitpltno){
-              return unitopt = e.Operator.FirstName +' '+ e.Operator.LastName
+      verifyoperator(){
+        var opt = this.MemberData.Operator
+        var optname = ''
+        var verifyy
+        this.Operators.forEach(function(e) {
+          optname = e.FirstName + ' ' + e.LastName
+            if(optname == opt){
+              return verifyy = true
             }
         })
-        console.log('Operator: ', unitopt)
-        this.Unit.Operator = unitopt
-    },
-    updateUnit(){
-      //update unit sa driver registration
-      var newdriver = {
-          MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
-          FirstName:  this.MemberData.FirstName,
-          LastName: this.MemberData.LastName
+        if(verifyy == true){
+          this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Operator Exists',
+          })
+          this.verify = true
+        }else {
+          this.$q.notify({
+          color: 'red-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: "Operator Doesn't Exist",
+          })
+          this.verify = false
         }
+        
+      },
+    // add() {
+    //   //add unit operator
+    //   var id = 'NGTSC'+ (this.MemberID.MemberID + 1)
+    //   var fname = this.MemberData.FirstName
+    //   var lname = this.MemberData.LastName
+    //   this.$firestore.RegUnits.doc(this.RegUnit.PlateNo).set({
+    //     Operator: {
+    //       MemberID: id,
+    //       FirstName: fname,
+    //       LastName: lname
+    //     }
+    //   })
+    //   .then(()=>{
+    //     this.RegUnits.PlateNo = ""
+    //   })
+    // },
+    // remove(e) {
+    //   //remove unit operator
+    //   this.$firestore.RegUnits.doc(e['.key']).delete()
+    // },
+    // deleteunits() {
+    //   //delete ng temp units collection
+    //   var del = this.$firestore.RegUnits
+    //   this.RegUnits.forEach(function(e) {
+    //         del.doc(e['.key']).delete()
+    //     })
+    // },
+    // addtounits(){
+    //   //lipat sa Units colletion kapag register na
+    //   var add = this.$firestore.Units
+    //   this.RegUnits.forEach(function(e) {
+    //         add.doc(e['.key']).set(e)
+    //     })
+    // },
+    // verifyifunit(){
+    //   //verify unit driver
+    //   var unitpltno = this.Unit.PlateNo
+    //   var unitopt
+    //   var verified = false
+    //   this.Units.forEach(function(e) {
+    //         if(e['.key'] == unitpltno){
+    //           return unitopt = e.Operator.FirstName +' '+ e.Operator.LastName
+    //         }
+    //     })
+    //     console.log('Operator: ', unitopt)
+    //     this.Unit.Operator = unitopt
+    // },
+    // updateUnit(){
+    //   //update unit sa driver registration
+    //   var newdriver = {
+    //       MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
+    //       FirstName:  this.MemberData.FirstName,
+    //       LastName: this.MemberData.LastName
+    //     }
       
-      this.$firestore.Units.doc(this.Unit.PlateNo).update({
-        Driver: firefirestore.FieldValue.arrayUnion(newdriver)
-      })
+    //   this.$firestore.Units.doc(this.Unit.PlateNo).update({
+    //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+    //   })
+    // },
+    DesignationChange(){
+      if(this.MemberData.Designation == 'Driver'){
+        this.MemberData.Occupation = 'Driver'
+      }else{
+        this.MemberData.Occupation = ''
+      }
     },
     adduser(email, password){
       Auth2.createUserWithEmailAndPassword(email, password)
@@ -627,17 +649,26 @@ export default {
       })
     },
     regMember: function () {
-      //register member
-      var plateno = []
-      if(this.MemberData.Designation == "Driver"){
-         plateno.push(this.Unit.PlateNo)
-      }else if (this.MemberData.Designation == "Operator"){
-        this.RegUnits.forEach(function(e) {
-         plateno.push(e['.key'])
-        })
+      if(this.verify == false && this.MemberData.Designation == 'Driver'){
+        this.$q.notify({
+          color: 'red-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: "Invalid Operator",
+          })
+        return
       }
+      //register member
+      // var plateno = []
+      // if(this.MemberData.Designation == "Driver"){
+      //    plateno.push(this.Unit.PlateNo)
+      // }else if (this.MemberData.Designation == "Operator"){
+      //   this.RegUnits.forEach(function(e) {
+      //    plateno.push(e['.key'])
+      //   })
+      // }
 
-        this.MemberData.Unit = plateno
+        // this.MemberData.Unit = plateno
         this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
         this.MemberData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
@@ -653,21 +684,21 @@ export default {
               console.log('MemberID Incremented')
             })
         })
-        .then(() => {
+        // .then(() => {
 
-          if(this.MemberData.Designation == 'Operator'){
-            this.addtounits()
-            this.deleteunits()
+        //   if(this.MemberData.Designation == 'Operator'){
+        //     this.addtounits()
+        //     this.deleteunits()
 
-            console.log('Unit/s Added to Collection')
-            console.log('Temp Unit/s Deleted')
-          }
-          else
-          {
-            this.updateUnit()
-            console.log('New Driver Added to Units')
-          }
-        })  
+        //     console.log('Unit/s Added to Collection')
+        //     console.log('Temp Unit/s Deleted')
+        //   }
+        //   else
+        //   {
+        //     this.updateUnit()
+        //     console.log('New Driver Added to Units')
+        //   }
+        // })  
     },
       onFilePickedPro(e){
         this.loading = true
@@ -681,7 +712,6 @@ export default {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             this.MemberData.imageUrlPro = downloadURL
-            console.log('ProfilePic:', downloadURL)
           }).then(() => {
             this.loading = false
           })
@@ -699,7 +729,6 @@ export default {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             this.MemberData.imageUrlLic = downloadURL
-            console.log('ProfileLic:', downloadURL)
           }).then(() => {
             this.loading1 = false
           })
