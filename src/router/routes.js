@@ -109,6 +109,10 @@ const routes = [
       {
         path: "/admin/jeepneys",
         component: () => import("pages/AdminPages/Jeepneys.vue")
+      },
+      {
+        path: "/admin/addstaff",
+        component: () => import("pages/AdminPages/AddStaff.vue")
       }
     ]
   }

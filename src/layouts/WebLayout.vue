@@ -5,7 +5,11 @@
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
            :class="'lt-md'"
           />
-          <q-toolbar-title>New GSIS Cooperative</q-toolbar-title>
+          <q-toolbar-title class="text-h4 text-uppercase">
+            <q-avatar size="69px">
+              <img  src="../statics/icons/New-GSIS-Cooperative.png">
+            </q-avatar>
+            New GSIS Cooperative</q-toolbar-title>
             <div>
             </div>
             <q-btn flat dark 
@@ -184,7 +188,7 @@
       <q-page-container>
             <div v-if="Loading">
               <q-spinner-oval
-                color="primary"
+                color="teal"
                 size="200px"
                 :thickness="5"
                 class="fixed-center"

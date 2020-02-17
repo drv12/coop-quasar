@@ -14,7 +14,7 @@
 
                         <!-- Start of Upload Image -->
                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                     <div class="q-pa-md">
+                     <div class="q-pa-md q-mt-xl q-pt-xl">
                           <div style=" text-align: center;">
                             <q-spinner
                               color="primary"
@@ -41,9 +41,69 @@
                       </q-input>
                      </div>
                    </div>
-                  <div class="col-sm-8">
-                    <div class="q-pa-md"></div>
-                  </div>
+                      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <!-- <div class="text-h6 text-center">License Details</div> -->
+                          <!-- <q-separator color="secondary" inset /> -->
+                    
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="q-pa-sm">
+                          <div style=" text-align: center;">
+                            <q-spinner
+                              color="teal"
+                              width='160' 
+                              height='90'
+                              v-if="loading1"
+                            />
+                            <img 
+                            v-if="!loading1"
+                            :src="MemberData.imageUrlLic"
+                            width='368' 
+                            >
+                          </div>
+                       <q-input 
+                       type="file"
+                       hint="License Picture"
+                       accept="image/*"
+                       @change="onFilePickedLic">
+                        <template v-slot:prepend>
+                          <q-icon name="attach_file" />
+                        </template>
+                      </q-input>
+                     </div>
+                   </div>
+                   </div>
+                   
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <!-- <div class="text-h6 text-center">Unit Details</div>
+                          <q-separator color="secondary" /> -->
+                     
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="q-pa-sm">
+                          <div style=" text-align: center;">
+                              <q-spinner
+                                color="teal"
+                                width='160' 
+                                height='90'
+                                v-if="loading1"
+                              />
+                                  <img 
+                                  v-if="!loading1"
+                                  :src="MemberData.imageUrlLic"
+                                  width='368' 
+                                  >
+                          </div>
+                                <q-input 
+                                type="file"
+                                hint="Unit Details"
+                                accept="image/*"
+                                @change="onFilePickedLic">
+                                  <template v-slot:prepend>
+                                    <q-icon name="attach_file" />
+                                  </template>
+                                </q-input>
+                     </div>
+                   </div>
+                        </div>
                         <!-- End of Upload Image -->
                         <!-- <div class="col-sm-12">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
@@ -262,37 +322,7 @@
                                 </q-file>
                               </div>
                         </div> -->
-                    <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="text-h6 text-center">License Details</div>
-                          <q-separator color="secondary" inset />
-                        </div>
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="q-pa-md">
-                          <div style=" text-align: center;">
-                            <q-spinner
-                              color="primary"
-                              width='160' 
-                              height='90'
-                              v-if="loading1"
-                            />
-                            <img 
-                            v-if="!loading1"
-                            :src="MemberData.imageUrlLic"
-                            width='368' 
-                            >
-                          </div>
-                       <q-input 
-                       type="file"
-                       hint="License Picture"
-                       accept="image/*"
-                       @change="onFilePickedLic">
-                        <template v-slot:prepend>
-                          <q-icon name="attach_file" />
-                        </template>
-                      </q-input>
-                     </div>
-                   </div>
+                  
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
@@ -333,7 +363,7 @@
                               </q-input>
                           </div>
                         </div> 
-                    </div>
+                       
                         <!-- End of Expiration date of Drivers License -->
 
                         <q-dialog v-model="bar2" persistent transition-show="flip-down" transition-hide="flip-up">
@@ -412,7 +442,7 @@
                                 </li>
                               </ul>
 
-                              <input class="form-control" type="text" v-model="RegUnit.PlateNo" v-on:keyup.enter="add()">
+                              <q-input color="teal" outlined class="form-control" type="text" v-model="RegUnit.PlateNo" v-on:keyup.enter="add()" />
                                 <br>
                               <button class="btn btn-primary" @click="add()">Add new</button>
                               <button class="btn btn-primary" @click="bar1=!bar1">Save</button>
