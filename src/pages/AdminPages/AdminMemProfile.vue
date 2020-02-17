@@ -51,9 +51,9 @@
             <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
             Print ID        
             </q-btn>
-            <!-- <q-btn flat color="teal-4" @click="bar = !bar; GetUnitOperator()">
-            Unit Details        
-            </q-btn> -->
+            <q-btn flat color="teal-4" @click="bar = !bar">
+            Drivers       
+            </q-btn>
             <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
             Update
             </q-btn>
@@ -84,7 +84,8 @@
 
 
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
-            <div class="text-h6 q-mt-sm q-ma-md">Operator: {{ MemberData.Operator }}</div>
+            <div class="text-h6 q-mt-sm q-ma-md" 
+            v-if="MemberData.Designation == 'Driver'">Operator: {{ MemberData.Operator.Name }}</div>
             <div class="q-pa-md">
               <q-input 
               v-model="MemberData.FirstName" 
@@ -315,6 +316,51 @@
   </q-card>
 </q-dialog>     -->
 
+<q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
+  <q-card>
+
+    <q-bar>
+      <q-space />
+      <q-btn dense flat icon="close" v-close-popup>
+      <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+      </q-btn>
+    </q-bar>
+
+    <div>
+      <q-card-section>
+        <div class="text-h6">Driver</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
+          <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
+              <div class="q-pa-md">
+                <q-input color="teal-4" 
+                v-model="Driver"
+                label="Driver" 
+                v-on:keyup.enter="addDriver();"
+                >
+                  <template v-slot:before>
+                  <q-icon name="mdi-jeepney" />
+                  </template>
+                </q-input>
+
+                <ul class="list-group">
+                  <li class="list-group-item" v-for= "(driver, key) in Drivers" :key="key">
+                      {{driver}} <button @click="remove(driver);" class="badge">x</button>
+                  </li>
+                </ul>
+
+                <q-btn @click="addDriver()">Add Driver</q-btn>
+              </div>
+            </div>
+        </div>
+      </q-card-section>
+    </div>     
+  </q-card>
+</q-dialog> 
+
+
   <q-dialog v-model="qrdialog">
     <q-card class="my-card" flat bordered>
       <q-card-section horizontal id="idpage">
@@ -420,7 +466,7 @@
 <script>
 import Vue from 'vue'
 
-import { firebaseDb, firebaseSto } from 'boot/firebase';
+import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 
 Vue.component(VueQrcode.name, VueQrcode);
@@ -446,7 +492,8 @@ export default {
             Unit: {
               Operator: '',
               PlateNo: ''
-            }
+            },
+            Driver: '',
         }
     },
     props: ['penRegId'],
@@ -456,11 +503,22 @@ export default {
             MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
             Members: firebaseDb.collection('MemberData'),
             Transactions: firebaseDb.collection('Transactions'),
-            // Units: firebaseDb.collection('Units'),
             OrNoData: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N")
         }
       },
     methods: {
+      remove(e) {
+        //remove unit operator
+        this.$firestore.MemberData.update({
+          Driver: firefirestore.FieldValue.arrayRemove(e)
+        })
+      },
+      addDriver(){
+        var newdriver = this.Driver
+        this.$firestore.MemberData.update({
+          Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+        })
+      },
       // GetOperatorUnits(){
       // var OpUnits = []
       // this.MemberData.Unit.forEach(function(munit) {
@@ -499,6 +557,18 @@ export default {
     //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
     //   })
     // },
+      GenQr(){
+      
+      if(this.MemberData.Designation == 'Driver'){
+          this.qrvalue = 
+            this.MemberData.MemberID + '\n' +
+            this.MemberData.MemberID
+          
+      }else{
+        this.qrvalue = this.MemberData.MemberID
+      }
+    
+      },
       updateMemberData () {
           this.$firestore.MemberData.set(this.MemberData);
           console.log('Data: ', this.MemberData)
@@ -611,12 +681,10 @@ export default {
     this.datetoday()
   },
   computed: {
-    // qrvalue(){
-    //   return {
-    //     DriverID: this.penRegId,
-    //     OperatorID: this.UnitDetails
-    //   }
-    // }
+    Drivers(){
+      return this.MemberData.Driver
+    }
+    
   }
 }
 </script>

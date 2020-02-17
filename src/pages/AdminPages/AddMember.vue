@@ -177,7 +177,7 @@
                         <!-- Start of Employer or Office -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Operator" label="Operator" >
+                              <q-input color="teal-4" v-model="Operator" label="Operator" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -190,7 +190,7 @@
                         <!-- Start of Other sources of Income -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Salary" label="Other sources of Income" >
+                              <q-input color="teal-4" v-model="MemberData.OtherIncome" label="Other sources of Income" >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -425,6 +425,7 @@
                                 </li>
                               </ul>
 
+
                               <q-input color="teal" outlined class="form-control" type="text" v-model="RegUnit.PlateNo" v-on:keyup.enter="add()" />
                                 <br>
                               <button class="btn btn-primary" @click="add()">Add new</button>
@@ -496,7 +497,7 @@ export default {
               imageUrlPro: 'https://image.shutterstock.com/image-vector/social-member-vector-icon-person-260nw-1139787308.jpg',
               imageUrlLic: 'https://www.pinoydriver.com/resources/wp-content/uploads/2019/06/foreign-drivers-license-ph.png',
               timestamp: '',
-              Unit: []
+              Operator: {}
             },
             options: ['Operator', 'Driver'],
             civilstatusoptions: ['Single', 'Married', 'Widow'],
@@ -517,7 +518,9 @@ export default {
                 LastName: ''
               }
               },
-              verify: false
+              verify: false,
+              OperatorDetails: {},
+              Operator: ''
             }
     },
   firestore: function () {
@@ -532,16 +535,26 @@ export default {
   },
     methods: {
       verifyoperator(){
-        var opt = this.MemberData.Operator
+        var opt = this.Operator
         var optname = ''
-        var verifyy
+        var MemberID= ''
+        var optdetails = {}
         this.Operators.forEach(function(e) {
           optname = e.FirstName + ' ' + e.LastName
+          MemberID = e['.key']
+
             if(optname == opt){
-              return verifyy = true
+               optdetails = {
+                MemberID: MemberID,
+                Name: optname,
+                verify: true
+              }
+              return optdetails
             }
         })
-        if(verifyy == true){
+        this.OperatorDetails = optdetails
+
+        if(optdetails.verify == true){
           this.$q.notify({
           color: 'green-4',
           textColor: 'white',
@@ -648,16 +661,29 @@ export default {
         var errorMessage = error.message;
       })
     },
+    log(){
+              console.log(this.OperatorDetails)
+    },
     regMember: function () {
-      if(this.verify == false && this.MemberData.Designation == 'Driver'){
-        this.$q.notify({
-          color: 'red-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: "Invalid Operator",
-          })
-        return
+
+      if(this.MemberData.Designation == 'Driver'){
+        this.verifyoperator()
+        if(this.verify == false){
+          this.$q.notify({
+            color: 'red-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: "Invalid Operator",
+            })
+          return
+        }else{
+          this.MemberData.Operator = {
+            MemberID: this.OperatorDetails.MemberID,
+            Name: this.OperatorDetails.Name
+          }
+        }
       }
+      
       //register member
       // var plateno = []
       // if(this.MemberData.Designation == "Driver"){
@@ -669,6 +695,7 @@ export default {
       // }
 
         // this.MemberData.Unit = plateno
+
         this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
         this.MemberData.timestamp = firefirestore.FieldValue.serverTimestamp()
         this.$firestore.AddMemberData.doc(this.mid).set(this.MemberData)
