@@ -12,7 +12,6 @@
     </div>
     <div v-if="!loading" class="col-xs-10 col-sm-10 col-md-8 q-pa-md">
       <q-markup-table separator="horizontal" flat bordered>
-      <template>
         <thead class="bg-teal">
           <tr class="text-h4 q-ml-md text-white">
             <th class="text-left">Last Name</th>
@@ -23,8 +22,8 @@
             <th class="text-left"></th>
           </tr>
         </thead>
-      </template>
-      <template>
+
+
         <tbody>
           <tr v-for="(PendingReg, id) in PendingRegs" :key="id">
             <td class="text-left">{{PendingReg.LastName}}</td>
@@ -35,7 +34,7 @@
             <td class="text-left"><q-btn flat label="View Details" class="full-width" icon-right="mdi-arrow-right" @click="loadPreReg(id)"/></td>
           </tr>
         </tbody>
-      </template>
+
     </q-markup-table>
     </div>
   </div>
