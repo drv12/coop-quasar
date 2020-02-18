@@ -132,7 +132,7 @@
                   <q-item-section avatar>
                     <q-icon name="mdi-jeepney" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Billings</q-item-section>
+                    <q-item-section class="text-uppercase">MEMBERS</q-item-section>
                 </q-item>
             </q-expansion-item>
             <!-- End of Tracking -->
