@@ -13,11 +13,11 @@
              <div class="row">
 
                         <!-- Start of Upload Image -->
-                   <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                   <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                      <div class="q-pa-md q-mt-xl q-pt-xl">
                           <div style=" text-align: center;">
                             <q-spinner
-                              color="primary"
+                              color="teal"
                               width='150' 
                               height='150'
                               v-if="loading"
@@ -41,6 +41,34 @@
                       </q-input>
                      </div>
                    </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          <div class="q-pa-sm">
+                          <div style=" text-align: center;">
+                              <q-spinner
+                                color="teal"
+                                width='160' 
+                                height='90'
+                                v-if="loading1"
+                              />
+                                  <img 
+                                  v-if="!loading1"
+                                  :src="MemberData.imageUrlLic"
+                                  width='368' 
+                                  >
+                          </div>
+                                <q-input 
+                                type="file"
+                                hint="Unit Details"
+                                accept="image/*"
+                                @change="onFilePickedLic">
+                                  <template v-slot:prepend>
+                                    <q-icon name="attach_file" />
+                                  </template>
+                                </q-input>
+                            </div>
+                          </div>
+                        </div>
                           <!-- <div class="col-sm-12">
                             <qrcode :value='qrvalue' :options="{ width: 200 }"></qrcode>
                         </div> -->
@@ -278,34 +306,7 @@
                           </div>
                         </div>
                         <!-- End of Email -->
-                          <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                          <div class="q-pa-sm">
-                          <div style=" text-align: center;">
-                              <q-spinner
-                                color="teal"
-                                width='160' 
-                                height='90'
-                                v-if="loading1"
-                              />
-                                  <img 
-                                  v-if="!loading1"
-                                  :src="MemberData.imageUrlLic"
-                                  width='368' 
-                                  >
-                          </div>
-                                <q-input 
-                                type="file"
-                                hint="Unit Details"
-                                accept="image/*"
-                                @change="onFilePickedLic">
-                                  <template v-slot:prepend>
-                                    <q-icon name="attach_file" />
-                                  </template>
-                                </q-input>
-                            </div>
-                          </div>
-                        </div>
+                       
                   
                   <!-- ############################################################################# -->
                         <!-- Start of License number --> 

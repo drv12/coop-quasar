@@ -13,7 +13,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" none>
+    <q-drawer v-model="left" behavior="mobile" side="left" none>
       <q-img
         class="absolute-top"
         src="https://cdn.quasar.dev/img/material.png"
@@ -110,7 +110,7 @@
                   <q-item-section avatar>
                     <q-icon name="assessment" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">All Payments</q-item-section>
+                    <q-item-section class="text-uppercase">Daily Collections</q-item-section>
                 </q-item>
            </q-expansion-item>
             <!-- End of Payment Member -->
@@ -124,43 +124,43 @@
                <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/admin/jeepneys"
+                    to="/admin/billings"
                     exact
                     >
                   <q-item-section avatar>
                     <q-icon name="mdi-jeepney" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">All Vehicles</q-item-section>
+                    <q-item-section class="text-uppercase">Billings</q-item-section>
                 </q-item>
             </q-expansion-item>
             <!-- End of Tracking -->
             <q-expansion-item
               expanded-separator
               icon="mdi-credit-card" 
-              label="Savings Account" 
+              label="Withdrawals" 
               :content-inset-level="0.5"
             >
               <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/admin/depositwithdraw"
+                    to="/admin/savings"
                     exact
                     >
                   <q-item-section avatar>
                     <q-icon name="mdi-bank" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Deposit/Withdraw</q-item-section>
+                    <q-item-section class="text-uppercase">Savings</q-item-section>
                 </q-item>
                  <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/admin/alltransaction"
+                    to="/admin/loans"
                     exact
                     >
                   <q-item-section avatar>
                     <q-icon name="mdi-receipt" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">All Transaction</q-item-section>
+                    <q-item-section class="text-uppercase">Loan</q-item-section>
                 </q-item>
             </q-expansion-item>
              <q-expansion-item
@@ -229,7 +229,7 @@ export default {
       //    ],
       //    }
       //   ],
-      left: true
+      left: false
     };
   }
 };
