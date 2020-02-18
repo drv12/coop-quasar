@@ -13,7 +13,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" none>
+    <q-drawer behavior="mobile" v-model="left" side="left" none>
       <q-img
         class="absolute-top"
         src="https://cdn.quasar.dev/img/material.png"
