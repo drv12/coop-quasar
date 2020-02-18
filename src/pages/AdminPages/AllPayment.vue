@@ -1,157 +1,111 @@
 <template>
-  <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment <q-icon name="mdi-arrow-right-box" /> All Payment</h6>
-     <q-separator />
-     <div class="q-pa-md">
-        <!-- <q-toolbar class="bg-white text-blue">
-          <q-space/>
-          
-        </q-toolbar> -->
-        
-        <q-table 
-            class="q-mt-md"
-            title="Treats"
-            :data="data"
-            :columns="columns"
-            row-key="name"
-            :visible-columns="visibleFilters"
-          >
+<div>
+    <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment<q-icon name="mdi-arrow-right-box" /> All Payment</h6>
+          <q-input @input="log(); QueryDate();" v-model="date" filled type="date" hint="Native date" />
 
-            
-            <template v-slot:top>
-                <q-input  
-                  class="q-mt-xs"
-                  color="blue-8" 
-                  :v-model="inputValue" 
-                  label="Enter start & end dates" 
-                  mask="####-##-## - ####-##-##"
-                  hint="Year/Month/Day">
-            <template v-slot:append>
-              <q-icon name="date_range" class="cursor-pointer">
-                <q-popup-proxy v-model="daterange" anchor="top right" self="bottom middle">
-                  <q-scroller
-                    v-model="value"
-                    view="date-range"
-                    no-header
-                    rounded-borders
-                    :style="scrollerPopupStyle240"
-                    @close="() => { daterange = false }"
-                  />
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-           </q-input>
+    <q-separator />
+      <div v-if="loading">
+        <q-spinner-oval
+        color="primary"
+        size="200px"
+        :thickness="5"
+        class="fixed-center"
+        />
+      </div>
+    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12" v-if="!loading">
+      <q-markup-table separator="horizontal" flat bordered>
+      <template>
+        <thead color="secondary">
+          <tr>
+            <th class="text-left">MemberID</th>
+            <th class="text-left">TransactionID</th>
+            <th class="text-left">OrNo</th>
+            <th class="text-left">Total</th>
+            <th class="text-left">Timestamp</th>
+            <th class="text-left"></th>
+          </tr>
+        </thead>
+      </template>
+      <template>
+        <tbody>
+          <tr v-for="(data, id) in Transactions" :key="id">
+            <td class="text-left">{{data.MemberID}}</td>
+            <td class="text-left">{{data.TransactionID}}</td>
+            <td class="text-left">{{data.OrNo}}</td>
+            <td class="text-left">{{data.Total}}</td>
+            <td class="text-left">{{data.timestamp.toDate()}}</td>
 
-              <q-space />
-
-              <q-select
-                  v-model="visibleFilters"
-                  multiple
-                  dense
-                  options-dense
-                  :display-value="$q.lang.table.columns"
-                  emit-value
-                  map-options
-                  :options="columns"
-                  option-value="name"
-                  label="Filter the table"
-                  options-cover
-                  style="min-width: 150px"
-              >
-              </q-select>
-              <q-input class="q-mt-xs q-ml-md" bottom-slots label="Search" >
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-            </template>
-
-          </q-table>
-     </div>
-  </div>
+            <td class="text-left">
+              <q-btn flat 
+              color="secondary"
+              icon-right="mdi-arrow-right" 
+              label="View Receipt" 
+              />
+            </td>
+          </tr>
+        </tbody>
+      </template>
+      </q-markup-table>
+    </div>
+    </div>
 </template>
 
 <script>
+import { firebaseDb } from 'boot/firebase';
 
 export default {
-  name: 'DateQInput',
-
   data () {
     return {
-      daterange: false,
-      value: '',
-      inputValue: '',
-      visibleFilters:['desc','membersid','membersname','orno','managementfee','shareofstocks','loans','savingsdeposit','accountsrecievable','forfeitedshare'],
-      columns: [
-        {
-          name: 'desc',
-          required: true,
-          label: 'Transaction ID',
-          align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-        { name: 'membersid', align: 'center', label: 'Members ID', field: 'membersid', sortable: true },
-        { name: 'membersname',  align: 'center', label: 'Members name', field: 'membersname', sortable: true },
-        { name: 'orno',align: 'center', label: 'OR No.', field: 'orno' },
-        { name: 'managementfee', align: 'center',label: 'Management Fee', field: 'managementfee' },
-        { name: 'shareofstocks',align: 'center', label: 'Share of Stocks', field: 'shareofstocks' },
-        { name: 'loans', align: 'center',label: 'Loans', field: 'loans', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-        { name: 'savingsdeposit', align: 'center', label: 'Savings Deposit', field: 'savingsdeposit', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-        { name: 'accountsrecievable' ,align: 'center', label: 'Accounts Recievable', field: 'accountsrecievable' },
-        { name: 'forfeitedshare',align: 'center', label: 'Forfeited Share', field: 'forfeitedshare' },
-      ],
-      data: [
-        {
-          name: '2020-000001',
-          membersid: 159,
-          membersname: 6.0,
-          orno: 24,
-          managementfee: 4.0,
-          shareofstocks: 87,
-          loans: '14%',
-          accountsrecievable: '1%',
-          savingsdeposit: '1%',
-          forfeitedshare: '1%'
-        },
-        ]
-
+      loading: true,
+      datetodaydata: '',
+      date:'',
+      // Transactions: {}
     }
   },
-
-  computed: {
-    scrollerPopupStyle240 () {
-      if (this.$q.screen.lt.sm) {
+  firestore () {
         return {
-          width: '90vw',
-          height: '70vh'
+            // Doc
+            Transactionss: firebaseDb.collection('Transactions')
         }
-      } else {
-        return {
-          maxHeight: '200px',
-          height: '200px',
-          width: '240px'
-        }
-      }
-    }
-  },
-  watch: {
-    value (val) {
-      const type = Object.prototype.toString.call(this.value)
-      if (type === '[object Array]') {
-        this.inputValue = `${val[0]} - ${val[1]}`
-      }
+      },
+  methods: {
+    QueryDate(){
+        var dt = this.date.toString()
+        this.$firestore.Transactionss.doc(dt).collection("Payment")
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        })
     },
-
-    inputValue (val) {
-      const parts = val.split(' - ')
-      if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
-        this.value[0] = parts[0]
-        this.value[1] = parts[1]
-      }
+    datetoday(){
+        var myDate = new Date();
+        var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+        var date = ('0' + myDate.getDate()).slice(-2);
+        var year = myDate.getFullYear();
+        var formattedDate = year + '-' + month + '-' + date;
+        this.datetodaydata = formattedDate;
+    },
+    log(){
+      // console.log(this.date)
     }
-  }
+  },
+  mounted () {
+      this.datetoday()
+      this.date = this.datetodaydata
+      // Binding Collections
+      this.$bindCollectionAsObject("Transactions", firebaseDb.collection("Transactions").doc(this.datetodaydata).collection('Payment'))
+      .then((Transactions) => {
+        this.loading = false
+      })
+    }
+     
+    
 }
 </script>
 

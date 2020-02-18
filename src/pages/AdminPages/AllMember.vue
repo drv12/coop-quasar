@@ -83,16 +83,6 @@ export default {
   firestore () {
     return {
       MemberData: {
-        // // collection reference.
-        //     ref: firebaseDb.collection('MemberData'),
-        //     // Bind the collection as an object if you would like to.
-        //     objects: true,
-        //     resolve: (data) => {
-        //         // collection is resolved
-        //     },
-        //     reject: (err) => {
-        //         // collection is rejected
-        //     }
         }
       }
   },
