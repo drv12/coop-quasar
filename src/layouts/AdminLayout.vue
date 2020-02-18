@@ -9,7 +9,9 @@
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar> -->
           <small>Potchi</small>
+          <q-space />
         </q-toolbar-title>
+          <q-btn color="teal" class="text-white" icon="mdi-logout-variant" />
       </q-toolbar>
     </q-header>
 
