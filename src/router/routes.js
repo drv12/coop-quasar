@@ -47,8 +47,12 @@ const routes = [
         component: () => import('pages/CollectorPages/AddPaymentCollector.vue') 
       },
       { 
-        path: '/collector/allpayments', 
-        component: () => import('pages/CollectorPages/AllPaymentsCollector.vue') 
+        path: '/collector/dailycollections', 
+        component: () => import('pages/CollectorPages/CollectorDailyCollections.vue') 
+      },
+      { 
+        path: '/collector/membersmonitor', 
+        component: () => import('pages/CollectorPages/MembersMonitoring.vue') 
       },
 
     ]

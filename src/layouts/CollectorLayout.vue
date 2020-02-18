@@ -13,7 +13,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" none>
+    <q-drawer v-model="left" behavior="mobile" side="left" none>
       <q-img
         class="absolute-top"
         src="https://cdn.quasar.dev/img/material.png"
@@ -64,16 +64,35 @@
                 <q-item
                     expand-separator 
                    :content-inset-level="0.5"
-                    to="/collector/allpayments"
+                    to="/collector/dailycollections"
                     exact
                     >
                   <q-item-section avatar>
                     <q-icon name="assessment" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">All Payments</q-item-section>
+                    <q-item-section class="text-uppercase">Daily Collections</q-item-section>
                 </q-item>
            </q-expansion-item>
             <!-- End of Payment Member -->
+            <q-expansion-item
+            expand-separator
+            icon="mdi-routes"
+            label="MONITORING"
+            :content-inset-level="0.5"
+            >
+                 <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/collector/membersmonitor"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-jeepney" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Members</q-item-section>
+                </q-item>
+
+           </q-expansion-item>
               <q-item
 
                     to=""
