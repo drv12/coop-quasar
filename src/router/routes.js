@@ -99,16 +99,16 @@ const routes = [
         component: () => import("pages/AdminPages/AllPayment.vue")
       },
       {
-        path: "/admin/depositwithdraw",
-        component: () => import("pages/AdminPages/Deposit-Withdraw.vue")
+        path: "/admin/savings",
+        component: () => import("pages/AdminPages/Savings.vue")
       },
       {
-        path: "/admin/alltransaction",
-        component: () => import("pages/AdminPages/AllTransactions.vue")
+        path: "/admin/loans",
+        component: () => import("pages/AdminPages/Loans.vue")
       },
       {
-        path: "/admin/jeepneys",
-        component: () => import("pages/AdminPages/Jeepneys.vue")
+        path: "/admin/billings",
+        component: () => import("pages/AdminPages/Billings.vue")
       },
       {
         path: "/admin/addstaff",

@@ -5,12 +5,9 @@
        <div class="q-pa-md">
            <q-card class="q-pa-lg">
                <div class="text-uppercase text-teal-4">Daily Payments</div>
-          <q-card-section horizontal >
-
-              
-
+          <q-card-section v-show="page == 1" class="page-1" >
                  <div class="row">
-                     <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="q-pa-xs" v-if="scanner" style="height: 150px; width:150px;">
                             <qrcode-stream @decode="onDecode"></qrcode-stream>
                         </div>
@@ -62,12 +59,12 @@
                     </div>
                     <!-- End of Management Fee -->
                     <!-- Start of Share of Stocks -->
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-white">ABC</span>
                     <div class="q-pa-xs">
                       <q-input color="teal-4" type="number" v-model="Payment.ShareCapital" label="Share of Stocks" mask="######" />
                     </div>
-                  </div>
+                      </div> -->
                     <!-- End of Share of Stocks -->
                      <!-- Start of Forfeited Share -->
                     <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -85,21 +82,22 @@
                     </div>
                   </div>
                     <!-- End of Savings Deposit -->
-                    <!-- Start of Accounts Recievable -->
-                    
-                    <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
-                        <div class="q-pa-xs">
-                            <q-input color="teal-4" v-model="accountsrecievable" label="Accounts Recievable" mask="######" />
-                        </div>
-                    </div> -->
-                    <!-- End of Accounts Recievable -->
+              
                      <!-- Start of Advances -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                         <div class="q-pa-xs">
-                            <q-input color="teal-4" type="number" v-model="Payment.Advances" label="Advances" mask="######" />
+                            <q-input color="teal-4" type="number" v-model="Payment.Advances" label="Advances to Members" mask="######" />
                         </div>
                     </div>
                     <!-- End of Advances -->
+                          <!-- Start of Accounts Recievable -->
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+                        <div class="q-pa-xs">
+                            <!-- <q-input color="teal-4" v-model="accountsrecievable" label="Accounts Recievable" mask="######" /> -->
+                        </div>
+                    </div>
+                    <!-- End of Accounts Recievable -->
                     <!-- Start of Date -->
                         <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                             <div class=" q-pa-xs">
@@ -156,16 +154,17 @@
                 
                   <div class="absolute-bottom-right">
                         <div class="q-mt-lg">
-                            <q-btn class="text-pink-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/>
+                            <!-- <q-btn class="text-pink-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/> -->
+                            <q-btn class="text-teal-4" icon-right="mdi-arrow-right-thick" label="Next" color="white" @click="page = 2"/>
                         </div>
                  </div>
                 </div>
           </q-card-section>
 
 
-          <q-card-section horizontal>
+          <q-card-section  v-show="page == 2" class="page-2" >
             <!-- <div v-if="Payment1.MemberID != ''" class="full-width"> -->
-            <div class="full-width">
+            <div class="row">
                      <!-- Start of Transaction ID -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
@@ -227,19 +226,16 @@
                   </div>
                     <!-- End of Savings Deposit -->
                      <!-- Start of Advances -->
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
-                        <div class="q-pa-xs">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-md">
+                        <div class="q-pa-xs q-mt-xs">
                             <q-input color="teal-4" v-model="Payment1.Advances" label="Advances" mask="######" />
                         </div>
                     </div>
                     <!-- End of Advances -->
-                    <!-- Start of Total Amount -->
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
-                              <div class="q-pa-xs">
-                                <q-input color="teal-4" v-model="Payment1.Total" label="Total Amount"/>
-                              </div>
-                        </div>
-                    <!-- End of Total Amount -->
+
+                     <!-- <div class="q-mb-lg q-pb-lg">
+                        <div class="q-pa-xs"></div>
+                      </div> -->
                      <!-- Start of Description-->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
@@ -255,6 +251,26 @@
                             <q-input color="teal-4" v-model="Payment1.Others" label="Amount" mask="₱ ###########" />
                         </div>
                      </div>
+                     
+
+                      <!-- Start of Total Amount -->
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+                              <div class="q-pa-xs">
+                                <q-input color="teal-4" v-model="Payment1.Total" label="Total Amount"/>
+                              </div>
+                        </div>
+                    <!-- End of Total Amount -->
+                                        <!-- Start of Blank Space -->
+                      <div class="q-mb-lg q-pb-lg">
+                        <div class="q-pa-md"></div>
+                      </div>
+                      <!-- End of Blank Space -->
+                    <div class="absolute-bottom-right">
+                        <div class="q-mt-lg">
+                            <q-btn class="text-teal-4 q-mr-md" icon="mdi-arrow-left-thick" label="Back" color="white" @click="page = 1"/>
+                              <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/>
+                    </div>
+                 </div>
                 </div>     
                      <!-- End of Amount -->
           </q-card-section>
@@ -277,6 +293,7 @@ Vue.use(VueQrcodeReader);
 export default {
     data(){
         return{
+            page: 1,
             scanner: false,
             Payment: {
               MemberID: '',

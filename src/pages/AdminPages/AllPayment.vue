@@ -1,17 +1,17 @@
 <template>
 <div>
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment<q-icon name="mdi-arrow-right-box" /> All Payment</h6>
-          <q-input @input="log(); QueryDate();" v-model="date" filled type="date" hint="Native date" />
+          <q-input class="q-ma-md" @input="log(); QueryDate();" v-model="date" outlined type="date" hint="Native date" />
 
     <q-separator />
-      <div v-if="loading">
+      <!-- <div v-if="loading">
         <q-spinner-oval
-        color="primary"
+        color="teal"
         size="200px"
         :thickness="5"
         class="fixed-center"
         />
-      </div>
+      </div> -->
     <div class="q-pa-md col-xs-12 col-sm-12 col-md-12" v-if="!loading">
       <q-markup-table separator="horizontal" flat bordered>
       <template>
