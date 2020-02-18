@@ -73,7 +73,17 @@
                   <q-item-section class="text-uppercase">Savings Deposit</q-item-section>
               </q-item>
           </q-expansion-item>
-
+              <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/member/loan"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-receipt" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Loan</q-item-section>
+                </q-item>
         <q-item to="" exact >
           <q-item-section avatar>
               <q-icon name="mdi-account-card-details" />

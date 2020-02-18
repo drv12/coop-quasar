@@ -29,6 +29,10 @@ const routes = [
         path: '/member/savingsdeposit', 
         component: () => import('pages/MemberPages/SavingsDeposit.vue')
       },
+      { 
+        path: '/member/loan', 
+        component: () => import('pages/MemberPages/MemberLoan.vue')
+      },
 
     ]
   },
