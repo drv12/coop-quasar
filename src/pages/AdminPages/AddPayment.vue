@@ -165,7 +165,7 @@
 
           <q-card-section horizontal>
             <!-- <div v-if="Payment1.MemberID != ''" class="full-width"> -->
-            <div v-if="false" class="full-width">
+            <div class="full-width">
                      <!-- Start of Transaction ID -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
@@ -350,17 +350,19 @@ export default {
                 this.Payment.OrNo = (this.Counter.OrNo + 1),
                 this.Payment.TransactionID = (this.Counter.TransactionID + 1)
                 this.Payment.MemberID = decodedString.substring(8,21)
-
+                
                 this.Payment1.OrNo = (this.Counter.OrNo + 2),
                 this.Payment1.TransactionID = (this.Counter.TransactionID + 2)
                 this.Payment1.MemberID= decodedString.substring(31, 44)
 
+                console.log(decodedString)
                 this.scanner = false
             }else{
                 this.Payment1.OrNo = (this.Counter.OrNo + 1),
                 this.Payment1.TransactionID = (this.Counter.TransactionID + 1)
                 this.Payment1.MemberID = decodedString.substring(10,23)
-
+                
+                console.log(decodedString)
                 this.scanner = false
             }
         },

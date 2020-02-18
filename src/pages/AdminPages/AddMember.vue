@@ -177,11 +177,12 @@
                         <!-- Start of Employer or Office -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="Operator" label="Operator" >
+                              <q-input color="teal-4" v-model="Operator" label="Operator" 
+                              @input="verifyoperator">
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
-                                <q-btn @click="verifyoperator" flat>Validate</q-btn>
+                                <q-btn @click="verifyoperator" flat>Validated</q-btn>
                               </q-input>
                                
                             </div>
@@ -564,12 +565,12 @@ export default {
           })
           this.verify = true
         }else {
-          this.$q.notify({
-          color: 'red-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: "Operator Doesn't Exist",
-          })
+          // this.$q.notify({
+          // color: 'red-4',
+          // textColor: 'white',
+          // icon: 'cloud_done',
+          // message: "Operator Doesn't Exist",
+          // })
           this.verify = false
         }
         

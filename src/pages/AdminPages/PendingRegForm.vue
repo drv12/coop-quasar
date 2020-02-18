@@ -134,7 +134,6 @@
         </div>
       </div>    
     </div> 
-    <q-btn label="asddasd" @click="log" />
 </div>
 </template> 
 

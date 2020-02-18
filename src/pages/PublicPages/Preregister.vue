@@ -127,9 +127,16 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                        <q-input standard v-model="PreRegData.Occupation" label="Occupation"
+                        <q-input standard v-model="DriverOccupation" label="Occupation"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        v-if="this.PreRegData.Designation == 'Driver'"
+                        readonly
+                        />
+                        <q-input standard v-model="Occupation" label="Occupation"
+                        lazy-rules
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        v-if="this.PreRegData.Designation == 'Operator'"
                         />
                         <q-input standard v-model="PreRegData.EmployerCompany" label="Employer/ Company"
                         lazy-rules
@@ -279,6 +286,7 @@ export default {
       datetodaydata: '',
       imageUrl: null,
       LicenseImage: null,
+      Occupation: ''
     }
   },
   firestore () {
@@ -289,6 +297,11 @@ export default {
   },
   methods: {
     regPre: function () {
+        if(this.PreRegData.Designation == 'Driver'){
+            this.PreRegData.Occupation = this.DriverOccupation
+        }else{
+          this.PreRegData.Occupation = this.Occupation
+        }
         let id
         let childurl
         this.PreRegData.timestamp = firefirestore.FieldValue.serverTimestamp()
@@ -368,6 +381,13 @@ export default {
   },
   mounted(){
     this.datetoday();
+  },
+  computed: {
+    DriverOccupation(){
+      if(this.PreRegData.Designation == 'Driver'){
+        return 'Driver'
+      }
+    }
   }
 }
 </script>
