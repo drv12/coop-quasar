@@ -5,7 +5,9 @@
      <q-separator />
        <div class="q-pa-md">    
          <div class="q-gutter-y-md full-width">
-        <q-form @reset="Clear" >
+        <q-form 
+        @submit="onSubmit"
+        @reset="Clear" >
           <div class="q-pa-md">
             <q-card class="q-pa-md">
            <q-card-section horizontal class="col">
@@ -59,7 +61,7 @@
                           </div>
                                 <q-input 
                                 type="file"
-                                hint="Unit Details"
+                                hint="License / Valid ID"
                                 accept="image/*"
                                 @change="onFilePickedLic">
                                   <template v-slot:prepend>
@@ -75,7 +77,9 @@
               <!-- Start of Firstname -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal" v-model="MemberData.FirstName" label="First name" >
+                            <q-input color="teal" v-model="MemberData.FirstName" label="First name"
+                            lazy-rules=""
+                            :rules="[ val => val && val.length > 0 || 'Please type something']">
                             <template v-slot:before>
                               <q-icon name="mdi-human-handsup" />
                             </template>
@@ -87,6 +91,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.LastName" label="Last name" 
+                            lazy-rules=""
+                            :rules="[ val => val && val.length > 0 || 'Please type something']"
                             >
                             <template v-slot:before>
                               <q-icon name="mdi-human-handsdown" />
@@ -99,6 +105,8 @@
                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                  <div class="q-pa-md">
                   <q-select color="teal-4" v-model="MemberData.Designation" :options="options" label="Designation"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || 'Please select something']"
                   @popup-hide="DesignationChange">
                   <template class="q-pa-md" v-slot:before>
                       <q-icon name="account_box" />
@@ -133,7 +141,10 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
                              <!-- di ko gets -->
-                            <q-input color="teal-4" label="Year/Month/Date" v-model="MemberData.BirthDate" mask="date" hint="Birthday" :rules="['date']">
+                            <q-input color="teal-4" label="Year/Month/Date" v-model="MemberData.BirthDate" mask="date" hint="Birthday" 
+                            lazy-rules
+                            :rules="['date'][ val => val && val.length > 0 || 'Please type something']"
+                            >
                               <template class="q-pa-none q-md-none" v-slot:before>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy
@@ -157,6 +168,8 @@
                                 v-model="MemberData.CivilStatus"
                                 :options="civilstatusoptions"
                                 label="Civil Status"
+                                lazy-rules
+                                :rules="[ val => val && val.length > 0 || 'Please select something']"
                               >
                                 <template class="q-pa-md" v-slot:before>
                                   <q-icon name="mdi-heart-box" />
@@ -172,6 +185,8 @@
                               label="Occupation" 
                               v-model="MemberData.Occupation"
                               id="myInput"
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
                               >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
@@ -183,7 +198,10 @@
                         <!-- Start of Employer or Office -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Occupation" label="Occupation" >
+                              <q-input color="teal-4" v-model="MemberData.Occupation" label="Occupation" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -194,7 +212,10 @@
                         <!-- Start of Employer or Office -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Operator'">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.EmployerCompany" label="Employer or Office" >
+                              <q-input color="teal-4" v-model="MemberData.EmployerCompany" label="Employer or Office" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -206,11 +227,14 @@
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" v-if="MemberData.Designation == 'Driver'">
                             <div class="q-pa-md">
                               <q-input color="teal-4" v-model="Operator" label="Operator" 
-                              @input="verifyoperator">
+                                :loading="loadingState"
+                                @input="verifyoperator"
+                                lazy-rules
+                                :rules="[ val => val && val.length > 0 || 'Please input something']"
+                                >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
-                                <q-btn @click="verifyoperator" flat>Validated</q-btn>
                               </q-input>
                                
                             </div>
@@ -219,7 +243,10 @@
                         <!-- Start of Other sources of Income -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.OtherIncome" label="Other sources of Income" >
+                              <q-input color="teal-4" v-model="MemberData.OtherIncome" label="Other sources of Income" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -230,7 +257,10 @@
                         <!-- Start of Nearest Relative -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.RelativeName" label="Nearest Relative" >
+                              <q-input color="teal-4" v-model="MemberData.RelativeName" label="Nearest Relative" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -241,7 +271,10 @@
                         <!-- Start of Relationships -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.Relationship" label="Relationship" >
+                              <q-input color="teal-4" v-model="MemberData.Relationship" label="Relationship" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -252,7 +285,11 @@
                           <!-- Start of Number of dependents -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
-                              <q-input color="teal-4" v-model="MemberData.NoDependents" label="Number of dependents" >
+                              <q-input color="teal-4" v-model="MemberData.NoDependents" label="Number of dependents"
+                              type="number" 
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
                                 <template v-slot:before>
                                   <q-icon name="mdi-briefcase" />
                                 </template>
@@ -264,7 +301,10 @@
                         <!-- Start of Birth place -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" label="Birth place" v-model="MemberData.BirthPlace">
+                            <q-input color="teal-4" label="Birth place" v-model="MemberData.BirthPlace"
+                            lazy-rules
+                            :rules="[ val => val && val.length > 0 || 'Please input something']"
+                            >
                               <template v-slot:before>
                                 <q-icon name="mdi-home-map-marker" />
                               </template>
@@ -276,6 +316,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class=" q-pa-md">
                             <q-input color="teal-4" v-model="MemberData.CurrentAddress" label="Address" autogrow 
+                            lazy-rules
+                            :rules="[ val => val && val.length > 0 || 'Please input something']"
                             >
                             <template v-slot:before>
                               <q-icon name="mdi-home" />
@@ -287,7 +329,10 @@
                         <!-- Start of Phone -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.Phone" label="Phone" mask="(##) - (####) - (#####)" >
+                            <q-input color="teal-4" v-model="MemberData.Phone" label="Phone" mask="(##) - (####) - (#####)" 
+                            lazy-rules
+                            :rules="[ val => val && val.length > 0 || 'Please input something']"
+                            >
                               <template v-slot:before>
                                 <q-icon name="mdi-cellphone" />
                               </template>
@@ -299,7 +344,10 @@
                         <!-- Start of Email -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" label="Email" v-model="MemberData.Email" type="email">
+                            <q-input color="teal-4" label="Email" v-model="MemberData.Email" type="email"
+                            lazy-rules
+                            :rules="[ val => val && val.length > 0 || 'Please input something']"
+                            >
                               <template v-slot:before>
                                 <q-icon name="mail" />
                               </template>
@@ -313,7 +361,10 @@
                         <!-- Start of License number --> 
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class="q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.LicenseNo" label="License number">
+                            <q-input color="teal-4" v-model="MemberData.LicenseNo" label="License number"
+                            lazy-rules
+                            :rules="[ val => val && val.length > 0 || 'Please input something']"
+                            >
                               <template v-slot:before>
                                 <q-icon name="mdi-account-card-details" />
                               </template>
@@ -450,7 +501,7 @@
                         <!-- End of Row -->
                          <div class="absolute-bottom-right">
                             <q-btn class="q-mr-md text-white" icon="cancel" type="reset" label="Reset" color="red-6" />
-                            <q-btn @click="regMember()" class="text-white" icon="check" label="Register" color="teal-6" />
+                            <q-btn @click="regMember()" type="submit" class="text-white" icon="check" label="Register" color="teal-6" />
                          </div>
                       </div>
                     </q-card-section>
@@ -472,6 +523,7 @@ import { firebaseDb, firebaseSto, firefirestore, Auth2 } from 'boot/firebase';
 export default {
     data(){
         return{
+          loadingState: false,
             bar1: false,
             bar2: false,
             choices: false,
@@ -538,6 +590,7 @@ export default {
   },
     methods: {
       verifyoperator(){
+        this.loadingState = true
         var opt = this.Operator
         var optname = ''
         var MemberID= ''
@@ -564,6 +617,7 @@ export default {
           icon: 'cloud_done',
           message: 'Operator Exists',
           })
+          this.loadingState = false
           this.verify = true
         }else {
           // this.$q.notify({
@@ -576,6 +630,15 @@ export default {
         }
         
       },
+     onSubmit () {
+      this.regMember()
+      this.$q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Submitted',
+          })
+    },
     // add() {
     //   //add unit operator
     //   var id = 'NGTSC'+ (this.MemberID.MemberID + 1)

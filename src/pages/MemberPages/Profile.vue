@@ -53,7 +53,7 @@
             <!-- end membership payment -->
             
             <q-btn flat round icon="event"/>
-            <q-btn @click="contract = !contract" flat color="teal-4">
+            <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>
             <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
@@ -62,9 +62,9 @@
             <q-btn flat color="teal-4" @click="bar = !bar" v-if="MemberData.Designation == 'Operator'">
             Drivers       
             </q-btn>
-            <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
+            <!-- <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
             Update
-            </q-btn>
+            </q-btn> -->
             <q-btn flat color="teal-4">
             Resign
             </q-btn>
@@ -98,6 +98,7 @@
               <q-input 
               v-model="MemberData.FirstName" 
               label="First Name" 
+              :readonly="upd"
               >
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
@@ -264,66 +265,6 @@
       </q-card-section>
     </q-card>
 
-<!-- <q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
-  <q-card>
-    <q-bar>
-      <q-space />
-      <q-btn dense flat icon="close" v-close-popup>
-      <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
-      </q-btn>
-    </q-bar>
-    <div>
-      <q-card-section>
-        <div class="text-h6">Unit Details</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
-          v-if="MemberData.Designation == 'Driver'">
-
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
-              <div class="q-pa-md">
-                <q-input color="teal-4" 
-                v-model="this.Unit.PlateNo"
-                ref="Plate"
-                label="Plate No." 
-                :readonly="Unit.PlateNo != ''"
-                >
-                  <template v-slot:before>
-                  <q-icon name="mdi-jeepney" />
-                  </template>
-                </q-input>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-              <div class="q-pa-md">
-                <q-input color="teal-4" v-model="Unit.Operator" label="Operator" readonly>
-                  <template v-slot:before>
-                    <q-icon name="mdi-account" />
-                  </template>
-                </q-input>
-              </div>
-            </div>
-
-            <div v-if="Unit.PlateNo == ''">
-                <q-btn label="Verify Unit" @click="verifyifunit()" color="primary"/>
-                <button class="btn btn-primary" @click="bar2=!bar2">Save</button>
-            </div>
-
-
-        </div>
-
-        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
-          v-if="MemberData.Designation == 'Operator'">
-        </div>
-
-
-      </q-card-section>
-    </div>
-  </q-card>
-</q-dialog>     -->
-
 <q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
   <q-card>
 
@@ -404,21 +345,20 @@
 
       <q-separator />
 
-      <!-- <q-card-actions>
+      <q-card-actions>
         <q-btn color="secondary" class="full-width" @click="printDiv('idpage')">
           Print
         </q-btn>
-      </q-card-actions> -->
+      </q-card-actions>
 
     </q-card>
   </q-dialog>
 
-    <q-dialog v-model="contract">
-      <q-card>
-        <q-card-section>
-        <div class="bg-white">
+        <div>
             <q-form
               class="q-gutter-md"
+              id="page"
+              v-show="false"
             >
               <p>&nbsp;</p>
               <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
@@ -467,10 +407,6 @@
               </div>
             </q-form>
         </div>
-        </q-card-section>
-                  </q-card>
-
-    </q-dialog>    
 
 
     </div>
@@ -487,7 +423,6 @@ Vue.component(VueQrcode.name, VueQrcode);
 export default {
     data(){
         return{
-            contract: false,
             inception: false,
             qrvalue: '',
             bar: false,
@@ -586,22 +521,22 @@ export default {
       }
     
       },
-      updateMemberData () {
-          this.$firestore.MemberData.set(this.MemberData);
-      },
+      // updateMemberData () {
+      //     this.$firestore.MemberData.set(this.MemberData);
+      // },
       //new code
       OrTid(){
         this.Payment.TransactionID = (this.Counter.TransactionID + 1)
         this.Payment.OrNo = (this.Counter.OrNo + 1)
       },
-      PayFee(){
-        this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
-        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').add(this.Payment)
+      // PayFee(){
+      //   this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
+      //   this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').add(this.Payment)
 
-        this.$firestore.MemberData.update({
-                MembershipFee: firefirestore.FieldValue.delete()
-        })
-      },
+      //   this.$firestore.MemberData.update({
+      //           MembershipFee: firefirestore.FieldValue.delete()
+      //   })
+      // },
        //new code
       printDiv(divName){
         const prtHtml = document.getElementById(divName).innerHTML;

@@ -47,9 +47,9 @@
             <q-btn flat dark 
             icon="lock" 
             label="Member Dashboard" 
-            to="/member/dashboard"
+            @click="loadPreReg(userDetails.MemberID)"
             :class="'gt-sm'"
-            v-if="userDetails.Designation == 'Driver'"
+            v-if="userDetails.Designation == 'Driver' || userDetails.Designation == 'Operator'"
             />
             <q-btn flat dark 
             icon="lock" 
@@ -158,8 +158,8 @@
 
                <q-item clickable
                v-ripple 
-               to="/member/dashboard"
-               v-if="userDetails.Designation == 'Driver'"
+               @click="loadPreReg(userDetails.MemberID)"
+               v-if="userDetails.Designation == 'Driver' || userDetails.Designation == 'Operator'"
                >
                   <q-item-section avatar>
                     <q-icon name="lock"/>
@@ -221,6 +221,9 @@ export default {
   },
   methods: {
     ...mapActions('store', ['logoutUser']),
+    loadPreReg(id) {
+            this.$router.push('/member/dashboard/' + id)
+        }
   }
 }
 </script>

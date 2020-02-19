@@ -53,7 +53,9 @@ const actions = {
                             LastName: userDetails.LastName,
                             Email: userDetails.Email,
                             Designation: userDetails.Designation,
-                            userId: userId})
+                            MemberID: userDetails.MemberID,
+                            userId: userId
+                        })
 
                             commit('setDesignation', {
                                 Designation: userDetails.Designation
@@ -67,7 +69,7 @@ const actions = {
                     }
                     
                 }).then(() => {
-                    // this.$router.replace('/')
+                    this.$router.replace('/')
                     commit('setLoading', false)
                 })
             }
@@ -75,7 +77,7 @@ const actions = {
                 //userlogout
                 commit('setUserDetails', {})
                 commit('setLoading', false)
-                // this.$router.replace('/')
+                this.$router.replace('/')
             }
           })
     }

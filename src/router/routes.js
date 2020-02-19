@@ -14,28 +14,29 @@ const routes = [
   {
     path: '/dashboard',
     redirect: '/member/dashboard',
-    // meta: {requiresMember: true},
+    meta: {requiresMember: true, requiresAdmin: true},
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
-        path: '/member/dashboard', 
+        path: '/member/dashboard/:penRegId', 
+        props: true,
         component: () => import('pages/MemberPages/Dashboard.vue') 
       },
       { 
-        path: '/member/dailypayment', 
-        component: () => import('pages/MemberPages/DailyPayment.vue')
+        path: '/member/profile/:penRegId', 
+        props: true,
+        component: () => import('pages/MemberPages/Profile.vue') 
       },
       { 
-        path: '/member/savingsdeposit', 
-        component: () => import('pages/MemberPages/SavingsDeposit.vue')
-      },
-
+        path: '/member/transactions/:penRegId', 
+        props: true,
+        component: () => import('pages/MemberPages/Transactions.vue')
+      }
     ]
   },
   {
     path: '/dashboard',
     redirect: '/collector/dashboard',
-    //: {requires: true},
     component: () => import('layouts/CollectorLayout.vue'),
     children: [
       { 

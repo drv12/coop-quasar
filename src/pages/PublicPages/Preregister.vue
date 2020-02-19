@@ -140,6 +140,14 @@
                         />
                         <q-input standard v-model="PreRegData.EmployerCompany" label="Employer/ Company"
                         lazy-rules
+                        v-if="PreRegData.Designation == 'Operator'"
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                        />
+                        <q-input standard v-model="Operator" label="Operator"
+                        v-if="PreRegData.Designation == 'Driver'"
+                        lazy-rules
+                        @input="verifyoperator"
+                        :loading="loadingState"
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
                         <q-input standard v-model="PreRegData.Salary" label="Salary"
@@ -257,28 +265,30 @@ import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 export default {
   data () {
     return {
+      loadingState: false,
       step: 1,
       PreRegData: {
-        FirstName: 'a',
-        LastName: 'a',
-        CivilStatus: 'Single',
-        BirthPlace: 'a',
-        BirthDate: '2020-02-12',
-        Address:'a',
-        Phone:'1121212',
-        Email:'sasas@gmail.com',
-        Occupation: 'a',
-        EmployerCompany: 'a',
-        Salary: '1',
-        OtherIncome: 'a',
-        RelativeName: 'a',
-        Relationship: 'a',
-        NoDependents: '1',
-        LicenseNo:'asas',
-        LicenseExp:'2020-02-12',
+        FirstName: '',
+        LastName: '',
+        CivilStatus: '',
+        BirthPlace: '',
+        BirthDate: '',
+        Address:'',
+        Phone:'',
+        Email:'',
+        Occupation: '',
+        EmployerCompany: '',
+        Salary: '',
+        OtherIncome: '',
+        RelativeName: '',
+        Relationship: '',
+        NoDependents: '',
+        LicenseNo:'',
+        LicenseExp:'',
         Designation: '',
         MembershipFee: 'To be Paid',
-        timestamp: ''
+        timestamp: '',
+        Operator: ''
       },
       accept: false,
       dbtn1: 'teal-4',
@@ -286,19 +296,80 @@ export default {
       datetodaydata: '',
       imageUrl: null,
       LicenseImage: null,
-      Occupation: ''
+      Occupation: '',
+      verify: false,
+      OperatorDetails: {},
+      Operator:''
     }
   },
   firestore () {
     return {
         // Collection
-        PreReg: firebaseDb.collection('PreRegPersonalData')
+        PreReg: firebaseDb.collection('PreRegPersonalData'),
+        Operators: firebaseDb.collection('MemberData').where('Designation', '==', 'Operator'),
     }
   },
   methods: {
+    verifyoperator(){
+      this.loadingState = true
+        var opt = this.Operator
+        var optname = ''
+        var MemberID= ''
+        var optdetails = {}
+        this.Operators.forEach(function(e) {
+          optname = e.FirstName + ' ' + e.LastName
+          MemberID = e['.key']
+
+            if(optname == opt){
+               optdetails = {
+                MemberID: MemberID,
+                Name: optname,
+                verify: true
+              }
+              return optdetails
+            }
+        })
+        this.OperatorDetails = optdetails
+
+        if(optdetails.verify == true){
+          this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Operator Exists',
+          })
+          this.loadingState = false
+          this.verify = true
+        }else {
+          // this.$q.notify({
+          // color: 'red-4',
+          // textColor: 'white',
+          // icon: 'cloud_done',
+          // message: "Operator Doesn't Exist",
+          // })
+          this.verify = false
+        }
+      },
     regPre: function () {
+
+
         if(this.PreRegData.Designation == 'Driver'){
             this.PreRegData.Occupation = this.DriverOccupation
+
+            if(this.verify == false){
+              this.$q.notify({
+                color: 'red-4',
+                textColor: 'white',
+                icon: 'cloud_done',
+                message: "Invalid Operator",
+                })
+              return
+            }else{
+              this.PreRegData.Operator = {
+                MemberID: this.OperatorDetails.MemberID,
+                Name: this.OperatorDetails.Name
+              }
+            }
         }else{
           this.PreRegData.Occupation = this.Occupation
         }

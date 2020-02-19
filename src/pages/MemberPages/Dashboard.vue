@@ -1,81 +1,77 @@
 <template>
-  <div>
-    <h6 class="q-ma-none q-pl-md q-pt-md text-teal">Dashboard</h6>
-    <q-separator />
-    <div class="row">
-      <div class="col-xs-12 col-md-3 col-sm-6">
-        <div class="q-pa-lg">
-          <q-card class="my-card bg-blue text-white">
-            <q-card-section>
-              <div class="text-h6">
-                <q-icon size="26px" name="people" />Drivers
-              </div>
-              <q-separator color="white" />
-              <div class="text-subtitle2">
-                Active
-                <h6 class="q-pa-none q-ma-none text-center shadow-21">69</h6>
-              </div>
+    <q-layout>
+        <div class="q-pa-md row items-start q-gutter-md">
+            <q-card class="my-card">
+            <q-card-section class="bg-primary text-white">
+                <div class="text-h6">Total Share of Stocks</div>
+                <div class="text-h5"> 14000 </div>
             </q-card-section>
-          </q-card>
-        </div>
-      </div>
-      <div class="col-xs-12 col-md-3 col-sm-6">
-        <div class="q-pa-lg">
-          <q-card class="my-card bg-red-14 text-white">
-            <q-card-section>
-              <div class="text-h6">
-                <q-icon size="26px" name="people" />Drivers
-              </div>
-              <q-separator color="white" />
-              <div class="text-subtitle2">
-                Inactive
-                <h6 class="q-pa-none q-ma-none text-center shadow-21">69</h6>
-              </div>
+
+            <q-separator />
+
+            <q-card-actions align="right">
+                <q-btn flat>View Transactions</q-btn>
+            </q-card-actions>
+            </q-card>
+
+            <q-card class="my-card">
+            <q-card-section class="bg-primary text-white">
+                <div class="text-h6">Capital Interest</div>
+                <div class="text-h5"> 280 </div>
             </q-card-section>
-          </q-card>
-        </div>
-      </div>
-      <div class="col-xs-12 col-md-3 col-sm-6">
-        <div class="q-pa-lg">
-          <q-card class="my-card bg-green text-white">
-            <q-card-section>
-              <div class="text-h6">
-                <q-icon size="26px" name="people" />Drivers
-              </div>
-              <q-separator color="white" />
-              <div class="text-subtitle2">
-                Payed
-                <h6 class="q-pa-none q-ma-none text-center shadow-21">69</h6>
-              </div>
+            </q-card>
+
+            <q-card class="my-card">
+            <q-card-section class="bg-purple text-white">
+                <div class="text-h6">Savings Deposit</div>
+                <div class="text-h5">5000</div>
             </q-card-section>
-          </q-card>
-        </div>
-      </div>
-      <div class="col-xs-12 col-md-3 col-sm-6">
-        <div class="q-pa-lg">
-          <q-card class="my-card bg-warning text-white">
-            <q-card-section>
-              <div class="text-h6">
-                <q-icon size="26px" name="people" />Drivers
-              </div>
-              <q-separator color="white" />
-              <div class="text-subtitle2">
-                Unpaid
-                <h6 class="q-pa-none q-ma-none text-center shadow-21">69</h6>
-              </div>
+
+            <q-card-actions align="right">
+                <q-btn flat>View Transactions</q-btn>
+            </q-card-actions>
+            </q-card>
+
+            <q-card class="my-card">
+            <q-card-section class="bg-teal text-white">
+                <div class="text-h6">Loan Balance</div>
+                <div class="text-subtitle2">0</div>
             </q-card-section>
-          </q-card>
+
+            <q-card-actions vertical align="right">
+                <q-btn flat>View Transactions</q-btn>
+            </q-card-actions>
+            </q-card>
+
+            <q-card class="my-card">
+            <q-card-section class="bg-grey-8 text-white">
+                <div class="text-h6">Billing</div>
+                <div class="text-h5">0</div>
+            </q-card-section>
+
+            <q-card-actions vertical align="right">
+                <q-btn flat>View Records</q-btn>
+            </q-card-actions>
+            </q-card>
         </div>
-      </div>
-    </div>
-  </div>
+    </q-layout>
 </template>
+
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {
+      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    }
+  },
+  props: ['penRegId'],
+  methods: {
   }
-};
+}
 </script>
-<style scoped>
+
+<style lang="sass" scoped>
+.my-card
+  width: 100%
+  max-width: 250px
 </style>

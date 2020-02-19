@@ -42,38 +42,38 @@ export default function ({store}) {
         }
       }
   
-  //     if(route.meta.requiresAdmin){
-  //       console.log('isadmin: ',dsg)
-  //       if(dsg == 'Admin'){
-  //         next()
-  //       } else {
-  //         next (
-  //           // { path: '/'}
-  //         )
-  //       }
-  //     }
+      if(route.meta.requiresAdmin){
+        console.log('isadmin: ',dsg)
+        if(dsg == 'Admin'){
+          next()
+        } else {
+          next (
+            { path: '/'}
+          )
+        }
+      }
   
-  //     if(route.meta.requiresCollector){
-  //       console.log('Collector')
-  //       if(dsg == 'Collector'){
-  //         next()
-  //       } else {
-  //         next (
-  //           // { path: '/'}
-  //         )
-  //       }
-  //     }
+      if(route.meta.requiresCollector){
+        console.log('Collector')
+        if(dsg == 'Collector'){
+          next()
+        } else {
+          next (
+            { path: '/'}
+          )
+        }
+      }
 
-  //     if(route.meta.requiresMember){
-  //       if(dsg == 'Driver' || dsg == 'Operator'){
-  //         next()
-  //       } else {
-  //         console.log('Member')
-  //         next (
-  //           // { path: '/'}
-  //           )
-  //       }
-  //     }
+      if(route.meta.requiresMember){
+        if(dsg == 'Driver' || dsg == 'Operator'){
+          next()
+        } else {
+          console.log('Member')
+          next (
+            { path: '/'}
+            )
+        }
+      }
 
       next()
     })
