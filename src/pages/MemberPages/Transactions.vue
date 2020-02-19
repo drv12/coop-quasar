@@ -33,6 +33,7 @@
             <td class="text-left">{{data.TransactionID}}</td>
             <td class="text-left">{{data.OrNo}}</td>
             <td class="text-left">{{data.Total}}</td>
+
             <td class="text-left">{{data.timestamp.toDate()}}</td>
 
             <td class="text-left">
