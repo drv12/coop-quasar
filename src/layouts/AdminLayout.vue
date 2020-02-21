@@ -9,7 +9,9 @@
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar> -->
           <small>Potchi</small>
+          <q-space />
         </q-toolbar-title>
+          <q-btn color="teal" class="text-white" icon="mdi-logout-variant" />
       </q-toolbar>
     </q-header>
 
@@ -130,7 +132,7 @@
                   <q-item-section avatar>
                     <q-icon name="mdi-jeepney" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Billings</q-item-section>
+                    <q-item-section class="text-uppercase">MEMBERS</q-item-section>
                 </q-item>
             </q-expansion-item>
             <!-- End of Tracking -->

@@ -67,13 +67,68 @@
           </q-card>
         </div>
       </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="q-pa-lg">
+              <apexchart max-width="600" height="500" type="bar" :options="charts" :series="bars"></apexchart>
+        </div>
+      </div>
+
+       <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 q-mt-xl q-pt-xl">
+          <div class="q-pa-lg">
+                <apexchart max-width="800" height="800" type="donut" :options="donuts" :series="payments"></apexchart>
+          </div>
+      </div>
+
+       <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12
+        q-mt-xl q-pt-xl">
+          <div class="q-pa-lg">
+             <apexchart max-width="500" type="line" :options="lines" :series="slantings"></apexchart>
+          </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+            charts:{
+        xaxis: {
+          categories: [2015, 2016, 2017, 2018, 2019, 2020]
+        }
+      },
+      bars: [
+        {
+          name: 'Drivers',
+          data: [ 96, 96, 99, 91, 91]
+        },
+        {
+          name: 'Operators',
+          data: [ 70, 78, 99, 91, 80]
+        },
+      ],
+        donuts:{
+            
+            labels: ['Management Fee', 'Share Capital', 'Savings Deposit', 'Advances']
+         }, 
+         payments: [100, 55, 13, 33],
+        //Line Graph
+        lines:{
+               xaxis: {
+              categories: [2015, 2016, 2017, 2018, 2019, 2020]
+              }
+        },
+        slantings:[
+          {
+            name: 'Drivers',
+            data: [100, 96, 99, 91, 91]
+          },
+          {
+            name: 'Operators',
+            data: [90, 80, 80, 85, 91]
+        },
+        ],
+    };
   }
 };
 </script>

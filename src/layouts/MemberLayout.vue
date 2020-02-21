@@ -14,12 +14,24 @@
         </q-toolbar>
       </q-header>
 
-      <q-drawer
-        v-model="drawer"
-        :width="200"
-        show-if-above
-        bordered
-        content-class="bg-grey-3"
+    <q-drawer behavior="mobile" v-model="left" side="left" none>
+      <q-img
+        class="absolute-top"
+        src="https://cdn.quasar.dev/img/material.png"
+        style="height: 150px"
+      >
+        <div class="absolute-center bg-transparent">
+          <q-avatar size="100px" class="q-mt-sm">
+            <img
+              src="https://i.pinimg.com/originals/02/23/25/022325055802a3b4af381fa65a8b42de.png"
+            />
+          </q-avatar>
+          <div class="text-weight-bold">Grizzly Bear</div>
+          <div>@wearebarebears</div>
+        </div>
+      </q-img>
+      <q-scroll-area
+        style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
       >
         <div style="margin-top: 100px; border-right: 1px solid #ddd"/>
           <q-list>
@@ -49,8 +61,34 @@
                   {{userDetails.name}}
                 </q-item-section>
               </q-item>
+<<<<<<< HEAD
           </q-list>
       </q-drawer>
+=======
+          </q-expansion-item>
+              <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/member/loan"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-receipt" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Loan</q-item-section>
+                </q-item>
+        <q-item to="" exact >
+          <q-item-section avatar>
+              <q-icon name="mdi-account-card-details" />
+            </q-item-section>
+          <q-item-section class="text-uppercase">Profile</q-item-section>
+        </q-item>
+
+       </q-list>
+      <!-- End of Sidebar Menu inside the Drawer -->
+      </q-scroll-area>
+    </q-drawer>
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
 
       <q-page-container>
         <router-view/>

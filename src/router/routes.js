@@ -28,10 +28,14 @@ const routes = [
         component: () => import('pages/MemberPages/Profile.vue') 
       },
       { 
-        path: '/member/transactions/:penRegId', 
-        props: true,
-        component: () => import('pages/MemberPages/Transactions.vue')
-      }
+        path: '/member/savingsdeposit', 
+        component: () => import('pages/MemberPages/SavingsDeposit.vue')
+      },
+      { 
+        path: '/member/loan', 
+        component: () => import('pages/MemberPages/MemberLoan.vue')
+      },
+
     ]
   },
   {
@@ -48,8 +52,12 @@ const routes = [
         component: () => import('pages/CollectorPages/AddPaymentCollector.vue') 
       },
       { 
-        path: '/collector/allpayments', 
-        component: () => import('pages/CollectorPages/AllPaymentsCollector.vue') 
+        path: '/collector/dailycollections', 
+        component: () => import('pages/CollectorPages/CollectorDailyCollections.vue') 
+      },
+      { 
+        path: '/collector/membersmonitor', 
+        component: () => import('pages/CollectorPages/MembersMonitoring.vue') 
       },
 
     ]

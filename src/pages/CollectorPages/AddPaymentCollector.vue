@@ -3,7 +3,7 @@
       <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment <q-icon name="mdi-arrow-right-box" /> Add Payment</h6>
        <q-separator />
        <div class="q-pa-md">
-           <q-card class="q-pa-lg">
+            <q-card class="q-pa-lg">
                <div class="text-uppercase text-teal-4">Daily Payments</div>
           <q-card-section v-show="page == 1" class="page-1" >
                  <div class="row">
@@ -11,12 +11,7 @@
                         <div class="q-pa-xs" v-if="scanner" style="height: 150px; width:150px;">
                             <qrcode-stream @decode="onDecode"></qrcode-stream>
                         </div>
-
-                        <q-page-sticky position="top-right" :offset="[18, 18]" >
-                            <q-btn fab color="secondary" @click="scanner=!scanner"
-                            style="height: 100px; width:100px;">QR Scanner </q-btn>
-                        </q-page-sticky>
-                        
+                        <q-btn @click="scanner=!scanner" >QR Scanner</q-btn>
                      </div>
 
                     <!-- Start of Transaction ID -->
@@ -31,7 +26,7 @@
                         <div class="q-pa-xs">
                                 <q-select
                                     color="teal-4"
-                                    
+                                    v-model="Payment.MemberID"
                                     label="Member's ID"
                                 >
                                     <template class="q-pa-xs" v-slot:append>
@@ -64,12 +59,24 @@
                     </div>
                     <!-- End of Management Fee -->
                     <!-- Start of Share of Stocks -->
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <span class="text-white">ABC</span>
                     <div class="q-pa-xs">
                       <q-input color="teal-4" type="number" v-model="Payment.ShareCapital" label="Share of Stocks" mask="######" />
                     </div>
+<<<<<<< HEAD
                       </div>
+=======
+                      </div> -->
+                    <!-- End of Share of Stocks -->
+                     <!-- Start of Forfeited Share -->
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <span class="text-white">ABC</span>
+                    <div class="q-pa-xs">
+                      <q-input color="teal-4" v-model="forfeitedshare" label="Forfeited Share" mask="######" />
+                    </div>
+                  </div> -->
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                     <!-- End of Share of Stocks -->
                      <!-- Start of Savings Deposit -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -118,7 +125,11 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-uppercase text-teal-4">Others</span>
+<<<<<<< HEAD
                              <q-input color="teal-4" v-model="Payment.OtherDes" label="Description" autogrow/>
+=======
+                             <q-input color="teal-4" type="number" v-model="Payment.OtherDes" label="Description" autogrow/>
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                     </div>
                     <!-- End of Description -->
@@ -126,6 +137,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-white">Others</span>
+<<<<<<< HEAD
                             <q-input color="teal-4" v-model="Payment.Others" label="Amount" mask="₱ ###########" />
                         </div>
                      </div>
@@ -135,6 +147,16 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                               <div class="q-pa-xs">
                                 <q-input color="teal-4" v-model="Total" label="Total Amount"/>
+=======
+                            <q-input color="teal-4" type="number" v-model="Payment.Others" label="Amount" mask="₱ ###########" />
+                        </div>
+                     </div>
+                     <!-- End of Amount -->
+                    <!-- Start of Total Amount -->
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+                              <div class="q-pa-xs">
+                                <q-input color="teal-4" type="number" v-model="Total" label="Total Amount"/>
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                               </div>
                         </div>
                     <!-- End of Total Amount -->
@@ -153,6 +175,7 @@
                   <div class="absolute-bottom-right">
                         <div class="q-mt-lg">
                             <!-- <q-btn class="text-pink-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/> -->
+<<<<<<< HEAD
                             <q-btn class="text-teal-4" 
                             icon-right="mdi-arrow-right-thick" 
                             label="Next" 
@@ -169,6 +192,9 @@
                             @click="PayFee()"
                             v-if="alone"
                             /> -->
+=======
+                            <q-btn class="text-teal-4" icon-right="mdi-arrow-right-thick" label="Next" color="white" @click="page = 2"/>
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                  </div>
                 </div>
@@ -210,7 +236,11 @@
                       <!-- Start of OR number -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
+<<<<<<< HEAD
                             <q-input color="teal-4" v-model="Payment1.OrNo" label="Official Reciept Number"/>
+=======
+                            <q-input color="teal-4" v-model="Payment1.OrNo" label="Official Reciept Number" mask="###########" />
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                      </div>
                      <!-- End of OR number -->
@@ -281,7 +311,11 @@
                     <div class="absolute-bottom-right">
                         <div class="q-mt-lg">
                             <q-btn class="text-teal-4 q-mr-md" icon="mdi-arrow-left-thick" label="Back" color="white" @click="page = 1"/>
+<<<<<<< HEAD
                               <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" @click="PayFeeOperator"/>
+=======
+                              <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/>
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                     </div>
                  </div>
                 </div>     
@@ -312,8 +346,13 @@ export default {
               MemberID: '',
               OrNo: '',
               TransactionID: '',
+<<<<<<< HEAD
               ShareCapital: 30,
               ManagementFee: 15,
+=======
+              ShareCapital: 0,
+              ManagementFee: 0,
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
               Advances: 0,
               SavingsDeposit: 0,
               Others: 0,
@@ -325,6 +364,7 @@ export default {
               MemberID: '',
               OrNo: '',
               TransactionID: '',
+<<<<<<< HEAD
               ShareCapital: 30,
               ManagementFee: 65,
               Advances: 0,
@@ -337,9 +377,99 @@ export default {
             DriverName: '',
             OperatorName: '',
             alone: false
+=======
+              ShareCapital: '',
+              ManagementFee: '',
+              Advances: '',
+              SavingsDeposit: '',
+              Others: '',
+              OthersDes: '',
+              Total: '',
+              timestamp: ''
+            },
+            DriverName: '',
+            OperatorName: ''
 
         }
     },
+    firestore () {
+        return {
+            // Doc
+            Transactions: firebaseDb.collection('Transactions'),
+            Counter: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
+            MemberData: firebaseDb.collection('MemberData')
+        }
+    },
+    methods: {
+        PayFee(){
+        this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
+        var payment = {
+              MemberID: this.Payment.MemberID,
+              OrNo: this.Payment.OrNo,
+              TransactionID: this.Payment.TransactionID,
+              ShareCapital: Number(this.Payment.ShareCapital),
+              ManagementFee: Number(this.Payment.ManagementFee),
+              Advances: Number(this.Payment.Advances),
+              SavingsDeposit: Number(this.Payment.SavingsDeposit),
+              Others: Number(this.Payment.Others),
+              OthersDes: this.Payment.OthersDes,
+              Total: this.Total,
+              timestamp: this.Payment.timestamp
+        }
+        this.$firestore.Transactions.doc(this.datetodaydata.toString()).collection('Payment').doc().set(payment)
+        .then(() => {
+            const increment = firefirestore.FieldValue.increment(1)
+            this.$firestore.Counter.update({ TransactionID: increment })
+            .then(() => {
+                 this.$firestore.Counter.update({ OrNo: increment })
+                 .then(()=>{
+                     console.log('Counter Incremented')
+                 })
+            })
+        })
+        },
+        onDecode (decodedString) {
+            if(decodedString.substring(0,1) == 'D'){
+                this.Payment.OrNo = (this.Counter.OrNo + 1),
+                this.Payment.TransactionID = (this.Counter.TransactionID + 1)
+                this.Payment.MemberID = decodedString.substring(8,21)
+
+                this.Payment1.OrNo = (this.Counter.OrNo + 2),
+                this.Payment1.TransactionID = (this.Counter.TransactionID + 2)
+                this.Payment1.MemberID= decodedString.substring(31, 44)
+
+                this.scanner = false
+            }else{
+                this.Payment1.OrNo = (this.Counter.OrNo + 1),
+                this.Payment1.TransactionID = (this.Counter.TransactionID + 1)
+                this.Payment1.MemberID = decodedString.substring(10,23)
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
+
+                this.scanner = false
+            }
+        },
+        datetoday(){
+        var myDate = new Date();
+        var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+        var date = ('0' + myDate.getDate()).slice(-2);
+        var year = myDate.getFullYear();
+        var formattedDate = year + '-' + month + '-' + date;
+        this.datetodaydata = formattedDate;
+        }   
+    },
+    mounted () {
+        this.datetoday()
+    },
+    computed: {
+        Total(){
+            return (parseInt(this.Payment.ManagementFee) + 
+            parseInt(this.Payment.ShareCapital) + 
+            parseInt(this.Payment.Advances) + 
+            parseInt(this.Payment.SavingsDeposit) + 
+            parseInt(this.Payment.Others))
+        }
+    },
+<<<<<<< HEAD
     firestore () {
         return {
             // Doc
@@ -472,6 +602,8 @@ export default {
             parseInt(this.Payment1.Others))
         }
     },
+=======
+>>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
     created() {
     //since 0 is considered false it will put an empty string in case priceFromDB is 0
     // this.Payment.ManagementFee = 0 || ''
@@ -482,6 +614,204 @@ export default {
   }
     
 }
+
+// COMMENT SA ORIG PAYMENT NG COLLECTOR
+//   <q-card class="q-pa-lg">
+//                <div class="text-uppercase text-teal-4">Daily Payments</div>
+//           <q-card-section horizontal >
+//                  <div class="row">
+//                     <!-- Start of Transaction ID -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="transactionid" label="Transaction ID" mask="2020-######" >
+//                                 <template v-slot:append>
+//                                     <q-icon name="mdi-database" />
+//                                 </template>
+//                             </q-input>
+//                         </div>
+//                      </div>
+//                      <!-- End of Transaction ID -->
+//                     <!-- Start of Members ID -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                                 <q-select
+//                                     color="teal-4"
+//                                     v-model="membersid"
+//                                     :options="membersname"
+//                                     label="Member's ID"
+//                                 >
+//                                     <template v-slot:append>
+//                                     <q-icon name="perm_identity" />
+//                                     </template>
+//                                 </q-select>
+//                         </div>
+//                      </div>
+//                      <!-- End of Members ID -->
+//                      <!-- Start of Members Name -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="membersname" label="Members name">
+                                
+//                                  <template v-slot:append>
+//                                     <q-icon name="mdi-account" />
+//                                  </template>
+//                             </q-input>
+//                         </div>
+//                      </div>
+//                      <!-- End of Members Name -->
+//                       <!-- Start of OR number -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="recieptnumber" label="Official Reciept Number" mask="###########">
+//                                 <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                                  </template>
+//                             </q-input>
+//                         </div>
+//                      </div>
+//                      <!-- End of OR number -->
+//                     <!-- Start of Management Fee -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                     <span class="text-uppercase text-teal-4">Fees</span>
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="managementfee" label="Management Fee" mask="######">
+//                                 <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                                  </template>
+//                             </q-input>
+//                         </div>
+//                     </div>
+//                     <!-- End of Management Fee -->
+//                     <!-- Start of Share of Stocks -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                     <span class="text-white">ABC</span>
+//                     <div class="q-pa-xs q-mx-sm">
+//                       <q-input color="teal-4" v-model="sharecapital" label="Share Capital" mask="######">
+//                           <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                          </template>
+//                       </q-input>
+//                     </div>
+//                   </div>
+//                     <!-- End of Share of Stocks -->
+//                      <!-- Start of Forfeited Share -->
+//                     <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                     <span class="text-white">ABC</span>
+//                     <div class="q-pa-xs q-mx-sm">
+//                       <q-input color="teal-4" v-model="forfeitedshare" label="Forfeited Share" mask="######">
+//                           <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                           </template>
+//                       </q-input>
+//                     </div>
+//                   </div> -->
+//                     <!-- End of Share of Stocks -->
+//                      <!-- Start of Savings Deposit -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                     <span class="text-white">ABC</span>
+//                     <div class="q-pa-xs q-mx-sm">
+//                       <q-input color="teal-4" v-model="savingsdeposit" label="Savings Deposit" mask="######">
+//                           <template v-slot:append>
+//                                     <q-icon name="fas fa-piggy-bank" />
+//                           </template>
+//                       </q-input>
+//                     </div>
+//                   </div>
+//                     <!-- End of Savings Deposit -->
+//                     <!-- Start of Accounts Recievable -->
+// <!--                     
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="accountsrecievable" label="Accounts Recievable" mask="######" >
+//                                 <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                                  </template>
+//                             </q-input>
+//                         </div>
+//                     </div> -->
+//                     <!-- End of Accounts Recievable -->
+//                      <!-- Start of Advances -->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+//                         <div class="q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" v-model="advances" label="Advances" mask="######">
+//                                 <template v-slot:append>
+//                                     <q-icon name="fas fa-money-bill" />
+//                                 </template>
+//                             </q-input>
+//                         </div>
+//                     </div>
+//                     <!-- End of Advances -->
+//                     <!-- Start of Date -->
+//                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+//                             <div class=" q-pa-xs q-mx-sm">
+//                             <q-input color="teal-4" label="Year/Month/Date" v-model="paymentdate" mask="date" hint="Date" :rules="['date']">
+//                                 <template class="q-pa-none q-md-none" v-slot:append>
+//                                 <q-icon name="event" class="cursor-pointer">
+//                                     <q-popup-proxy
+//                                     ref="qDateProxy"
+//                                     transition-show="scale"
+//                                     transition-hide="scale"
+//                                     >
+//                                     <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" />
+//                                     </q-popup-proxy>
+//                                 </q-icon>
+//                                 </template>
+//                             </q-input>
+//                             </div>
+//                         </div>
+//                     <!-- End of Date -->
+//                     <!-- Start of Total Amount -->
+//                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
+//                               <div class="q-pa-xs q-mx-sm">
+//                                 <q-input color="teal-4" v-model="totalamount" label="Total Amount">
+//                                     <template v-slot:append>
+//                                        <q-icon name="fas fa-equals" />
+//                                     </template>
+//                                 </q-input>
+//                               </div>
+//                         </div>
+//                     <!-- End of Total Amount -->
+//                      <!-- Start of Description-->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                              <span class="text-uppercase text-teal-4">Others</span>
+//                              <q-input color="teal-4" v-model="description" label="Description" autogrow>
+//                                  <template v-slot:append>
+//                                      <q-icon name="fas fa-sticky-note" />
+//                                  </template>
+//                              </q-input>
+//                         </div>
+//                     </div>
+//                     <!-- End of Description -->
+//                      <!-- Start of Amount-->
+//                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+//                         <div class="q-pa-xs q-mx-sm">
+//                              <span class="text-white">Others</span>
+//                             <q-input color="teal-4" v-model="descriptionamount" label="Amount" mask="₱ ###########">
+//                                  <template v-slot:append>
+//                                      <q-icon name="fas fa-plus" />
+//                                  </template>
+//                             </q-input>
+//                         </div>
+//                      </div>
+//                      <!-- End of Amount -->
+//                      <!-- Start of Blank Space -->
+//                       <div class="q-mb-lg q-pb-lg">
+//                         <div class="q-pa-md"></div>
+//                       </div>
+//                       <!-- End of Blank Space -->
+//                      <!-- Start of Add Payment button -->
+                    
+//                      <!-- End of Add Payment button -->
+                
+//                   <div class="absolute-bottom-right">
+//                         <div class="q-mt-lg">
+//                             <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" />
+//                         </div>
+//                  </div>
+//                 </div>
+//           </q-card-section>
+//           </q-card>
 </script>
 
 <style scoped>
