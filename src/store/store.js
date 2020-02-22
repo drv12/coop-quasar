@@ -67,7 +67,7 @@ const actions = {
                     }
                     
                 }).then(() => {
-                    // this.$router.replace('/')
+                   // this.$router.replace('/home')
                     commit('setLoading', false)
                 })
             }

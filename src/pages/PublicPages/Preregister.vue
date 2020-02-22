@@ -77,15 +77,15 @@
 
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
                         
-                        <q-input standard v-model="PreRegData.FirstName" label="First Name"
+                        <q-input standard color="teal-4" v-model="PreRegData.FirstName" label="First Name"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.LastName" label="Last Name"
+                        <q-input standard color="teal-4" v-model="PreRegData.LastName" label="Last Name"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-select v-model="PreRegData.CivilStatus" 
+                        <q-select color="teal-4" v-model="PreRegData.CivilStatus" 
                         :options="['Single', 'Married', 'Widow']" 
                         label="Civil Status" 
                         lazy-rules
@@ -96,12 +96,12 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                         <q-input standard v-model="PreRegData.BirthDate" stack-label label="Birthdate"
+                         <q-input color="teal-4" standard v-model="PreRegData.BirthDate" stack-label label="Birthdate"
                         type="date"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.BirthPlace" label="Birthplace"
+                        <q-input  color="teal-4" standard v-model="PreRegData.BirthPlace" label="Birthplace"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -110,15 +110,15 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
                         
-                        <q-input standard v-model="PreRegData.Address" label="Address"
+                        <q-input color="teal-4" standard v-model="PreRegData.Address" label="Address"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.Phone" label="Phone No."
+                        <q-input color="teal-4" standard v-model="PreRegData.Phone" label="Phone No."
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.Email" label="Email Address"
+                        <q-input color="teal-4" standard v-model="PreRegData.Email" label="Email Address"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -127,20 +127,20 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                        <q-input standard v-model="PreRegData.Occupation" label="Occupation"
+                        <q-input color="teal-4" standard v-model="PreRegData.Occupation" label="Occupation"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.EmployerCompany" label="Employer/ Company"
+                        <q-input color="teal-4" standard v-model="PreRegData.EmployerCompany" label="Employer/ Company"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.Salary" label="Salary"
+                        <q-input color="teal-4" standard v-model="PreRegData.Salary" label="Salary"
                         type="number"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.OtherIncome" label="Other Sources of Income"
+                        <q-input color="teal-4" standard v-model="PreRegData.OtherIncome" label="Other Sources of Income"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -149,15 +149,15 @@
                         </strong>
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
-                        <q-input standard v-model="PreRegData.RelativeName" label="Nearest Relative"
+                        <q-input color="teal-4" standard v-model="PreRegData.RelativeName" label="Nearest Relative"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.Relationship" label="Relationship"
+                        <q-input color="teal-4" standard v-model="PreRegData.Relationship" label="Relationship"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard v-model="PreRegData.NoDependents" label="Number of Dependents"
+                        <q-input color="teal-4"  standard v-model="PreRegData.NoDependents" label="Number of Dependents"
                         type="number"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -172,6 +172,7 @@
                           <img :src="imageUrl" width='300' height='150'>
 
                           <q-input 
+                           color="teal-4" 
                           type="file"
                           :hint="PreRegData.Designation == 'Driver' ? 'License Picture' : 'ID Picture'"
                           accept="image/*" 
@@ -186,12 +187,12 @@
                             </template>
                           </q-input>
 
-                        <q-input standard v-model="PreRegData.LicenseNo" 
+                        <q-input  color="teal-4" standard v-model="PreRegData.LicenseNo" 
                         :label="PreRegData.Designation == 'Driver' ? 'License No.' : 'ID No.'"
                         lazy-rules
                         :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
-                        <q-input standard stack-label 
+                        <q-input color="teal-4"  standard stack-label 
                         v-model="PreRegData.LicenseExp" 
                         label="Expiration Date"
                         type="date"
@@ -202,7 +203,8 @@
                     </div>
 
                     <div>
-                        <q-btn label="Submit" 
+                        <q-btn 
+                        label="Submit" 
                         type="submit" 
                         class="full-width	justify-center items-center q-mb-md" 
                         color="teal"/>
@@ -252,25 +254,25 @@ export default {
     return {
       step: 1,
       PreRegData: {
-        FirstName: 'a',
-        LastName: 'a',
-        CivilStatus: 'Single',
-        BirthPlace: 'a',
-        BirthDate: '2020-02-12',
-        Address:'a',
-        Phone:'1121212',
-        Email:'sasas@gmail.com',
-        Occupation: 'a',
-        EmployerCompany: 'a',
-        Salary: '1',
-        OtherIncome: 'a',
-        RelativeName: 'a',
-        Relationship: 'a',
-        NoDependents: '1',
-        LicenseNo:'asas',
-        LicenseExp:'2020-02-12',
+        FirstName: '',
+        LastName: '',
+        CivilStatus: '',
+        BirthPlace: '',
+        BirthDate: '',
+        Address:'',
+        Phone:'',
+        Email:'',
+        Occupation: '',
+        EmployerCompany: '',
+        Salary: '',
+        OtherIncome: '',
+        RelativeName: '',
+        Relationship: '',
+        NoDependents: '',
+        LicenseNo:'',
+        LicenseExp:'',
         Designation: '',
-        MembershipFee: 'To be Paid',
+        MembershipFee: '',
         timestamp: ''
       },
       accept: false,
@@ -342,12 +344,13 @@ export default {
     onSubmit () {
      this.regPre()
      this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted',
+          position: 'top',
+          color: 'white',
+          textColor: 'teal-4',
+          icon: 'check_circle',
+          message: 'Successfully Registered',
         })
-          this.$refs.stepbtn.click()
+         // this.$refs.stepbtn.click()
     },
     onReset () {
       this.FirstName = null

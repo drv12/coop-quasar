@@ -67,7 +67,7 @@
           </q-card>
         </div>
       </div>
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="q-pa-lg">
               <apexchart max-width="600" height="500" type="bar" :options="charts" :series="bars"></apexchart>
         </div>
@@ -85,6 +85,7 @@
              <apexchart max-width="500" type="line" :options="lines" :series="slantings"></apexchart>
           </div>
       </div>
+      
     </div>
   </div>
 </template>
