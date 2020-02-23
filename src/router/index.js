@@ -31,9 +31,8 @@ export default function ({store}) {
       let dsg = localStorage.getItem('Designation')
 
       if(route.meta.requiresAuth){
-        if(dsg != ''){
+        if(dsg == null){
           next(
-            { path: '/'}
           )
         } else {
           next (
@@ -42,7 +41,7 @@ export default function ({store}) {
         }
       }
   
-      if(route.meta.requiresAdmin){
+      if(route.meta.isAdmin){
         console.log('isadmin: ',dsg)
         if(dsg == 'Admin'){
           next()
@@ -53,7 +52,7 @@ export default function ({store}) {
         }
       }
   
-      if(route.meta.requiresCollector){
+      if(route.meta.isCollector){
         console.log('Collector')
         if(dsg == 'Collector'){
           next()
@@ -64,7 +63,7 @@ export default function ({store}) {
         }
       }
 
-      if(route.meta.requiresMember){
+      if(route.meta.isMember){
         if(dsg == 'Driver' || dsg == 'Operator'){
           next()
         } else {

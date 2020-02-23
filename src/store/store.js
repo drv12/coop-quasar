@@ -30,6 +30,9 @@ const actions = {
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
         .then( response => {
             console.log(response)
+            if(response != null){
+                this.$router.replace('/')
+            }
         })
         .catch(function(error) {
             console.log(error.message)
@@ -73,7 +76,6 @@ const actions = {
                     }
                     
                 }).then(() => {
-                    this.$router.replace('/')
                     commit('setLoading', false)
                 })
             }
