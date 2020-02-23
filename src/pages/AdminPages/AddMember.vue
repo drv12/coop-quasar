@@ -728,7 +728,7 @@ export default {
       })
     },
     log(){
-              console.log(this.OperatorDetails)
+      console.log(this.OperatorDetails)
     },
     regMember: function () {
 
@@ -736,13 +736,15 @@ export default {
         this.verifyoperator()
         if(this.verify == false){
           this.$q.notify({
+            position:'top',
             color: 'red-4',
             textColor: 'white',
             icon: 'cloud_done',
             message: "Invalid Operator",
             })
           return
-        }else{
+        }
+        else{
           this.MemberData.Operator = {
             MemberID: this.OperatorDetails.MemberID,
             Name: this.OperatorDetails.Name
@@ -776,7 +778,13 @@ export default {
             .then(() => {
               console.log('MemberID Incremented')
             })
-        })
+        }) 
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Successfully Created',
+          })
         // .then(() => {
 
         //   if(this.MemberData.Designation == 'Operator'){

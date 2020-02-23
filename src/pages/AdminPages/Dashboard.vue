@@ -79,7 +79,8 @@
           </div>
       </div>
 
-       <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 q-mt-xl q-pt-xl">
+       <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12
+        q-mt-xl q-pt-xl">
           <div class="q-pa-lg">
              <apexchart max-width="500" type="line" :options="lines" :series="slantings"></apexchart>
           </div>
@@ -127,7 +128,7 @@ export default {
             name: 'Operators',
             data: [90, 80, 79, 56, 84, 80, 85, 91]
         },
-        ]
+        ],
 
     }
   }

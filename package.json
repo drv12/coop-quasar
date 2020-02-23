@@ -18,6 +18,8 @@
     "apexcharts": "^3.15.6",
     "axios": "^0.18.1",
     "firebase": "^7.7.0",
+    "firebase-admin": "^8.9.2",
+    "firebase-functions": "^3.3.0",
     "jspdf": "^1.5.3",
     "nodemailer": "^6.4.2",
     "quasar": "^1.0.0",

@@ -31,13 +31,13 @@
 
                 <div class="col-lg-12 q-mb-xl"> 
                    <div class="q-pa-md">       
-                        <q-select outlined color="teal-4" :options="roles" label="Role" />
+                        <q-select v-model="roling" outlined color="teal-4" :options="roles" label="Role" />
                    </div>
                 </div>
 
                 <div class="absolute-bottom-right q-mr-md"> 
                    <div class="q-pa-md">       
-                         <q-btn class="text-teal-4" icon-right="check" label="Register Staff" color="white" />
+                         <q-btn @click="registerButtonPressed()" class="text-teal-4" icon-right="check" label="Register Staff" color="white" />
                    </div>
                 </div>
 
@@ -48,6 +48,7 @@
     </div>
 </template>
 <script>
+import  firebase from "@firebase/app";
 export default {
     data() {
         return {
@@ -55,8 +56,42 @@ export default {
             email: '',
             password: '',
             isPwd: true,
+            roling: '',
         }
     },
+    created() {
+        firebase.auth().onAuthStateChanged(userAuth => {
+            if (userAuth) {
+                firebase
+                    .auth()
+                    .currentUser.getIdTokenResult()
+                    .then(tokenResult => {
+                        console.log(tokenResult.claims);
+                    });
+            }
+        });
+      },
+      methods: {
+        async registerButtonPressed() {
+            try {
+                var {
+                    user
+                } = await firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(this.email, this.password);
+
+                // signout
+                firebase
+                    .auth()
+                    .signOut()
+                    // .then(user => {
+                    //     this.$router.push("/login");
+                    // });
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+      },
 }
 </script>
 <style scoped>

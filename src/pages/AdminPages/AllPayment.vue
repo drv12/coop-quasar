@@ -103,7 +103,11 @@ export default {
       this.datetoday()
       this.date = this.datetodaydata
       // Binding Collections
+<<<<<<< HEAD
       this.$bindCollectionAsObject("Transactions", firebaseDb.collection("Transactions").doc('2020-02-19').collection('Payment'))
+=======
+      this.$bindCollectionAsObject("Transactions", firebaseDb.collection('2020-02-18').doc(this.datetodaydata).collection('Payment'))
+>>>>>>> 858b059f3d5c6fea3c9835b20fe933c3e3d14b4b
       .then((Transactions) => {
         this.loading = false
       })
