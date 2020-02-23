@@ -38,6 +38,8 @@ const actions = {
     },
     logoutUser(){
         firebaseAuth.signOut();
+        localStorage.removeItem('Designation')
+        this.$router.replace('/')
     },
     handleAuthStateChanged({commit}){
         commit('setLoading', true)
@@ -56,6 +58,8 @@ const actions = {
                             MemberID: userDetails.MemberID,
                             userId: userId
                         })
+
+                        localStorage.setItem('Designation', userDetails.Designation)
 
                             commit('setDesignation', {
                                 Designation: userDetails.Designation
@@ -77,7 +81,6 @@ const actions = {
                 //userlogout
                 commit('setUserDetails', {})
                 commit('setLoading', false)
-                this.$router.replace('/')
             }
           })
     }

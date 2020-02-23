@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/dashboard',
     redirect: '/member/dashboard',
-    meta: {requiresMember: true, requiresAdmin: true},
+    meta: {isMember: true},
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
@@ -37,6 +37,7 @@ const routes = [
   {
     path: '/dashboard',
     redirect: '/collector/dashboard',
+    meta: {isCollector: true},
     component: () => import('layouts/CollectorLayout.vue'),
     children: [
       { 
@@ -62,7 +63,7 @@ const routes = [
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
-    // meta: {requiresAdmin: true},
+    meta: {isAdmin: true},
     redirect: '/admin/dashboard',
     children: [
       {

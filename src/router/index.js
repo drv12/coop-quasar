@@ -28,7 +28,7 @@ export default function ({store}) {
 
   Router.beforeEach((to,from, next) => {
     to.matched.some( route =>{
-      let dsg = store.getters['store/Designation']
+      let dsg = localStorage.getItem('Designation')
 
       if(route.meta.requiresAuth){
         if(dsg != ''){
