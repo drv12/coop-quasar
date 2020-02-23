@@ -1,5 +1,6 @@
 <template>
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders ">
+      <div>
       <q-header elevated class="bg-teal">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
@@ -23,7 +24,6 @@
             label="Be a Member" 
             to="/preregister"
             :class="'gt-sm'"
-            v-if="!userDetails.userId"
             />
             <q-btn flat dark 
             icon="account_balance" 
@@ -37,33 +37,26 @@
             to="/about"
             :class="'gt-sm'"
             />
-            <q-btn flat dark 
+            <!-- <q-btn flat dark 
             icon="lock" 
             label="Admin Dashboard" 
             to="/admin/dashboard"
             :class="'gt-sm'"
-            v-if="userDetails.Designation == 'Admin'"
             />
             <q-btn flat dark 
             icon="lock" 
             label="Member Dashboard" 
-            @click="loadPreReg(userDetails.MemberID)"
             :class="'gt-sm'"
-            v-if="userDetails.Designation == 'Driver' || userDetails.Designation == 'Operator'"
-            />
+            /> -->
             <q-btn flat dark 
             icon="lock" 
             label="Log In" 
             :class="'gt-sm'"
-            to="/login"
-            v-if="!userDetails.userId"
             />
             <q-btn flat dark 
             icon="lock" 
             label="Logout" 
             :class="'gt-sm'"
-            v-if="userDetails.userId"
-            @click="logoutUser"
             />
         </q-toolbar>
       </q-header>
@@ -97,7 +90,6 @@
                <q-item clickable
                v-ripple 
                to="/preregister"
-               v-if="!userDetails.userId"
                >
                   <q-item-section avatar>
                     <q-icon name="face"/>
@@ -133,8 +125,6 @@
 
             <q-item clickable
                v-ripple 
-               to="/login"
-               v-if="!userDetails.userId"
                >
                   <q-item-section avatar>
                     <q-icon name="lock"/>
@@ -143,10 +133,9 @@
                     Log In
                   </q-item-section>
                </q-item>
-               <q-item clickable
+
+               <!-- <q-item clickable
                v-ripple 
-               to="/admin/dashboard"
-               v-if="userDetails.Designation == 'Admin'"
                >
                   <q-item-section avatar>
                     <q-icon name="lock"/>
@@ -158,8 +147,6 @@
 
                <q-item clickable
                v-ripple 
-               @click="loadPreReg(userDetails.MemberID)"
-               v-if="userDetails.Designation == 'Driver' || userDetails.Designation == 'Operator'"
                >
                   <q-item-section avatar>
                     <q-icon name="lock"/>
@@ -167,12 +154,10 @@
                   <q-item-section>
                     Member Dashboard
                   </q-item-section>
-               </q-item>
+               </q-item> -->
 
                <q-item clickable
                v-ripple 
-               @click="logoutUser"
-               v-if="userDetails.userId"
                >
                   <q-item-section avatar>
                     <q-icon name="lock"/>
@@ -186,15 +171,7 @@
         </q-scroll-area>
       </q-drawer>
       <q-page-container>
-            <div v-if="Loading">
-              <q-spinner-oval
-                color="teal"
-                size="200px"
-                :thickness="5"
-                class="fixed-center"
-              />
-            </div>
-        <router-view v-if="!Loading"/>
+        <router-view/>
       </q-page-container>
 
       <q-footer elevated class="bg-teal">
@@ -202,6 +179,7 @@
           <q-toolbar-title>Footer</q-toolbar-title>
         </q-toolbar>
       </q-footer>
+      </div>
     </q-layout>
 </template>
 
@@ -215,15 +193,8 @@ export default {
       drawer: false,
     }
   },
-  computed: {
-    ...mapState('store', ['userDetails']),
-    ...mapGetters('store', ['Loading'])
-  },
   methods: {
-    ...mapActions('store', ['logoutUser']),
-    loadPreReg(id) {
-            this.$router.push('/member/dashboard/' + id)
-        }
+
   }
 }
 </script>

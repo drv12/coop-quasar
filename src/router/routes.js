@@ -12,9 +12,8 @@ const routes = [
     ]
   },
   {
-    path: '/dashboard',
+    path: '/member',
     redirect: '/member/dashboard',
-    meta: {requiresMember: true, requiresAdmin: true},
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
@@ -26,20 +25,12 @@ const routes = [
         path: '/member/profile/:penRegId', 
         props: true,
         component: () => import('pages/MemberPages/Profile.vue') 
-      },
-      { 
-        path: '/member/savingsdeposit', 
-        component: () => import('pages/MemberPages/SavingsDeposit.vue')
-      },
-      { 
-        path: '/member/loan', 
-        component: () => import('pages/MemberPages/MemberLoan.vue')
-      },
+      }
 
     ]
   },
   {
-    path: '/dashboard',
+    path: '/collector',
     redirect: '/collector/dashboard',
     component: () => import('layouts/CollectorLayout.vue'),
     children: [
@@ -64,13 +55,11 @@ const routes = [
   },
   {
     path: '/login',    
-    meta: {requiresAuth: true},
     component: () => import('pages/PublicPages/Login.vue') 
   },
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
-    // meta: {requiresAdmin: true},
     redirect: '/admin/dashboard',
     children: [
       {
@@ -126,6 +115,7 @@ const routes = [
     ]
   }
 ]
+
 
 // Always leave this as last one
 if (process.env.MODE !== 'ssr') {

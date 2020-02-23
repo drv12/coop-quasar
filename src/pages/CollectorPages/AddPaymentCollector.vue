@@ -64,9 +64,6 @@
                     <div class="q-pa-xs">
                       <q-input color="teal-4" type="number" v-model="Payment.ShareCapital" label="Share of Stocks" mask="######" />
                     </div>
-<<<<<<< HEAD
-                      </div>
-=======
                       </div> -->
                     <!-- End of Share of Stocks -->
                      <!-- Start of Forfeited Share -->
@@ -76,7 +73,6 @@
                       <q-input color="teal-4" v-model="forfeitedshare" label="Forfeited Share" mask="######" />
                     </div>
                   </div> -->
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                     <!-- End of Share of Stocks -->
                      <!-- Start of Savings Deposit -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -125,11 +121,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-uppercase text-teal-4">Others</span>
-<<<<<<< HEAD
-                             <q-input color="teal-4" v-model="Payment.OtherDes" label="Description" autogrow/>
-=======
                              <q-input color="teal-4" type="number" v-model="Payment.OtherDes" label="Description" autogrow/>
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                     </div>
                     <!-- End of Description -->
@@ -137,17 +129,6 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
                              <span class="text-white">Others</span>
-<<<<<<< HEAD
-                            <q-input color="teal-4" v-model="Payment.Others" label="Amount" mask="₱ ###########" />
-                        </div>
-                     </div>
-                     
-
-                      <!-- Start of Total Amount -->
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
-                              <div class="q-pa-xs">
-                                <q-input color="teal-4" v-model="Total" label="Total Amount"/>
-=======
                             <q-input color="teal-4" type="number" v-model="Payment.Others" label="Amount" mask="₱ ###########" />
                         </div>
                      </div>
@@ -156,7 +137,6 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 q-mt-sm">
                               <div class="q-pa-xs">
                                 <q-input color="teal-4" type="number" v-model="Total" label="Total Amount"/>
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                               </div>
                         </div>
                     <!-- End of Total Amount -->
@@ -175,26 +155,7 @@
                   <div class="absolute-bottom-right">
                         <div class="q-mt-lg">
                             <!-- <q-btn class="text-pink-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/> -->
-<<<<<<< HEAD
-                            <q-btn class="text-teal-4" 
-                            icon-right="mdi-arrow-right-thick" 
-                            label="Next" 
-                            color="white" 
-                            @click="page = 2"
-                            v-if="!alone"
-                            />
-
-                            <!-- <q-btn 
-                            class="text-teal-4" 
-                            icon-right="check" 
-                            label="Add Payment" 
-                            color="white" 
-                            @click="PayFee()"
-                            v-if="alone"
-                            /> -->
-=======
                             <q-btn class="text-teal-4" icon-right="mdi-arrow-right-thick" label="Next" color="white" @click="page = 2"/>
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                  </div>
                 </div>
@@ -236,11 +197,7 @@
                       <!-- Start of OR number -->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="q-pa-xs">
-<<<<<<< HEAD
-                            <q-input color="teal-4" v-model="Payment1.OrNo" label="Official Reciept Number"/>
-=======
                             <q-input color="teal-4" v-model="Payment1.OrNo" label="Official Reciept Number" mask="###########" />
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                         </div>
                      </div>
                      <!-- End of OR number -->
@@ -311,11 +268,7 @@
                     <div class="absolute-bottom-right">
                         <div class="q-mt-lg">
                             <q-btn class="text-teal-4 q-mr-md" icon="mdi-arrow-left-thick" label="Back" color="white" @click="page = 1"/>
-<<<<<<< HEAD
-                              <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" @click="PayFeeOperator"/>
-=======
                               <q-btn class="text-teal-4" icon-right="check" label="Add Payment" color="white" @click="PayFee"/>
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
                     </div>
                  </div>
                 </div>     
@@ -346,13 +299,8 @@ export default {
               MemberID: '',
               OrNo: '',
               TransactionID: '',
-<<<<<<< HEAD
-              ShareCapital: 30,
-              ManagementFee: 15,
-=======
               ShareCapital: 0,
               ManagementFee: 0,
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
               Advances: 0,
               SavingsDeposit: 0,
               Others: 0,
@@ -364,20 +312,6 @@ export default {
               MemberID: '',
               OrNo: '',
               TransactionID: '',
-<<<<<<< HEAD
-              ShareCapital: 30,
-              ManagementFee: 65,
-              Advances: 0,
-              SavingsDeposit: 0,
-              Others: 0,
-              OthersDes: 0,
-              Total: 0,
-              timestamp: ''
-            },
-            DriverName: '',
-            OperatorName: '',
-            alone: false
-=======
               ShareCapital: '',
               ManagementFee: '',
               Advances: '',
@@ -443,7 +377,6 @@ export default {
                 this.Payment1.OrNo = (this.Counter.OrNo + 1),
                 this.Payment1.TransactionID = (this.Counter.TransactionID + 1)
                 this.Payment1.MemberID = decodedString.substring(10,23)
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
 
                 this.scanner = false
             }
@@ -469,141 +402,6 @@ export default {
             parseInt(this.Payment.Others))
         }
     },
-<<<<<<< HEAD
-    firestore () {
-        return {
-            // Doc
-            Transactions: firebaseDb.collection('Transactions'),
-            Counter: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
-            MemberData: firebaseDb.collection('MemberData')
-        }
-    },
-    methods: {
-        // GetDriverName(){
-        //     var mystring = this.Payment.MemberID
-        //     mystring = mystring.replace('0','0');
-        //     console.log(mystring)
-        //     this.$firestore.MemberData.doc(mystring)
-        //     .get().then(function(doc) {
-        //     if (doc.exists) {
-        //         console.log("Document data:", doc.data());
-        //     } else {
-        //         // doc.data() will be undefined in this case
-        //         console.log("No such document!");
-        //     }
-        // }).catch(function(error) {
-        //     console.log("Error getting document:", error);
-        // });
-        // },
-
-        PayFeeOperator(){
-        this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
-        var payment = {
-              MemberID: this.Payment1.MemberID,
-              OrNo: this.Payment1.OrNo,
-              TransactionID: this.Payment1.TransactionID,
-              ShareCapital: Number(this.Payment1.ShareCapital),
-              ManagementFee: Number(this.Payment1.ManagementFee),
-              Advances: Number(this.Payment1.Advances),
-              SavingsDeposit: Number(this.Payment1.SavingsDeposit),
-              Others: Number(this.Payment1.Others),
-              OthersDes: this.Payment1.OthersDes,
-              Total: this.Total,
-              timestamp: this.Payment1.timestamp
-        }
-        this.$firestore.Transactions.doc(this.datetodaydata.toString()).collection('Payment').doc().set(payment)
-        .then(() => {
-            const increment = firefirestore.FieldValue.increment(1)
-            this.$firestore.Counter.update({ TransactionID: increment })
-            .then(() => {
-                 this.$firestore.Counter.update({ OrNo: increment })
-                 .then(()=>{
-                     console.log('Counter Incremented')
-                 })
-            })
-        })
-        },
-        PayFeeDriver(){
-        this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
-        var payment = {
-              MemberID: this.Payment.MemberID,
-              OrNo: this.Payment.OrNo,
-              TransactionID: this.Payment.TransactionID,
-              ShareCapital: Number(this.Payment.ShareCapital),
-              ManagementFee: Number(this.Payment.ManagementFee),
-              Advances: Number(this.Payment.Advances),
-              SavingsDeposit: Number(this.Payment.SavingsDeposit),
-              Others: Number(this.Payment.Others),
-              OthersDes: this.Payment.OthersDes,
-              Total: this.Total1,
-              timestamp: this.Payment.timestamp
-        }
-        this.$firestore.Transactions.doc(this.datetodaydata.toString()).collection('Payment').doc().set(payment)
-        .then(() => {
-            const increment = firefirestore.FieldValue.increment(1)
-            this.$firestore.Counter.update({ TransactionID: increment })
-            .then(() => {
-                 this.$firestore.Counter.update({ OrNo: increment })
-                 .then(()=>{
-                     console.log('Counter Incremented')
-                 })
-            })
-        })
-        },
-        onDecode (decodedString) {
-            if(decodedString.substring(0,1) == 'D'){
-                this.alone = false
-                this.Payment.OrNo = (this.Counter.OrNo + 1),
-                this.Payment.TransactionID = (this.Counter.TransactionID + 1)
-                this.Payment.MemberID = decodedString.substring(8,21)
-                
-                this.Payment1.OrNo = (this.Counter.OrNo + 2),
-                this.Payment1.TransactionID = (this.Counter.TransactionID + 2)
-                this.Payment1.MemberID= decodedString.substring(31, 44)
-
-                console.log(decodedString)
-                this.scanner = false
-            }else{
-                this.alone = true
-                this.page = 2
-                this.Payment1.OrNo = (this.Counter.OrNo + 1),
-                this.Payment1.TransactionID = (this.Counter.TransactionID + 1)
-                this.Payment1.MemberID = decodedString.substring(10,23)
-                
-                console.log(decodedString)
-                this.scanner = false
-            }
-        },
-        datetoday(){
-        var myDate = new Date();
-        var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
-        var date = ('0' + myDate.getDate()).slice(-2);
-        var year = myDate.getFullYear();
-        var formattedDate = year + '-' + month + '-' + date;
-        this.datetodaydata = formattedDate;
-        }   
-    },
-    mounted () {
-        this.datetoday()
-    },
-    computed: {
-        Total(){
-            return (parseInt(this.Payment.ManagementFee) + 
-            parseInt(this.Payment.ShareCapital) + 
-            parseInt(this.Payment.Advances) + 
-            parseInt(this.Payment.SavingsDeposit) + 
-            parseInt(this.Payment.Others))
-        },
-        Total1(){
-            return (parseInt(this.Payment1.ManagementFee) + 
-            parseInt(this.Payment1.ShareCapital) + 
-            parseInt(this.Payment1.Advances) + 
-            parseInt(this.Payment1.SavingsDeposit) + 
-            parseInt(this.Payment1.Others))
-        }
-    },
-=======
->>>>>>> f160ae8dd404812659d44474e303d1de8d287ad8
     created() {
     //since 0 is considered false it will put an empty string in case priceFromDB is 0
     // this.Payment.ManagementFee = 0 || ''

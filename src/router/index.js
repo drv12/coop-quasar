@@ -26,58 +26,6 @@ export default function ({store}) {
     base: process.env.VUE_ROUTER_BASE
   })
 
-  Router.beforeEach((to,from, next) => {
-    to.matched.some( route =>{
-      let dsg = store.getters['store/Designation']
-
-      if(route.meta.requiresAuth){
-        if(dsg != ''){
-          next(
-            { path: '/'}
-          )
-        } else {
-          next (
-            { path: '/'}
-          )
-        }
-      }
-  
-      if(route.meta.requiresAdmin){
-        console.log('isadmin: ',dsg)
-        if(dsg == 'Admin'){
-          next()
-        } else {
-          next (
-            { path: '/'}
-          )
-        }
-      }
-  
-      if(route.meta.requiresCollector){
-        console.log('Collector')
-        if(dsg == 'Collector'){
-          next()
-        } else {
-          next (
-            { path: '/'}
-          )
-        }
-      }
-
-      if(route.meta.requiresMember){
-        if(dsg == 'Driver' || dsg == 'Operator'){
-          next()
-        } else {
-          console.log('Member')
-          next (
-            { path: '/'}
-            )
-        }
-      }
-
-      next()
-    })
-  })
   return Router
 }
 

@@ -20,10 +20,13 @@ import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('store',['handleAuthStateChanged'])
+    // ...mapActions('store',['handleAuthStateChanged']),
   },
   mounted(){
-    this.handleAuthStateChanged();
+    // this.handleAuthStateChanged();
   },
+  // created() {
+  //   this.handleAuthStateChanged();
+  // }
 }
 </script>
