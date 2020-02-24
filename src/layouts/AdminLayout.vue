@@ -207,32 +207,11 @@ export default {
 
   data() {
     return {
-      // lists: [
-      //   { icon: 'dashboard', text: 'Dashboard', route: '/' },
-      //   { icon: 'people', text: 'Members', route: '/member' },
-      //   { icon: 'receipt', text:'Payment', route: '' },
-      //   { icon: 'credit_card', text: 'Credit', route: '' },
-      //   { icon: 'assignment', text: 'Bulletin', route: '' },
-      //   { icon: 'sentiment_satisfied_alt', text: 'Benefits', route: '' },
-      //   { icon: 'folder', text: 'Reports', route: '' },
-      //   { icon: 'account_tree', text: 'Add Users', route: '' }
-      // ],
-      // lists:[
-      //   { icon: 'dashboard', text: 'Dashboard', route: '/' }
-      // ],
-      // paths:[
-      //    { 
-      //    icon: 'people', 
-      //    text: 'Members',
-      //    paths: [
-      //        { icon: 'people', text: 'Add Member', route: '/member' }
-      //    ],
-      //    }
-      //   ],
+ 
       left: false
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .q-item.q-router-link--active, .q-item--active{

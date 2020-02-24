@@ -1,5 +1,14 @@
 <template>
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders ">
+      <div v-if="Loading">
+        <q-spinner-oval
+        color="teal"
+        size="200px"
+        :thickness="5"
+        class="fixed-center"
+        />
+      </div>
+    <div v-else>
       <q-header elevated class="bg-teal">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu"
@@ -186,15 +195,7 @@
         </q-scroll-area>
       </q-drawer>
       <q-page-container>
-            <div v-if="Loading">
-              <q-spinner-oval
-                color="teal"
-                size="200px"
-                :thickness="5"
-                class="fixed-center"
-              />
-            </div>
-        <router-view v-if="!Loading"/>
+        <router-view/>
       </q-page-container>
 
       <q-footer elevated class="bg-teal">
@@ -202,6 +203,7 @@
           <q-toolbar-title>Footer</q-toolbar-title>
         </q-toolbar>
       </q-footer>
+    </div>
     </q-layout>
 </template>
 
