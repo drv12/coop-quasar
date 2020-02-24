@@ -4,7 +4,7 @@
 
     <q-separator />
       <div v-if="loading">
-        <q-spinner-oval
+        <q-spinner-ball
         color="primary"
         size="200px"
         :thickness="5"

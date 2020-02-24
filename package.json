@@ -16,14 +16,19 @@
     "@firebase/firestore": "^1.10.2",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
+    "dns": "^0.2.2",
     "firebase": "^7.7.0",
+    "firebase-admin": "^8.9.2",
+    "http2": "^3.3.7",
     "jspdf": "^1.5.3",
     "nodemailer": "^6.4.2",
     "quasar": "^1.0.0",
+    "sweetalert2": "^9.8.2",
     "vue": "^2.6.11",
     "vue-firestore": "^0.3.30",
     "vue-qrcode-reader": "^2.1.1",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0"

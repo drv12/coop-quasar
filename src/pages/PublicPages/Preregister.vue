@@ -261,6 +261,7 @@
 
 <script>
 import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
+import Swal from 'sweetalert2'
 
 export default {
   data () {
@@ -341,34 +342,17 @@ export default {
           this.loadingState = false
           this.verify = true
         }else {
-          // this.$q.notify({
-          // color: 'red-4',
-          // textColor: 'white',
-          // icon: 'cloud_done',
-          // message: "Operator Doesn't Exist",
-          // })
+
           this.verify = false
         }
       },
     regPre: function () {
-
-
         if(this.PreRegData.Designation == 'Driver'){
             this.PreRegData.Occupation = this.DriverOccupation
 
-            if(this.verify == false){
-              this.$q.notify({
-                color: 'red-4',
-                textColor: 'white',
-                icon: 'cloud_done',
-                message: "Invalid Operator",
-                })
-              return
-            }else{
               this.PreRegData.Operator = {
                 MemberID: this.OperatorDetails.MemberID,
                 Name: this.OperatorDetails.Name
-              }
             }
         }else{
           this.PreRegData.Occupation = this.Occupation
@@ -424,19 +408,46 @@ export default {
       this.LicenseImage = files[0]
     },
     onSubmit () {
-     this.regPre()
-     this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted',
-        })
-          this.$refs.stepbtn.click()
+      if(this.verify == false){
+              this.$q.notify({
+                color: 'red-4',
+                textColor: 'white',
+                icon: 'cloud_done',
+                message: "Invalid Operator",
+                })
+              return
+            }
+
+              this.regPre()
+              Swal.fire(
+                'Succesful',
+                'Application Sent',
+                'success'
+              )
+              this.$refs.stepbtn.click()
     },
     onReset () {
-      this.FirstName = null
-      this.LastName = null
-      this.accept = false
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, clear fields!'
+      }).then((result) => {
+        if (result.value) {
+          this.FirstName = null
+          this.LastName = null
+          this.accept = false
+          
+          Swal.fire(
+            'Clear Complete!',
+            'Fields has been cleared',
+            'success'
+          )
+        }
+      })
     },
     datetoday(){
       var myDate = new Date();

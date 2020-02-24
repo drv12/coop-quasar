@@ -31,13 +31,13 @@
 
                 <div class="col-lg-12 q-mb-xl"> 
                    <div class="q-pa-md">       
-                        <q-select outlined color="teal-4" :options="roles" label="Role" />
+                        <q-select outlined color="teal-4" :options="roles" v-model="Designation" label="Role" />
                    </div>
                 </div>
 
                 <div class="absolute-bottom-right q-mr-md"> 
                    <div class="q-pa-md">       
-                         <q-btn class="text-teal-4" icon-right="check" label="Register Staff" color="white" />
+                         <q-btn @click="changeRole(email, Designation)" class="text-teal-4" icon-right="check" label="Register Staff" color="white" />
                    </div>
                 </div>
 
@@ -47,7 +47,11 @@
        </div>
     </div>
 </template>
+
 <script>
+import { firefunctions } from 'boot/firebase';
+import Swal from 'sweetalert2'
+
 export default {
     data() {
         return {
@@ -55,8 +59,22 @@ export default {
             email: '',
             password: '',
             isPwd: true,
+            Designation: ''
         }
     },
+    methods: {
+        changeRole(email, Designation) {
+            var addMessage = firefunctions.httpsCallable("setUserRole");
+            var data = { email: email, designation: Designation };
+            addMessage(data)
+                .then(function(result) {
+                    console.log(result);
+                })
+                .catch(function(error) {
+                    console.log(error)
+                });
+        }
+    }
 }
 </script>
 <style scoped>

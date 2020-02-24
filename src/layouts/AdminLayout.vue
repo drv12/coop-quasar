@@ -166,7 +166,7 @@
              <q-expansion-item
               expanded-separator
               icon="fas fa-user-circle" 
-              label="Manage" 
+              label="File Maintenance" 
               :content-inset-level="0.5"
             >
               <q-item
@@ -178,7 +178,51 @@
                   <q-item-section avatar>
                     <q-icon name="mdi-account" />
                   </q-item-section>
-                    <q-item-section class="text-uppercase">Add Staff</q-item-section>
+                    <q-item-section class="text-uppercase">Users</q-item-section>
+                </q-item>
+                <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/admin/addstaff"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-account" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Fees</q-item-section>
+                </q-item>
+                <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/admin/addstaff"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-account" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Cash Advances</q-item-section>
+                </q-item>
+                <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/admin/addstaff"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-account" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Units</q-item-section>
+                </q-item>
+                <q-item
+                    expand-separator 
+                   :content-inset-level="0.5"
+                    to="/admin/addstaff"
+                    exact
+                    >
+                  <q-item-section avatar>
+                    <q-icon name="mdi-account" />
+                  </q-item-section>
+                    <q-item-section class="text-uppercase">Web Content</q-item-section>
                 </q-item>
             </q-expansion-item>
        </q-list>

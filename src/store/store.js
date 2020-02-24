@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueFirestore from 'vue-firestore'
-import Firebase from 'firebase'
+import Swal from 'sweetalert2'
+
 
 Vue.use(VueFirestore);
 
@@ -35,13 +36,19 @@ const actions = {
             }
         })
         .catch(function(error) {
-            console.log(error.message)
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'Close'
+              })
             commit('setLoading', false)
-          });
+          })
     },
     logoutUser(){
         firebaseAuth.signOut();
         localStorage.removeItem('Designation')
+        localStorage.removeItem('id')
         this.$router.replace('/')
     },
     handleAuthStateChanged({commit}){
@@ -50,6 +57,7 @@ const actions = {
             if (user) {
               //userlogin
               let userId = firebaseAuth.currentUser.uid
+              firebaseAuth.currentUser.getIdTokenResult().then(data => console.log('token',data.claims))
               firebaseDb.collection("Users").doc(userId).get().then(function(doc) {
                     if (doc.exists) {
                         let userDetails = doc.data()
@@ -61,9 +69,16 @@ const actions = {
                             MemberID: userDetails.MemberID,
                             userId: userId
                         })
+                        let dsg = userDetails.Designation
 
-                        localStorage.setItem('Designation', userDetails.Designation)
-
+                        if(dsg == 'Admin'){
+                            localStorage.setItem('Designation', 'e3afed0047b08059d0fada10f400c1e5')
+                        }else if(dsg == 'Collector'){
+                            localStorage.setItem('Designation', '8fc330d76e990ab6964af08ea1e47d2e')
+                        }else if(dsg == 'Driver' || dsg == 'Operator'){
+                            localStorage.setItem('Designation', '858ba4765e53c712ef672a9570474b1d')
+                        }
+                        
                             commit('setDesignation', {
                                 Designation: userDetails.Designation
                                 }
@@ -76,6 +91,15 @@ const actions = {
                     }
                     
                 }).then(() => {
+                    commit('setLoading', false)
+                })
+                .catch(function(error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonText: 'Close'
+                    })
                     commit('setLoading', false)
                 })
             }

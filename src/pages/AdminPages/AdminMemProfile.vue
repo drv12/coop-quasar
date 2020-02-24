@@ -53,7 +53,7 @@
             <!-- end membership payment -->
             
             <q-btn flat round icon="event"/>
-            <q-btn @click="contract = !contract" flat color="teal-4">
+            <q-btn @click="printDiv('page')" flat color="teal-4">
             Print Contract
             </q-btn>
             <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
@@ -156,7 +156,9 @@
             </div>
 
             <div class="q-pa-md">
-              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" :readonly="upd">
+              <q-input v-model="MemberData.EmployerCompany" label="Employer or Office" :readonly="upd"
+              v-if="MemberData.Designation == 'Operator'"
+              >
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
                 </template>
@@ -370,7 +372,7 @@
 
 
   <q-dialog v-model="qrdialog">
-    <q-card class="my-card" flat bordered>
+    <q-card class="my-card bg-white" flat bordered>
       <q-card-section horizontal id="idpage">
       <div class="id-card-tag"></div>
         <div class="id-card-tag-strip"></div>
@@ -395,32 +397,28 @@
             </div>
             <h3>www.newgsistsc.com</h3>
             <hr>
-            <p><strong>"PENGG"</strong>HOUSE,4th Floor, TC 11/729(4), Division Office Road <p>
-            <p>Near PMG Junction, Thiruvananthapuram Kerala, India <strong>695033</strong></p>
-            <p>Ph: 9446062493 | E-ail: info@onetikk.info</p>
         </div>
 	    </div>
       </q-card-section>
 
       <q-separator />
 
-      <!-- <q-card-actions>
+      <q-card-actions>
         <q-btn color="secondary" class="full-width" @click="printDiv('idpage')">
           Print
         </q-btn>
-      </q-card-actions> -->
+      </q-card-actions>
 
     </q-card>
   </q-dialog>
 
-    <q-dialog v-model="contract">
+    <div id="page" v-show="false">
       <q-card>
         <q-card-section>
-        <div class="bg-white">
+        <div class="bg-white q-ma-lg" >
             <q-form
-              class="q-gutter-md"
+              class="q-ma-md"
             >
-              <p>&nbsp;</p>
               <h6 class="h6">APPLICATION FOR MEMBERSHIP</h6>
               
               <span style="padding-left: 150px;">I hereby apply for membership to the <strong>New GSIS Transport Service Cooperative.</strong></span>
@@ -455,7 +453,12 @@
                     <span style="float:right"> Date of birth:  {{ MemberData.BirthDate }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
                     <br><span style="float:left"> Present Address: {{ MemberData.Address }} </span> 
                   <br><span style="float:left"> Occupation: {{ MemberData.Occupation }} </span> 
+                <div v-if="MemberData.Designation == 'Operator'">
                 <br><span style="float:left"> Employer or office: {{ MemberData.EmployerCompany }} </span>
+                </div> 
+                <div v-if="MemberData.Designation == 'Driver'">
+                <br><span style="float:left"> Employer or office: {{ MemberData.Operator.Name }} </span>
+                </div>  
                 <span style="float:right"> Salary:  {{ MemberData.Salary }} &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> 
                 <br><span style="float:left"> Other sources of income: {{ MemberData.OtherIncome }} </span> 
                 <br><span style="float:left"> Nearest relative: {{ MemberData.RelativeName }} </span>
@@ -470,7 +473,7 @@
         </q-card-section>
                   </q-card>
 
-    </q-dialog>    
+    </div>    
 
 
     </div>
@@ -596,7 +599,7 @@ export default {
       },
       PayFee(){
         this.Payment.timestamp = firefirestore.FieldValue.serverTimestamp()
-        this.$firestore.Transactions.doc(this.datetodaydata).collection('Payment').add(this.Payment)
+        this.$firestore.Transactions.doc(this.datetodaydata.toString()).collection('Payment').add(this.Payment)
 
         this.$firestore.MemberData.update({
                 MembershipFee: firefirestore.FieldValue.delete()
@@ -753,11 +756,6 @@ export default {
 		.qr-code img {
 			width: 180px;
 		}
-		p {
-			font-size: 5px;
-			margin: 2px;
-		}
-
 
   .h6 {
     text-align: center;

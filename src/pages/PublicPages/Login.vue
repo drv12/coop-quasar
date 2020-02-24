@@ -70,6 +70,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
+
 export default {
     name: "Login",
     data() {
@@ -84,7 +85,7 @@ export default {
             ...mapActions('store',['loginUser']),
             signin(){
                 this.loginUser(this.formData)
-            },
+            }
         },
         computed: {
             ...mapGetters('store', ['Loading'])

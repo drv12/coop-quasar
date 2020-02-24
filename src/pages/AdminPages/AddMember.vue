@@ -240,6 +240,19 @@
                             </div>
                           </div>
                         <!-- Start of Employer or Office -->
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            <div class="q-pa-md">
+                              <q-input color="teal-4" v-model="MemberData.Salary" label="Other sources of Income" 
+                              type="number"
+                              lazy-rules
+                              :rules="[ val => val && val.length > 0 || 'Please input something']"
+                              >
+                                <template v-slot:before>
+                                  <q-icon name="mdi-money" />
+                                </template>
+                              </q-input>
+                            </div>
+                          </div>
                         <!-- Start of Other sources of Income -->
                           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="q-pa-md">
@@ -315,7 +328,7 @@
                         <!-- Start of Address -->
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                           <div class=" q-pa-md">
-                            <q-input color="teal-4" v-model="MemberData.CurrentAddress" label="Address" autogrow 
+                            <q-input color="teal-4" v-model="MemberData.Address" label="Address" autogrow 
                             lazy-rules
                             :rules="[ val => val && val.length > 0 || 'Please input something']"
                             >
@@ -516,9 +529,6 @@
     
 <script>
 import { firebaseDb, firebaseSto, firefirestore, Auth2 } from 'boot/firebase';
-// import VueQrcode from '@chenfengyuan/vue-qrcode'
-
-// Vue.component(VueQrcode.name, VueQrcode);
 
 export default {
     data(){
@@ -620,12 +630,6 @@ export default {
           this.loadingState = false
           this.verify = true
         }else {
-          // this.$q.notify({
-          // color: 'red-4',
-          // textColor: 'white',
-          // icon: 'cloud_done',
-          // message: "Operator Doesn't Exist",
-          // })
           this.verify = false
         }
         
@@ -712,7 +716,6 @@ export default {
         console.log("User " + userId + " created successfully!");
         Auth2.signOut();
 
-        //ayaw gumana
         this.$firestore.Users.doc(userId).set({
           Designation: this.MemberData.Designation,
           Email: email,

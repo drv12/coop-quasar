@@ -8,6 +8,9 @@
 import Vue from 'vue'
 import VueFirestore from 'vue-firestore'
 import Firebase from 'firebase'
+import Swal from 'sweetalert2'
+import * as admin from 'firebase-admin';
+
  
 require('firebase/firestore')
 Vue.use(VueFirestore)

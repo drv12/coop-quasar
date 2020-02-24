@@ -3,7 +3,7 @@
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal"> Members <q-icon name="mdi-arrow-right-box" /> Pending Applications </h6>
     <q-separator />
     <div v-if="loading">
-      <q-spinner-oval
+      <q-spinner-ball
         color="teal"
         size="200px"
         :thickness="5"
@@ -50,20 +50,9 @@ export default {
         }
     },
     firestore () {
-    return {
-    PendingRegs: {
-        // collection reference.
-            // ref: firebaseDb.collection('PreRegPersonalData'),
-            // Bind the collection as an object if you would like to.
-            // objects: true,
-            // resolve: (data) => {
-            //     // collection is resolved
-            // },
-            // reject: (err) => {
-            //     // collection is rejected
-            // }
+      return {
+          //historylogs
         }
-      }
     },
     mounted () {
       // Binding Collections

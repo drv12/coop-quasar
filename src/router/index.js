@@ -42,8 +42,7 @@ export default function ({store}) {
       }
   
       if(route.meta.isAdmin){
-        console.log('isadmin: ',dsg)
-        if(dsg == 'Admin'){
+        if(dsg == 'e3afed0047b08059d0fada10f400c1e5'){
           next()
         } else {
           next (
@@ -53,8 +52,7 @@ export default function ({store}) {
       }
   
       if(route.meta.isCollector){
-        console.log('Collector')
-        if(dsg == 'Collector'){
+        if(dsg == '8fc330d76e990ab6964af08ea1e47d2e'){
           next()
         } else {
           next (
@@ -64,7 +62,7 @@ export default function ({store}) {
       }
 
       if(route.meta.isMember){
-        if(dsg == 'Driver' || dsg == 'Operator'){
+        if(dsg == '858ba4765e53c712ef672a9570474b1d'){
           next()
         } else {
           console.log('Member')

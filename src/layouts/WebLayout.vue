@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders ">
       <div v-if="Loading">
-        <q-spinner-oval
+        <q-spinner-ball  
         color="teal"
         size="200px"
         :thickness="5"

@@ -21,10 +21,11 @@ var firebaseConfig = {
  let firebaseDb = firebaseApp.firestore();
  let firebaseSto = firebaseApp.storage();
  let firefirestore = firebase.firestore;
+ let firefunctions = firebase.functions();
 
 
  //2nd app
  let secondaryApp = firebase.initializeApp(firebaseConfig, "secondary");
  let Auth2 = secondaryApp.auth();
 
- export {Auth2, firebaseAuth, firebaseDb, firebaseSto, firefirestore}
+ export {Auth2, firebaseAuth, firebaseDb, firebaseSto, firefirestore, firefunctions}

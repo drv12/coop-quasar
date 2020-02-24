@@ -4,14 +4,14 @@
           <!-- <q-input class="q-ma-md" @input="QueryDate();" v-model="date" outlined type="date" hint="Native date" /> -->
 
     <q-separator />
-      <!-- <div v-if="loading">
-        <q-spinner-oval
+      <div v-if="loading">
+        <q-spinner-ball
         color="teal"
         size="200px"
         :thickness="5"
         class="fixed-center"
         />
-      </div> -->
+      </div>
     <div class="q-pa-md col-xs-12 col-sm-12 col-md-12" v-if="!loading">
       <q-markup-table separator="horizontal" flat bordered>
       <template>
@@ -33,7 +33,7 @@
             <td class="text-left">{{data.TransactionID}}</td>
             <td class="text-left">{{data.OrNo}}</td>
             <td class="text-left">{{data.Total}}</td>
-            <td class="text-left">{{data.timestamp.toDate()}}</td>
+            <td class="text-left">{{((data.timestamp.toDate().toUTCString()))}}</td>
 
             <td class="text-left">
               <q-btn flat 
@@ -103,7 +103,7 @@ export default {
       this.datetoday()
       this.date = this.datetodaydata
       // Binding Collections
-      this.$bindCollectionAsObject("Transactions", firebaseDb.collection("Transactions").doc('2020-02-19').collection('Payment'))
+      this.$bindCollectionAsObject("Transactions", firebaseDb.collection("Transactions").doc(this.date).collection('Payment'))
       .then((Transactions) => {
         this.loading = false
       })

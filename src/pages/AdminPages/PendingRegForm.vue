@@ -68,9 +68,15 @@
                         <q-separator class= "q-mb-md q-pt-xs" color="secondary" inset hidden = 'true'/>
 
                         <q-input standard v-model="PenReg.Occupation" label="Occupation"
+                        v-if="PenReg.Designation == 'Operator'"
+                        readonly
+                        />
+                         <q-input standard v-model="PenReg.Operator.Name" label="Operator"
+                         v-if="PenReg.Designation == 'Driver'"
                         readonly
                         />
                         <q-input standard v-model="PenReg.EmployerCompany" label="Employer/ Company"
+                        v-if="PenReg.Designation == 'Operator'"
                         readonly
                         />
                         <q-input standard v-model="PenReg.Salary" label="Salary"
@@ -125,9 +131,11 @@
                 />
                 <q-btn class="col q-ma-md" 
                 @click="rejectMember"
-                to="/admin/pendingreg/"
                 color="teal-4" 
                 label="Reject"/>
+                <q-btn class="col q-ma-md" 
+                color="teal-4" 
+                label="Send Email"/>
               </div>
           </q-card>
           
@@ -138,8 +146,8 @@
 </template> 
 
 <script>
-import { firebaseDb, firefirestore } from 'boot/firebase';
-// import { mapActions } from 'vuex'
+import { firebaseDb, firefirestore,Auth2 } from 'boot/firebase';
+import Swal from 'sweetalert2'
 
 export default {
   data () {
@@ -159,6 +167,27 @@ export default {
     }
   },
   methods: {
+    adduser(email, password){
+      Auth2.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        let userId = Auth2.currentUser.uid
+        console.log("User " + userId + " created successfully!");
+        Auth2.signOut();
+
+        this.$firestore.Users.doc(userId).set({
+          Designation: this.PenReg.Designation,
+          Email: email,
+          FirstName: this.PenReg.FirstName,
+          LastName: this.PenReg.LastName,
+          MemberID: email.substring(0,12)
+        })
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      })
+    },
     regMember(){
       this.mid = 'NGTSC'+ (this.MemberID.MemberID + 1)
       this.PenReg.timestamp = firefirestore.FieldValue.serverTimestamp()
@@ -168,39 +197,39 @@ export default {
       this.$firestore.MemberID.update({ MemberID: increment })
 
       this.$firestore.PenReg.delete()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Application has been approved',
+        showConfirmButton: false,
+        timer: 1500
+      })
     },
     rejectMember(){
-      this.$firestore.PenReg.delete()
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reject application!'
+      }).then((result) => {
+        if (result.value) {
+          this.$firestore.PenReg.delete()
+          this.$router.replace('/admin/pendingreg/')
+          Swal.fire(
+            'Rejected!',
+            'Application has been deleted.',
+            'success'
+          )
+          
+        }
+      })
     },
     loadPreReg(id) {
-            this.$router.push('/admin/profile/' + id)
+            this.$router.replace('/admin/profile/' + id)
     }
-    // printDiv(divName){
-		// 	const prtHtml = document.getElementById(divName).innerHTML;
-
-    //   // Get all stylesheets HTML
-    //   let stylesHtml = '';
-    //   for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
-    //     stylesHtml += node.outerHTML;
-    //   }
-    //   // Open the print window
-    //   const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-
-    //   WinPrint.document.write(`<!DOCTYPE html>
-    //   <html>
-    //     <head>
-    //       ${stylesHtml}
-    //     </head>
-    //     <body>
-    //       ${prtHtml}
-    //     </body>
-    //   </html>`);
-
-    //   WinPrint.document.close();
-    //   WinPrint.focus();
-    //   WinPrint.print();
-    //   WinPrint.close();
-		// }
   }
 }
 </script>
