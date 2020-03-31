@@ -1,7 +1,7 @@
 <template>
 <div>
     <h6 class="q-ma-none q-pl-md q-pt-md text-teal-4">Payment<q-icon name="mdi-arrow-right-box" /> All Payment</h6>
-          <!-- <q-input class="q-ma-md" @input="QueryDate();" v-model="date" outlined type="date" hint="Native date" /> -->
+          <q-input class="q-ma-md" @input="QueryDate();" v-model="date" outlined type="date" hint="Native date" />
 
     <q-separator />
       <!-- <div v-if="loading">
@@ -12,7 +12,7 @@
         class="fixed-center"
         />
       </div> -->
-    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12" v-if="!loading">
+    <div class="q-pa-md col-xs-12 col-sm-12 col-md-12">
       <q-markup-table separator="horizontal" flat bordered>
       <template>
         <thead color="secondary">
@@ -27,7 +27,15 @@
         </thead>
       </template>
       <template>
-        <tbody>
+        <div v-if="loading">
+        <q-spinner-oval
+        color="teal"
+        :thickness="5"
+        class="fixed-center"
+        size="3em"
+        />
+      </div>
+        <tbody v-else>
           <tr v-for="(data, id) in Transactions" :key="id">
             <td class="text-left">{{data.MemberID}}</td>
             <td class="text-left">{{data.TransactionID}}</td>
@@ -56,39 +64,40 @@ import { firebaseDb } from 'boot/firebase';
 export default {
   data () {
     return {
-      loading: true,
+      loading: false,
       datetodaydata: '',
       date:'',      
+      Transactions: {}
     }
   },
   firestore () {
         return {
             // Doc
-            // Transactionss: firebaseDb.collection('Transactions')
+            Transactions: firebaseDb.collection('Transactions')
         }
       },
   methods: {
-    // QueryDate(){
-    //     var dt = this.date.toString()
-    //     var TransactionData = {}
-    //     this.$firestore.Transactionss.doc(dt).collection("Payment")
-    //     .get()
-    //     .then(function(querySnapshot) {
-    //         querySnapshot.forEach(function(doc) {
-    //             // doc.data() is never undefined for query doc snapshots
-    //             TransactionData[doc.id] = doc.data();
-    //             // console.log(doc.id, " => ", doc.data());
-    //         })
-    //     })
-    //     .then(() => {
-    //       console.log(TransactionData);
-    //     })
-    //     .catch(function(error) {
-    //         console.log("Error getting documents: ", error);
-    //     })
-        
-    //     this.Transactions = TransactionData
-    // },
+    QueryDate(){
+      this.loading = true
+        var dt = this.date.toString()
+        var TransactionData = {}
+        this.$firestore.Transactions.doc(dt).collection("Payment")
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                TransactionData[doc.id] = doc.data();
+                // console.log(doc.id, " => ", doc.data());
+            })
+        })
+        .then(() => {
+          this.Transactions = TransactionData
+          this.loading = false
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        })
+    },
     datetoday(){
         var myDate = new Date();
         var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
@@ -101,16 +110,12 @@ export default {
   },
   mounted () {
       this.datetoday()
-      this.date = this.datetodaydata
-      // Binding Collections
-<<<<<<< HEAD
-      this.$bindCollectionAsObject("Transactions", firebaseDb.collection("Transactions").doc('2020-02-19').collection('Payment'))
-=======
-      this.$bindCollectionAsObject("Transactions", firebaseDb.collection('2020-02-18').doc(this.datetodaydata).collection('Payment'))
->>>>>>> 858b059f3d5c6fea3c9835b20fe933c3e3d14b4b
-      .then((Transactions) => {
-        this.loading = false
-      })
+      // this.date = this.datetodaydata
+      // // Binding Collections
+      // this.$bindCollectionAsObject("Transactions", firebaseDb.collection('Transactions').doc(this.datetodaydata).collection('Payment'))
+      // .then((Transactions) => {
+      //   this.loading = false
+      // })
     },
     computed: {
 

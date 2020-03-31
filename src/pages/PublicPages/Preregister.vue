@@ -278,7 +278,7 @@ export default {
         Address:'',
         Phone:'',
         Email:'',
-        Occupation: '',
+        Occupation: 'Driver',
         EmployerCompany: '',
         Salary: '',
         OtherIncome: '',
@@ -311,6 +311,7 @@ export default {
     }
   },
   methods: {
+    
     verifyoperator(){
       this.loadingState = true
         var opt = this.Operator
@@ -352,8 +353,6 @@ export default {
         }
       },
     regPre: function () {
-
-
         if(this.PreRegData.Designation == 'Driver'){
             this.PreRegData.Occupation = this.DriverOccupation
 
@@ -426,13 +425,13 @@ export default {
     },
     onSubmit () {
      this.regPre()
-     this.$q.notify({
-          position: 'top',
-          color: 'white',
-          textColor: 'teal-4',
-          icon: 'check_circle',
-          message: 'Successfully Registered',
-        })
+    //  this.$q.notify({
+    //       position: 'top',
+    //       color: 'white',
+    //       textColor: 'teal-4',
+    //       icon: 'check_circle',
+    //       message: 'Successfully Registered',
+    //     })
          // this.$refs.stepbtn.click()
     },
     onReset () {

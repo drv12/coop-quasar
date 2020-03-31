@@ -48,11 +48,11 @@
                   label="Login"
                   @click="signin"
                >
-               <!-- <q-spinner-dots
+               <q-spinner-dots
                 class="on-right"
                 color="white"
                 v-if="Loading"
-                /> -->
+                />
                 </q-btn>
               </q-card-actions>
                 <!-- <h6 class="colortext text-white text-uppercase q-pa-none absolute-bottom">
@@ -69,32 +69,24 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import firebase from '@firebase/app';
-require('firebase/auth');
-
 export default {
     name: "Login",
     data() {
         return {
-              formData:{
+            formData: {
                 email: '',
-                password: '',
-              }
-        }
-        },
-        created() {
-          firebase.auth().onAuthStateChanged(userAuth => {
-            if (userAuth) {
-                firebase.auth() .currentUser.getIdTokenResult().then(tokenResult => {
-                        console.log(tokenResult.claims);
-                    });
-            }
-        });
+                password: ''
+                }
+            };
         },
         methods: {
+            ...mapActions('store',['loginUser']),
+            signin(){
+                this.loginUser(this.formData)
+            }
         },
         computed: {
-           ...mapGetters('store', ['Loading'])
+            ...mapGetters('store', ['Loading'])
         }
 };
 </script>

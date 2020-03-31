@@ -59,8 +59,11 @@
             <q-btn flat color="teal-4" @click="qrdialog = !qrdialog; GenQr()">
             Print ID        
             </q-btn>
-            <q-btn flat color="teal-4" @click="bar = !bar" v-if="MemberData.Designation == 'Operator'">
-            Drivers       
+            <q-btn flat color="teal-4" @click="bar = !bar; listDrivers();" v-if="MemberData.Designation == 'Operator'">
+            Unit/s Details       
+            </q-btn>
+            <q-btn flat color="teal-4" @click="bar = !bar; driverUnit();"  v-if="MemberData.Designation == 'Driver'">
+            Jeepney       
             </q-btn>
             <q-btn flat @click="upd = !upd; updateMemberData()" color="teal-4">
             Update
@@ -92,12 +95,13 @@
 
 
             <div class="text-h5 q-mt-sm q-ma-md">Member ID: {{ penRegId }}</div>
-            <div class="text-h6 q-mt-sm q-ma-md" 
-            v-if="MemberData.Designation == 'Driver'">Operator: {{ MemberData.Operator.Name }}</div>
+            <!-- <div class="text-h6 q-mt-sm q-ma-md" 
+            v-if="MemberData.Designation == 'Driver'">Operator: {{ MemberData.Operator.Name }}</div> -->
             <div class="q-pa-md">
               <q-input 
               v-model="MemberData.FirstName" 
               label="First Name" 
+              :readonly="upd"
               >
                 <template v-slot:before>
                  <q-icon name="mdi-human-handsup" />
@@ -264,109 +268,123 @@
       </q-card-section>
     </q-card>
 
-<!-- <q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
-  <q-card>
+<q-dialog v-model="bar">
+  <q-card class="my-card" style="width: 700px; max-width: 80vw;">
+    
     <q-bar>
       <q-space />
       <q-btn dense flat icon="close" v-close-popup>
       <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
       </q-btn>
     </q-bar>
-    <div>
+
+    <div v-if="MemberData.Designation == 'Driver'">
       <q-card-section>
-        <div class="text-h6">Unit Details</div>
+        <div class="text-h6">Jeepney & Operator</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
-          v-if="MemberData.Designation == 'Driver'">
-
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
-              <div class="q-pa-md">
-                <q-input color="teal-4" 
-                v-model="this.Unit.PlateNo"
-                ref="Plate"
-                label="Plate No." 
-                :readonly="Unit.PlateNo != ''"
-                >
-                  <template v-slot:before>
-                  <q-icon name="mdi-jeepney" />
-                  </template>
-                </q-input>
-              </div>
+      <q-card-section class="row items-center q-pb-none">
+        <div class="q-pa-md">
+              <q-input v-model="drvOperator" label="Operator" readonly>
+                <template v-slot:before>
+                 <q-icon name="mdi-face" />
+                </template>
+              </q-input>
             </div>
 
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-              <div class="q-pa-md">
-                <q-input color="teal-4" v-model="Unit.Operator" label="Operator" readonly>
-                  <template v-slot:before>
-                    <q-icon name="mdi-account" />
-                  </template>
-                </q-input>
-              </div>
+            <div class="q-pa-md">
+              <q-input v-model="MemberData.PlateNo" label="Plate No" 
+              @input="plateNoVerify()"
+              :loading="loadingState"
+              >
+                <template v-slot:before>
+                 <q-icon name="mdi-jeepney" />
+                </template>
+              </q-input>
+            </div>
+      </q-card-section>
+    </div>
+
+    <div v-if="MemberData.Designation == 'Operator'">
+      <q-card-section>
+        <div class="text-h6">Jeepney & Drivers</div>
+      </q-card-section>
+
+      <q-card-section class="row items-center q-pa-md" v-for="(data, id) in UnitsDriver" :key="id">
+        <div class="full-width">
+          <div class="q-pb-md">
+              <q-input :value=id label="Plate No" 
+              outlined 
+              >
+                <template v-slot:before>
+                 <q-icon name="mdi-jeepney" />
+                </template>
+                 <q-btn flat icon="add" @click="addDriverDialog = !addDriverDialog">
+                   <q-tooltip content-class="bg-white text-primary">Add Driver</q-tooltip>
+                 </q-btn>
+                 <q-btn flat icon="edit">
+                   <q-tooltip content-class="bg-white text-primary">Update Plate No.</q-tooltip>
+                 </q-btn>
+                 <q-btn flat icon="cancel">
+                   <q-tooltip content-class="bg-white text-primary">Delete</q-tooltip>
+                 </q-btn>
+              </q-input>
             </div>
 
-            <div v-if="Unit.PlateNo == ''">
-                <q-btn label="Verify Unit" @click="verifyifunit()" color="primary"/>
-                <button class="btn btn-primary" @click="bar2=!bar2">Save</button>
-            </div>
+        <div class="q-pa-md" v-if="addDriverDialog">
+          <q-input v-model="Driver" label="Driver" 
+            @input="driverVerify()"
+            :loading="loadingState"
+            >
+              <template v-slot:before>
+                <q-icon name="mdi-face" />
+              </template>
+              <q-btn flat icon="save"></q-btn>
+            </q-input>
+        </div> 
 
-
+          <div v-for="(dat, i) in data" :key="i" class="q-pa-md">
+            <q-input :value="dat.FirstName +' '+ dat.LastName" label="Driver" 
+              @input="driverVerify()"
+              readonly
+              >
+                <template v-slot:before>
+                 <q-icon name="mdi-face" />
+                </template>
+                 <q-btn flat icon="cancel"></q-btn>
+              </q-input>
+          </div>
         </div>
-
-        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md"
-          v-if="MemberData.Designation == 'Operator'">
-        </div>
-
-
       </q-card-section>
     </div>
   </q-card>
-</q-dialog>     -->
-
-<q-dialog v-model="bar" persistent transition-show="flip-down" transition-hide="flip-up">
-  <q-card>
-
-    <q-bar>
-      <q-space />
-      <q-btn dense flat icon="close" v-close-popup>
-      <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
-      </q-btn>
-    </q-bar>
-
-    <div>
-      <q-card-section>
-        <div class="text-h6">Driver</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 q-pa-md">
-          <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12"> 
-              <div class="q-pa-md">
-                <q-input color="teal-4" 
-                v-model="Driver"
-                label="Driver" 
-                v-on:keyup.enter="addDriver();"
-                >
-                  <template v-slot:before>
-                  <q-icon name="mdi-jeepney" />
-                  </template>
-                </q-input>
-
-                <ul class="list-group">
-                  <li class="list-group-item" v-for= "(driver, key) in Drivers" :key="key">
-                      {{driver}} <button @click="remove(driver);" class="badge">x</button>
-                  </li>
-                </ul>
-
-                <q-btn @click="addDriver()">Add Driver</q-btn>
-              </div>
-            </div>
-        </div>
-      </q-card-section>
-    </div>     
-  </q-card>
 </q-dialog> 
+
+<!-- <q-dialog v-model="addDriverDialog" persistent >
+  <q-card class="my-card">
+    <q-card-section class="row items-center q-pa-md">
+      <div class="q-pa-md">
+        <q-input v-model="Driver" label="Driver" 
+          @input="driverVerify()"
+          :loading="loadingState"
+          >
+            <template v-slot:before>
+              <q-icon name="mdi-face" />
+            </template>
+          </q-input>
+        </div>
+    </q-card-section>
+
+    <q-card-actions>
+        <q-btn flat color="secondary" class="col-5">
+          Save
+        </q-btn>
+        <q-btn flat color="red" class="col-5">
+          Cancel
+        </q-btn>
+      </q-card-actions>
+  </q-card>  
+</q-dialog> -->
 
 
   <q-dialog v-model="qrdialog">
@@ -404,11 +422,11 @@
 
       <q-separator />
 
-      <!-- <q-card-actions>
+      <q-card-actions>
         <q-btn color="secondary" class="full-width" @click="printDiv('idpage')">
           Print
         </q-btn>
-      </q-card-actions> -->
+      </q-card-actions>
 
     </q-card>
   </q-dialog>
@@ -472,7 +490,6 @@
 
     </q-dialog>    
 
-
     </div>
 </template>
 
@@ -481,12 +498,16 @@ import Vue from 'vue'
 
 import { firebaseDb, firebaseSto, firefirestore } from 'boot/firebase';
 import VueQrcode from '@chenfengyuan/vue-qrcode'
+import Swal from 'sweetalert2'
+
 
 Vue.component(VueQrcode.name, VueQrcode);
 
 export default {
     data(){
         return{
+            addDriverDialog: false,
+            loadingState: false,
             contract: false,
             inception: false,
             qrvalue: '',
@@ -510,6 +531,9 @@ export default {
               PlateNo: ''
             },
             Driver: '',
+            UnitsDriver: {},
+            drvOperator: '',
+            verifyPlateNo: true
         }
     },
     props: ['penRegId'],
@@ -518,69 +542,156 @@ export default {
             // Doc
             MemberData: firebaseDb.collection('MemberData').doc(this.penRegId),
             Members: firebaseDb.collection('MemberData'),
+            DriverData: firebaseDb.collection('MemberData').where('Designation', '==', 'Driver'),
+            Units: firebaseDb.collection('Units'),
             Transactions: firebaseDb.collection('Transactions'),
             Counter: firebaseDb.collection('Counter').doc("v65AIZI2jjNN2jlEv17N"),
         }
       },
     methods: {
-      remove(e) {
-        //remove unit operator
-        this.$firestore.MemberData.update({
-          Driver: firefirestore.FieldValue.arrayRemove(e)
+      driverVerify(){
+        this.loadingState = true
+        var drvname
+        this.DriverData.forEach((e) => {
+          drvname = e.FirstName + ' ' + e.LastName
+
+          if(this.Driver == drvname){
+              this.loadingState = false
+          }
         })
       },
-      addDriver(){
-        var newdriver = this.Driver
-        this.$firestore.MemberData.update({
-          Driver: firefirestore.FieldValue.arrayUnion(newdriver)
+      plateNoVerify(){
+        this.loadingState = true
+        var plt = this.MemberData.PlateNo
+        var MemberID= ''
+        var vrf
+
+        this.Units.forEach((e) => {
+          // PlateNo = e['.key']
+            if(plt == e.PlateNo){
+              return vrf = true
+            }
         })
+
+        if(vrf == true){
+          Swal.fire(
+              {
+                customClass: {
+                  container: 'my-swal3',
+                },
+                title: 'Plate No Exists!!',
+                text: 'success',
+              }              
+            )
+          this.verifyPlateNo = true
+          this.loadingState = false
+        }else{
+          this.verifyPlateNo = false
+        }
       },
-      wala(){
-          // GetOperatorUnits(){
-          // var OpUnits = []
-          // this.MemberData.Unit.forEach(function(munit) {
-          //   console.log('MemberDataUnit: ', munit)
+      driverUnit(){
+        var drvOp
+        var drvOpnm
+        var dd = this.$firestore.Members
 
-          //   OpUnits.push(this.Units.doc(munit))
-          // })
-          //   console.log('Operator: ', unitopt)
-          //   this.Unit.Operator = unitopt
-          // },
-        //   GetUnitOperator(){
-        //   var unitpltno = this.MemberData.Unit[0]
-        //   this.Unit.PlateNo = unitpltno
-        //   var unitdet
-        //   var verified = false
-        //   this.Units.forEach(function(e) {
-        //         if(e['.key'] == unitpltno){
+        this.$firestore.Units.doc(this.MemberData.PlateNo)
+        .get()
+        .then((doc) => {
+          drvOp = doc.data()
+          })
+          .then(()=>{
+            dd.doc(drvOp.Operator)
+            .get()
+            .then((doc) => {
+              drvOpnm = doc.data()
+              })
+              .then(()=>{
+                this.drvOperator = drvOpnm.FirstName + ' ' +  drvOpnm.LastName
+              })
+          })
+      },
+      listDrivers(){
+        
+        var UnitDriver = {}
+        var test = []
+        var mb =this.$firestore.Members
+        var set = this.$set
+        var key
+        
+          this.MemberData.PlateNo.forEach(function(key, index){
+            mb.where('PlateNo', '==' , key)
+            .get()
+            .then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                //  UnitDriver[key] = doc.data()
+                  // UnitDriver.push({
+                  //   MemberID: doc.id,
+                  //   data: doc.data()
+                  // })
+                  test.push(doc.data())
+                })
+                  set(UnitDriver, key , test)
+                  test = []
+             })
+           })
 
-        //           return unitdet = {
-        //             Operator: e.Operator.FirstName +' '+ e.Operator.LastName,
-        //             MemberId: e.MemberID
-        //           }
-        //         }
-        //     })
-        //     this.Unit.Operator = unitdet.Operator
-        //   },
-        //   updateUnit(){
-        //   //update unit sa driver registration
-        //       var newdriver = {
-        //       MemberID: 'NGTSC'+ (this.MemberID.MemberID + 1),
-        //       FirstName:  this.MemberData.FirstName,
-        //       LastName: this.MemberData.LastName
-        //     }
-          
-        //     this.$firestore.Units.doc(this.Unit.PlateNo).update({
-        //     Driver: firefirestore.FieldValue.arrayUnion(newdriver)
-        //   })
-        // },
+          this.UnitsDriver = UnitDriver
+          console.log('resolvec', this.UnitsDriver)
+        
+      },
+      removedriver(id, key){
+        Swal.fire({
+          customClass: {
+            container: 'my-swal'
+          },
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, remove it!'
+        }).then((result) => {
+          if (result.value) {
+            
+            this.UnitsDriver.splice(key, 1);
+            this.$firestore.Members.doc(id).update({
+              PlateNo: ''
+              })
+
+            Swal.fire(
+              {
+                customClass: {
+                  container: 'my-swal2',
+                },
+                title: 'Removed!',
+                text: 'Driver has been removed.',
+              }              
+            )
+          }
+        })
+
+      },
+      loadProfile(id) {
+            this.bar = !this.bar
+            this.$router.push('/admin/profile/' + id)
+            window.location.reload();
       },
       GenQr(){
-      
       if(this.MemberData.Designation == 'Driver'){
-          this.qrvalue = 
-            'Driver: ' + this.MemberData['.key'] +' '+ 'Operator: ' + this.MemberData.Operator.MemberID
-          
+
+        var op
+
+        this.$firestore.Units.doc(this.MemberData.PlateNo)
+        .get()
+        .then((doc) => {
+          op = doc.data().Operator
+          })
+          .then(() => {
+            this.qrvalue = 
+            'Driver: ' + this.MemberData['.key'] +' '+ 'Operator: ' + op
+          })
       }else{
         this.qrvalue = 'Operator: ' + this.MemberData['.key']
       }
@@ -684,14 +795,26 @@ export default {
     this.datetoday()
   },
   computed: {
-    Drivers(){
-      return this.MemberData.Driver
-    }
+    // Drivers(){
+    //   console.log('ss', this.UnitsDriver)
+    //   return this.UnitsDriver
+    // }
   }
 }
 </script>
 
 <style>
+    .my-swal {
+        z-index: 300000;
+      }
+
+    .my-swal2 {
+        z-index: 300000;
+      }  
+
+    .my-swal3 {
+        z-index: 300000;
+      }  
 
 		.id-card-holder {
 			width: 300px;

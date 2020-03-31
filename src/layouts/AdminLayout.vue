@@ -73,7 +73,7 @@
                     </q-item-section>
                       <q-item-section class="text-uppercase">All Members</q-item-section>
                   </q-item>
-                   <q-item
+                   <!-- <q-item
                     expand-separator 
                     to="/admin/pendingreg"
                     exact
@@ -82,7 +82,7 @@
                       <q-icon name="mdi-timer" />
                     </q-item-section>
                       <q-item-section class="text-uppercase">Pending Registration</q-item-section>
-                  </q-item>
+                  </q-item> -->
            </q-expansion-item>
           <!-- End of Sidemenu Member -->
          <!-- Start of Payment Member -->

@@ -12,8 +12,9 @@ const routes = [
     ]
   },
   {
-    path: '/member',
+    path: '/dashboard',
     redirect: '/member/dashboard',
+    meta: {isMember: true},
     component: () => import('layouts/MemberLayout.vue'),
     children: [
       { 
@@ -25,13 +26,18 @@ const routes = [
         path: '/member/profile/:penRegId', 
         props: true,
         component: () => import('pages/MemberPages/Profile.vue') 
+      },
+      { 
+        path: '/member/transactions/:penRegId', 
+        props: true,
+        component: () => import('pages/MemberPages/Transactions.vue')
       }
-
     ]
   },
   {
-    path: '/collector',
+    path: '/dashboard',
     redirect: '/collector/dashboard',
+    meta: {isCollector: true},
     component: () => import('layouts/CollectorLayout.vue'),
     children: [
       { 
@@ -41,25 +47,18 @@ const routes = [
       { 
         path: '/collector/addpayment', 
         component: () => import('pages/CollectorPages/AddPaymentCollector.vue') 
-      },
-      { 
-        path: '/collector/dailycollections', 
-        component: () => import('pages/CollectorPages/CollectorDailyCollections.vue') 
-      },
-      { 
-        path: '/collector/membersmonitor', 
-        component: () => import('pages/CollectorPages/MembersMonitoring.vue') 
-      },
-
+      }
     ]
   },
   {
     path: '/login',    
+    meta: {requiresAuth: true},
     component: () => import('pages/PublicPages/Login.vue') 
   },
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
+    meta: {isAdmin: true},
     redirect: '/admin/dashboard',
     children: [
       {
@@ -115,7 +114,6 @@ const routes = [
     ]
   }
 ]
-
 
 // Always leave this as last one
 if (process.env.MODE !== 'ssr') {
